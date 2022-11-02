@@ -17,3 +17,4 @@ The plan should contain the following information:
 
 > It is not uncommon that as the project progresses, there may be changes relative to project plan, and that is fine. 
 > The final outcome will be described in the final documentation, that can be based on the project plan. 
+.
