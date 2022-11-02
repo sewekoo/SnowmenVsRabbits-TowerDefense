@@ -8,6 +8,37 @@ In each meeting, you are required to discuss:
 4. Deviations and changes to the project plan, if any
 
 
+# Meeting 2.11.2022 2H::0M
+
+**Participants**: 
+1. Roosa Ahlroos
+2. Lauri Karanko
+3. Severi Koivumaa
+4. Karl Rass
+
+## Summary of works
+None of the members had done much prior work yet as the groups were
+formed a day ago. We had all read the requirements for the project and the tower defense game but all of us felt a little bit overwhelmed about where to begin. 
+
+## Challenges
+
+1. The deadline for the project plan is 11th of november so a little over a week away. This means that we have to acquaint ourselves to what exactly has to be done (already written in the requirements) but more importantly what libraries should be used to implement those features.
+2. After we have an understanding of what work needs to be done, we have to do the work division and write the project plan document.
+
+## Actions
+1. First we are going to reach out to our instructor to see when they could possibly meet with us.
+2. We agreed that everyone would all research the tower defense game topic and try to find example implementations. This is important because it will give us a better understanding of the architecture of the program since none of us have designed a game before.
+3. We will also look into the SFML and Qt libraries to see what opportunities they provide.
+
+> Please reflect these action decisions in your git commit messages so that 
+> your group members and advisor can follow the progress.
+
+## Project status 
+Short summary of current project status. 
+
+### TODOs
+1. Everyone is going to research the libraries and ideas for implementation as identified above. We will also send out the email to our advisor before the end of this meeting.
+
 # Meeting dd.mm.2022 HH::MM
 
 **Participants**: 
