@@ -8,7 +8,7 @@ In each meeting, you are required to discuss:
 4. Deviations and changes to the project plan, if any
 
 
-# Meeting dd.mm.2021 HH::MM
+# Meeting dd.mm.2022 HH::MM
 
 **Participants**: 
 1. Member 1
