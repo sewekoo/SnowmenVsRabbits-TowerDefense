@@ -39,6 +39,37 @@ Short summary of current project status.
 ### TODOs
 1. Everyone is going to research the libraries and ideas for implementation as identified above. We will also send out the email to our advisor before the end of this meeting.
 
+# Meeting 08.11.2022 2H::49M
+
+**Participants**: 
+1. Roosa Ahlroos
+2. Lauri Karanko
+3. Severi Koivumaa
+4. Karl Rass
+
+## Summary of works
+We met in Teams and started out with creating a shared Word document to get started with the project plan. We went over different classes and attributes that we think would be useful in addition to general rules of the game.
+
+## Challenges
+
+1. How to set up libraries
+2. What classes to use
+3. Should we use a tile system
+
+## Actions
+We will all continue writing out the plan and research more about the subject.
+
+> Please reflect these action decisions in your git commit messages so that 
+> your group members and advisor can follow the progress.
+
+## Project status 
+We have currently only worked on the project plan and added meeting notes.
+
+### TODOs
+1. Continue research into the subject
+2. Meet again on Thursday and hopefully finish the plan 
+
+
 # Meeting dd.mm.2022 HH::MM
 
 **Participants**: 
