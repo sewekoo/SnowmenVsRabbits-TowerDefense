@@ -70,6 +70,38 @@ We have currently only worked on the project plan and added meeting notes.
 2. Meet again on Thursday and hopefully finish the plan 
 
 
+# Meeting 11.11.2022 1H::4M
+
+**Participants**: 
+1. Roosa Ahlroos
+2. Lauri Karanko
+3. Severi Koivumaa
+4. Karl Rass
+
+## Summary of works
+We finished the project plan and divided the work between the team members. The division is not done too strictly and will be up for discussion in the later meetings, when we have more of an idea just how much work they require.
+
+## Challenges
+
+1. Dividing the work into blocks of hopefully semi equal size
+2. Getting started with actual coding
+
+## Actions
+1. Roosa will start work on the GUI
+2. ... And Lauri with enemies-class
+3. ... And Severi with both the game loop and level & tile classes
+4. ... And Karl with towers-class and level design
+
+> Please reflect these action decisions in your git commit messages so that 
+> your group members and advisor can follow the progress.
+
+## Project status 
+We now have a base idea about what and who will be doing what. We have made decisions on some of the details of our game, but everything is still a work in progress.
+
+### TODOs
+The TODOs reflect the actions listed.
+
+
 # Meeting dd.mm.2022 HH::MM
 
 **Participants**: 
