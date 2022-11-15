@@ -1,2 +1,0 @@
-/Users/lauri/IdeaProjects/Group_Project/build/CMakeFiles/edit_cache.dir
-/Users/lauri/IdeaProjects/Group_Project/build/CMakeFiles/rebuild_cache.dir
