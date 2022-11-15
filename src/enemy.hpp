@@ -1,9 +1,11 @@
 #ifndef ABSTRACT_ENEMY
 #define ABSTRACT_ENEMY
 
+
 #include <iostream>
 
-/**
+/** 
+ * \class Enemy
  * @brief An abstract enemy class
  * 
  * All enemies have hit points, speed and a sell value (all as int) that depend on the type of enemy in question.
@@ -30,9 +32,9 @@ public:
     }
   }
 
-  const int GetHP() const { return hp_; }
-  const int GetSpeed() const { return speed_; }
-  const int GetValue() const { return value_; }
+  const int GetHP() const { return hp_; }         /**< Getter function returns HP */
+  const int GetSpeed() const { return speed_; }   /**< Getter function returns Speed */
+  const int GetValue() const { return value_; }   /**< Getter function returns Value */
 
 private:
   int hp_;
