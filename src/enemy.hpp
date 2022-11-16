@@ -14,7 +14,7 @@
 
 class Enemy {
 public:
-  Enemy(int hp, int speed, int value) : hp_(hp), speed_(speed), value_(value) { }
+  Enemy(double hp, double speed, double value) : hp_(hp), speed_(speed), value_(value) { }
   ~Enemy();
 
   /**
@@ -22,7 +22,7 @@ public:
    * Damage is substracted from hp_. If damage is greater or equal to enemy's hp, it goes to 0. (= enemy dies)
    * Function returns a boolean value indicating if this enemy died during function call.
    */
-  bool TakeDamage(int dmg) {
+  bool TakeDamage(double dmg) {
     if (hp_ > dmg) {
       hp_ -= dmg;
       return false;
@@ -32,14 +32,14 @@ public:
     }
   }
 
-  const int GetHP() const { return hp_; }         /**< Getter function returns HP */
-  const int GetSpeed() const { return speed_; }   /**< Getter function returns Speed */
-  const int GetValue() const { return value_; }   /**< Getter function returns Value */
+  const double GetHP() const { return hp_; }         /**< Getter function returns HP */
+  const double GetSpeed() const { return speed_; }   /**< Getter function returns Speed */
+  const double GetValue() const { return value_; }   /**< Getter function returns Value */
 
 private:
-  int hp_;
-  int speed_;
-  int value_;
+  double hp_;
+  double speed_;
+  double value_;
 
 };
 
