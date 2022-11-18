@@ -10,7 +10,7 @@ int main()
     bplay.SetPosition({400, 200});
     bexit.SetPosition({400, 400});
     Font font;
-    font.loadFromFile("Sono-Regular.ttf");
+    font.loadFromFile("misc/Sono-Regular.ttf");
     bplay.SetFont(font);
     bexit.SetFont(font);
 
