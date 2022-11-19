@@ -3,6 +3,7 @@
 
 
 #include <iostream>
+#include <string>
 
 /** 
  * \class Enemy
@@ -14,7 +15,7 @@
 
 class Enemy {
 public:
-  Enemy(double hp, double speed, double value) : hp_(hp), speed_(speed), value_(value) { }
+  Enemy(double hp, double speed, double value, std::string texture) : hp_(hp), speed_(speed), value_(value), texture_(texture) { }
   ~Enemy();
 
   /**
@@ -32,15 +33,16 @@ public:
     }
   }
 
-  const double GetHP() const { return hp_; }         /**< Getter function returns HP */
-  const double GetSpeed() const { return speed_; }   /**< Getter function returns Speed */
-  const double GetValue() const { return value_; }   /**< Getter function returns Value */
+  const double GetHP() const { return hp_; }                /**< Getter function returns HP */
+  const double GetSpeed() const { return speed_; }          /**< Getter function returns Speed */
+  const double GetValue() const { return value_; }          /**< Getter function returns Value */
+  const std::string GetTexture() const { return texture_; } /**< Getter function returns texture */
 
 private:
   double hp_;
   double speed_;
   double value_;
-
+  std::string texture_;
 };
 
 #endif

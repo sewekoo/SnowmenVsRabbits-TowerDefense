@@ -30,7 +30,7 @@
  */ 
 class EasyEnemy : public Enemy {
 public:
-    EasyEnemy() : Enemy(EASY_HEALTH, EASY_SPEED, EASY_VALUE) { }
+    EasyEnemy() : Enemy(EASY_HEALTH, EASY_SPEED, EASY_VALUE, "rabbit_basic.png") { }
 };
 
 /** \class FastEnemy
@@ -38,7 +38,7 @@ public:
  */
 class FastEnemy : public Enemy {
 public:
-    FastEnemy() : Enemy(FAST_HEALTH, FAST_SPEED, FAST_VALUE) { }
+    FastEnemy() : Enemy(FAST_HEALTH, FAST_SPEED, FAST_VALUE, "rabbit_small.png") { }
 };
 
 /** \class FastEnemy
@@ -46,7 +46,7 @@ public:
  */
 class SlowEnemy : public Enemy {
 public:
-    SlowEnemy() : Enemy(SLOW_HEALTH, SLOW_SPEED, SLOW_VALUE) { }
+    SlowEnemy() : Enemy(SLOW_HEALTH, SLOW_SPEED, SLOW_VALUE, "rabbit_dark.png") { }
 };
 
 
