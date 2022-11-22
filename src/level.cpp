@@ -27,7 +27,6 @@ void Level::initializeLevel() {
     tileMap.resize(mapSize_, std::vector<Tile>());
     for (int y = 0; y < this->mapSize_; y++) {
       tileMap[x].resize(mapSize_, Tile());
-      tileMap[x][y].setSize(sf::Vector2f(gridSizeF_, gridSizeF_));
 
       try {
         if (this->levelInfo_[x][y] ==
@@ -35,7 +34,9 @@ void Level::initializeLevel() {
           tileMap[x][y] = Grass(sf::Vector2f(gridSizeF_, gridSizeF_));
         } else if (this->levelInfo_[x][y] ==
                    "1") {  // If info points to road, then fill with road
-          tileMap[x][y] = Road(sf::Vector2f(gridSizeF_, gridSizeF_));
+          Road newRoad = Road(sf::Vector2f(gridSizeF_, gridSizeF_));
+          tileMap[x][y] = newRoad;
+          roads.push_back(newRoad);
         } else if (this->levelInfo_[x][y] ==
                    "2") {  // If info points to entry point, then make it entry
                            // point
@@ -59,7 +60,12 @@ void Level::initializeLevel() {
                                            // then fill with grass
         tileMap[x][y] = Grass(sf::Vector2f(gridSizeF_, gridSizeF_));
       }
+      tileMap[x][y].setSize(sf::Vector2f(gridSizeF_, gridSizeF_));
       tileMap[x][y].setPosition(x * gridSizeF_, y * gridSizeF_);
+      std::cout << "Tile set to position " << tileMap[x][y].getPosition().x
+                << " " << tileMap[x][y].getPosition().y << std::endl;
+      tileMap[x][y].SetGridLocation(x, y);
+      std::cout << "Saved position " << x << " " << y << std::endl;
     }
   }
 }
