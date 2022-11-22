@@ -71,9 +71,32 @@ class Game {
   sf::Vector2f mousePosView;
   sf::Vector2u mousePosGrid;
 
+  // Mouse clicker flag
+  bool mouseClicked = false;
+
+  // Enemies
+  std::vector<Enemy*> enemies;
+  int enemiesAdded = 0;
+
+  // Towers
+  std::vector<Tower*> towers;
+
   // Text
   sf::Text text;
   sf::Font font;
+
+  // Textures
+  sf::Texture basicEnemyTexture;
+  sf::Sprite basicEnemySprite;
+
+  sf::Texture basicEnemyHurtTexture;
+  sf::Sprite basicEnemyHurtSprite;
+
+  sf::Texture basicTowerTexture;
+  sf::Sprite basicTowerSprite;
+
+  sf::Texture sniperTowerTexture;
+  sf::Sprite sniperTowerSprite;
 
   // Level
   Level* level;

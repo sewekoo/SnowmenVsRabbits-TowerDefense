@@ -11,6 +11,9 @@ Game::Game() {
 Game::~Game() {
   delete this->window;
   delete this->level;
+  for (auto i : towers) {
+    delete i;
+  }
 }
 
 // Functions
@@ -20,10 +23,11 @@ const bool Game::GetWindowIsOpen() const { return this->window->isOpen(); }
 void Game::pollEvents() {
   while (this->window->pollEvent(event)) {
     switch (this->event.type) {
+      // Closes the window when closed
       case sf::Event::Closed:
         this->window->close();
         break;
-
+      // Closes the window with escape button
       case sf::Event::KeyPressed:
         if (this->event.key.code == sf::Keyboard::Escape) {
           this->window->close();
@@ -33,7 +37,85 @@ void Game::pollEvents() {
   }
 }
 
-void Game::updateInput() {}
+void Game::updateInput() {
+  if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+    mouseClicked = false;
+  }
+  if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && mouseClicked == false) {
+    mouseClicked = true;
+    std::cout << "Left Mouse clicked" << std::endl;
+    for (int x = 0; x < this->level->GetMapSize(); x++) {
+      for (int y = 0; y < this->level->GetMapSize(); y++) {
+        if ((this->level->tileMap[x][y].IsOccupied()) &&
+            (this->level->tileMap[x][y].type_ == 0) &&
+            (this->level->tileMap[x][y].GetGridLocationX() == mousePosGrid.x) &&
+            (this->level->tileMap[x][y].GetGridLocationY() == mousePosGrid.y)) {
+          std::cout << "Tower upgrade sequence began" << std::endl;
+          if (this->level->tileMap[x][y].GetTower() != nullptr) {
+            std::cout << "Tile tower value is not nullptr. Trying to upgrade:"
+                      << std::endl;
+            try {
+              std::cout << this->level->tileMap[x][y].occupantTower_
+                        << "level: "
+                        << this->level->tileMap[x][y].occupantTower_->GetLevel()
+                        << std::endl;
+              this->level->tileMap[x][y].occupantTower_->Upgrade();
+              std::cout << "Upgrade success. New level: "
+                        << this->level->tileMap[x][y].occupantTower_->GetLevel()
+                        << std::endl;
+            } catch (const std::exception& e) {
+              std::cout << "Upgrade failed" << std::endl;
+            }
+          }
+        }
+
+        if ((this->level->tileMap[x][y].IsOccupied()) &&
+            (this->level->tileMap[x][y].type_ == 1) &&
+            (this->level->tileMap[x][y].GetGridLocationX() == mousePosGrid.x) &&
+            (this->level->tileMap[x][y].GetGridLocationY() == mousePosGrid.y)) {
+          if (this->level->tileMap[x][y].GetEnemy()->TakeDamage(10)) {
+            std::cout << "Enemy is killed (but not deleted)" << std::endl;
+          }
+          std::cout << "Enemy hp: "
+                    << this->level->tileMap[x][y].GetEnemy()->GetHP()
+                    << std::endl;
+        }
+
+        if ((!this->level->tileMap[x][y].IsOccupied()) &&
+            (this->level->tileMap[x][y].type_ == 1) &&
+            (this->level->tileMap[x][y].GetGridLocationX() == mousePosGrid.x) &&
+            (this->level->tileMap[x][y].GetGridLocationY() == mousePosGrid.y)) {
+          std::cout << "MousePos X & Y: " << mousePosGrid.x << " "
+                    << mousePosGrid.y << std::endl;
+          std::cout << "TilePos X & Y: "
+                    << this->level->tileMap[x][y].GetGridLocationX() << " "
+                    << this->level->tileMap[x][y].GetGridLocationY()
+                    << std::endl;
+          std::cout << "Enemy adding sequence began" << std::endl;
+          Enemy* newEnemy =
+              new EasyEnemy(this->mousePosGrid.x, this->mousePosGrid.y);
+          std::cout << "Enemy created into variable succesful" << std::endl;
+          enemies.push_back(newEnemy);
+          std::cout << "Enemy pushed to enemies vector succesful" << std::endl;
+          this->level->tileMap[x][y].addOccupant(newEnemy);
+          enemiesAdded++;
+          this->level->tileMap[x][y].MakeOccupied();
+          std::cout << "Succesfully increased enemy counter" << std::endl;
+        }
+        if ((!this->level->tileMap[x][y].IsOccupied()) &&
+            (this->level->tileMap[x][y].type_ == 0) &&
+            (this->level->tileMap[x][y].GetGridLocationX() == mousePosGrid.x) &&
+            (this->level->tileMap[x][y].GetGridLocationY() == mousePosGrid.y)) {
+          Tower* newTower =
+              new Tower(this->mousePosGrid.x, this->mousePosGrid.y);
+          towers.push_back(newTower);
+          this->level->tileMap[x][y].addOccupant(newTower);
+          this->level->tileMap[x][y].MakeOccupied();
+        }
+      }
+    }
+  }
+}
 
 void Game::updateDt() { dt = dtClock.restart().asSeconds(); }
 
@@ -60,6 +142,14 @@ void Game::updateMousePosition() {
      << std::endl;
   ss << "View: x: " << mousePosView.x << " y: " << mousePosView.y << std::endl;
   ss << "Grid: x: " << mousePosGrid.x << " y: " << mousePosGrid.y << std::endl;
+  ss << "Mouse clicked: ";
+  if (mouseClicked) {
+    ss << "Yes" << std::endl;
+  } else {
+    ss << "No" << std::endl;
+  }
+  ss << "Enemies added: " << enemiesAdded << std::endl;
+  ss << "Mouse clicked: " << mouseClicked << std::endl;
   text.setString(ss.str());
 }
 
@@ -70,9 +160,9 @@ void Game::updateTileSelector() {
 
 void Game::update() {
   this->updateDt();
+  this->updateInput();
   this->updateMousePosition();
   this->pollEvents();
-  this->updateInput();
   this->updateTileSelector();
 }
 /**
@@ -93,8 +183,33 @@ void Game::render() {
     }
   }
 
-  this->window->draw(this->level->entrypoint);
+  for (auto i : enemies) {
+    basicEnemySprite.setPosition(i->GetPosX() * gridSizeF,
+                                 i->GetPosY() * gridSizeF);
+    if (i->GetHP() >= 1) {
+      this->window->draw(basicEnemySprite);
+    } else {
+      // basicEnemyHurtSprite.setPosition(i->GetPosX() * gridSizeF,
+      //                                  i->GetPosY() * gridSizeF);
+      // this->window->draw(basicEnemyHurtSprite);
+      sf::Color original = basicEnemySprite.getColor();
+      basicEnemySprite.setColor(sf::Color::Red);
+      this->window->draw(basicEnemySprite);
+      basicEnemySprite.setColor(original);
+    }
+  }
 
+  for (auto i : towers) {
+    if (i->GetLevel() <= 1) {
+      basicTowerSprite.setPosition(i->posX_ * gridSizeF, i->posY_ * gridSizeF);
+      this->window->draw(basicTowerSprite);
+    } else {
+      sniperTowerSprite.setPosition(i->posX_ * gridSizeF, i->posY_ * gridSizeF);
+      this->window->draw(sniperTowerSprite);
+    }
+  }
+
+  this->window->draw(this->level->entrypoint);
   this->window->draw(tileSelector);
 
   // Draw UI
@@ -123,6 +238,27 @@ void Game::InitializeVariables() {
   text.setFont(font);
   text.setPosition(20.f, 20.f);
   text.setString("Test");
+
+  if (!basicEnemyTexture.loadFromFile("pics/rabbit_basic_crop.png")) {
+    std::cout << "Texture for enemy load failed" << std::endl;
+  }
+  basicEnemySprite.setTexture(basicEnemyTexture);
+
+  if (!basicEnemyHurtTexture.loadFromFile("pics/rabbit_basic_crop.png")) {
+    std::cout << "Texture for enemy load failed" << std::endl;
+  }
+  basicEnemyHurtSprite.setTexture(basicEnemyHurtTexture);
+  basicEnemyHurtSprite.setColor(sf::Color::Red);
+
+  if (!basicTowerTexture.loadFromFile("pics/snowman_basic_crop.png")) {
+    std::cout << "Texture for tower load failed" << std::endl;
+  }
+  basicTowerSprite.setTexture(basicTowerTexture);
+
+  if (!sniperTowerTexture.loadFromFile("pics/snowman_hat_crop.png")) {
+    std::cout << "Texture for sniper tower load failed" << std::endl;
+  }
+  sniperTowerSprite.setTexture(sniperTowerTexture);
 }
 
 void Game::InitializeWindow() {

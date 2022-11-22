@@ -32,6 +32,7 @@ class Level {
   std::vector<std::vector<Tile>> tileMap;
   EntryPoint entrypoint;
   ExitPoint exitpoint;
+  std::vector<Road> roads;
 
   /**
    * Initalizes level

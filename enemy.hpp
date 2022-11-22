@@ -1,6 +1,11 @@
 #ifndef ABSTRACT_ENEMY
 #define ABSTRACT_ENEMY
 
+#include <SFML/Audio.hpp>
+#include <SFML/Graphics.hpp>
+#include <SFML/Network.hpp>
+#include <SFML/System.hpp>
+#include <SFML/Window.hpp>
 #include <iostream>
 
 /**
@@ -12,9 +17,20 @@
  * default destructor deletes the class upon destruction.
  */
 
-class Enemy {
+class Enemy : public sf::RectangleShape {
  public:
-  Enemy(int hp, int speed, int value) : hp_(hp), speed_(speed), value_(value) {}
+  Enemy(float posX, float posY, double hp, double speed, double value)
+      : sf::RectangleShape(sf::Vector2f(gridSizeF, gridSizeF)) {
+    posX_ = posX;
+    posY_ = posY;
+    hp_ = hp;
+    speed_ = speed;
+    value_ = value;
+    this->setSize(sf::Vector2f(gridSizeF, gridSizeF));
+    this->setPosition(posX * gridSizeF, posY * gridSizeF);
+  }
+
+  std::string textureName = "pics/rabbit_basic.png";
   ~Enemy() {}
 
   /**
@@ -23,7 +39,7 @@ class Enemy {
    * to enemy's hp, it goes to 0. (= enemy dies) Function returns a boolean
    * value indicating if this enemy died during function call.
    */
-  bool TakeDamage(int dmg) {
+  bool TakeDamage(double dmg) {
     if (hp_ > dmg) {
       hp_ -= dmg;
       return false;
@@ -33,18 +49,25 @@ class Enemy {
     }
   }
 
-  const int GetHP() const { return hp_; } /**< Getter function returns HP */
-  const int GetSpeed() const {
+  const double GetHP() const { return hp_; } /**< Getter function returns HP */
+  const double GetSpeed() const {
     return speed_;
   } /**< Getter function returns Speed */
-  const int GetValue() const {
+  const double GetValue() const {
     return value_;
   } /**< Getter function returns Value */
 
+  const float GetPosX() const { return posX_; }
+
+  const float GetPosY() const { return posY_; }
+
  private:
-  int hp_;
-  int speed_;
-  int value_;
+  double hp_;
+  double speed_;
+  double value_;
+  float gridSizeF = 100.f;
+  float posX_;
+  float posY_;
 };
 
 #endif

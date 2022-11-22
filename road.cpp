@@ -2,42 +2,20 @@
 
 Road::Road(const sf::Vector2f& size) : Tile(size) {
   this->InitalizeColors();
-  // occupant_ = nullptr;
-  // next_ = nullptr;
+  this->occupantEnemy_ = nullptr;
 }
 
-/**
-Road::Road(Road* next, const sf::Vector2f& size) : Tile(size) {
-  this->InitalizeColors();
-  // occupant_ = nullptr;
-  next_ = next;
-}
-*/
-
-Road::~Road() {
-  // delete occupant_;
-  // delete next_;
-}
+Road::~Road() { delete occupantEnemy_; }
 
 void Road::InitalizeColors() {
   this->setFillColor(sf::Color(223, 189, 110, 255));
   this->setOutlineThickness(1.f);
   this->setOutlineColor(sf::Color(213, 181, 104, 255));
+  this->type_ = 1;
 }
-
-// Road& Road::GetNext() { return *next_; }
-
-// void Road::SetNext(Road* next) { next_ = next; }
-
-/**
-void Road::AddEnemy(Enemy* enemy) {
-   this->occupant_ = enemy;
-  this->MakeOccupied();
-}
-*/
 
 void Road::EmptyTile() {
-  // delete this->occupant_;
-  // this->occupant_ = nullptr;
+  delete this->occupantEnemy_;
+  this->occupantEnemy_ = nullptr;
   this->MakeFree();
 }

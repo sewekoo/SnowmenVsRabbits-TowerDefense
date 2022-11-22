@@ -7,7 +7,8 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 
-#include "enemy.hpp"
+#include "enemy_types.hpp"
+#include "tower_sniper.hpp"
 
 /**
  * Abstract class to represent one tile in a level.
@@ -36,9 +37,26 @@ class Tile : public sf::RectangleShape {
 
   void SetNeighbour(Tile* neighbour);
 
+  void SetGridLocation(int x, int y);
+
+  int GetGridLocationX();
+  int GetGridLocationY();
+  int type_;
+
+  void addOccupant(Tower* tower);
+  void addOccupant(Enemy* enemy);
+
+  Tower* GetTower();
+  Enemy* GetEnemy();
+
+  Tower* occupantTower_;
+  Enemy* occupantEnemy_;
+
  private:
   bool occupied_ = false;
   Tile* next_;
+  int gridLocationX_;
+  int gridLocationY_;
 };
 
 #endif
