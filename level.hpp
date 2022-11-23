@@ -49,6 +49,12 @@ class Level {
    */
   int GetMapSize();
 
+  void MoveEnemy(Tile tile);
+
+  void MoveEnemies();
+
+  void TurnEnemies();
+
  private:
   const int mapSize_;
   std::vector<std::vector<std::string>> levelInfo_;

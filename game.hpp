@@ -34,6 +34,9 @@ class Game {
    * Updates clock.
    */
   void updateDt();
+
+  void updateMoveClock();
+
   /**
    * Updates mouse postion
    * - Relative to screen
@@ -66,6 +69,7 @@ class Game {
   float dt = 0.f;
   // Clock
   sf::Clock dtClock;
+  sf::Clock MoveClock;
 
   // Mouse positions
   sf::Vector2u mousePosScreen;

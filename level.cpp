@@ -79,3 +79,75 @@ void Level::initalizeNeighbours() {
         &tileMap[std::get<0>(coordSecond)][std::get<1>(coordSecond)]);
   }
 }
+
+void Level::TurnEnemies() {
+  for (int x = 0; x < GetMapSize(); x++) {
+    for (int y = 0; y < GetMapSize(); y++) {
+      if(tileMap[x][y].IsOccupied() && tileMap[x][y].type_ == 1) {
+        if(tileMap[x][y].GetGridLocationX() < tileMap[x][y].GetNext()->GetGridLocationX()) {
+         tileMap[x][y].GetEnemy()->direction = 0;
+        } else if(tileMap[x][y].GetGridLocationX() > tileMap[x][y].GetNext()->GetGridLocationX()) {
+          tileMap[x][y].GetEnemy()->direction = 2;
+        } else if(tileMap[x][y].GetGridLocationY() < tileMap[x][y].GetNext()->GetGridLocationY()) {
+          tileMap[x][y].GetEnemy()->direction = 1;
+        } else if(tileMap[x][y].GetGridLocationY() > tileMap[x][y].GetNext()->GetGridLocationY()) {
+         tileMap[x][y].GetEnemy()->direction = 3;
+        }
+      }
+    }
+  }  
+}
+
+void Level::MoveEnemies() {
+  for (int x = 0; x < GetMapSize(); x++) {
+    for (int y = 0; y < GetMapSize(); y++) {
+      if (tileMap[x][y].type_ == 1 && 
+          tileMap[x][y].IsOccupied() &&
+          tileMap[x][y].GetEnemy()->direction == 0 &&
+          !tileMap[x][y].GetNext()->IsOccupied()) {
+        tileMap[x][y].GetEnemy()->ChangePos(tileMap[x][y].GetEnemy()->GetPosX() + (1.f / 100.f), tileMap[x][y].GetEnemy()->GetPosY());
+      } else if (tileMap[x][y].type_ == 1 && 
+          tileMap[x][y].IsOccupied() &&
+          tileMap[x][y].GetEnemy()->direction == 1 &&
+          !tileMap[x][y].GetNext()->IsOccupied()) {
+        tileMap[x][y].GetEnemy()->ChangePos(tileMap[x][y].GetEnemy()->GetPosX(), tileMap[x][y].GetEnemy()->GetPosY() + (1.f / 100.f));
+      } else if (tileMap[x][y].type_ == 1 && 
+          tileMap[x][y].IsOccupied() &&
+          tileMap[x][y].GetEnemy()->direction == 2 &&
+          !tileMap[x][y].GetNext()->IsOccupied()) {
+        tileMap[x][y].GetEnemy()->ChangePos(tileMap[x][y].GetEnemy()->GetPosX() - (1.f / 100.f), tileMap[x][y].GetEnemy()->GetPosY());
+      } else if (tileMap[x][y].type_ == 1 && 
+          tileMap[x][y].IsOccupied() &&
+          tileMap[x][y].GetEnemy()->direction == 3 &&
+          !tileMap[x][y].GetNext()->IsOccupied()) {
+        tileMap[x][y].GetEnemy()->ChangePos(tileMap[x][y].GetEnemy()->GetPosX(), tileMap[x][y].GetEnemy()->GetPosY() - (1.f / 100.f));
+      }
+
+      if (tileMap[x][y].type_ == 1 && 
+          tileMap[x][y].IsOccupied() && 
+          tileMap[x][y].enemyMovedHere && 
+          !tileMap[x][y].GetNext()->IsOccupied() &&
+          (tileMap[x][y].GetEnemy()->GetPosX() == tileMap[x][y].GetNext()->GetGridLocationX() ||
+          tileMap[x][y].GetEnemy()->GetPosY() == tileMap[x][y].GetNext()->GetGridLocationY())) {
+        std::cout << "move one enemy" << std::endl;
+        std::cout << tileMap[x][y].GetEnemy() << std::endl;
+        tileMap[x][y].GetNext()->addOccupant(tileMap[x][y].GetEnemy());
+        std::cout << tileMap[x][y].GetNext()->GetEnemy() << std::endl;
+        std::cout << "Successfully added enemy pointer to next" << std::endl;
+        tileMap[x][y].GetNext()->MakeOccupied();
+        std::cout << "Successfully made next tile occupied" << std::endl;
+        tileMap[x][y].GetNext()->enemyMovedHere = false;
+        std::cout << "Succesfully turned enemyMovedFlag to false" << std::endl;
+        tileMap[x][y].GetEnemy()->ChangePos(tileMap[x][y].GetNext()->GetGridLocationX(), tileMap[x][y].GetNext()->GetGridLocationY());
+        std::cout << "Successfully changed Pos values in enemy instance" << std::endl;
+        tileMap[x][y].enemyMoved();
+        std::cout << "Successfully removed enemy pointer from current tile" << std::endl;
+      }
+    }
+  }
+  for (int x = 0; x < GetMapSize(); x++) {
+    for (int y = 0; y < GetMapSize(); y++) {
+      tileMap[x][y].enemyMovedHere = true;
+    }
+  }
+}

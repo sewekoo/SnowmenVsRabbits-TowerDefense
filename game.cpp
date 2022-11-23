@@ -131,6 +131,17 @@ void Game::updateInput() {
 
 void Game::updateDt() { dt = dtClock.restart().asSeconds(); }
 
+void Game::updateMoveClock() {
+  sf::Time timeElapsed = MoveClock.getElapsedTime();
+  sf::Int32 moveTime = 100;
+  if (timeElapsed.asMilliseconds() >= moveTime) {
+    MoveClock.restart();
+    // std::cout << "Move enemies" << std::endl;
+    this->level->TurnEnemies();
+    this->level->MoveEnemies();
+  }
+}
+
 void Game::updateMousePosition() {
   mousePosScreen.x = sf::Mouse::getPosition().x;
   mousePosScreen.y = sf::Mouse::getPosition().y;
@@ -177,6 +188,7 @@ void Game::update() {
   this->updateMousePosition();
   this->pollEvents();
   this->updateTileSelector();
+  this->updateMoveClock();
 }
 /**
  * @return void
@@ -199,17 +211,17 @@ void Game::render() {
   for (auto i : enemies) {
     basicEnemySprite.setPosition(i->GetPosX() * gridSizeF,
                                  i->GetPosY() * gridSizeF);
-    if (i->GetHP() >= 1) {
-      this->window->draw(basicEnemySprite);
-    } else {
-      // basicEnemyHurtSprite.setPosition(i->GetPosX() * gridSizeF,
-      //                                  i->GetPosY() * gridSizeF);
-      // this->window->draw(basicEnemyHurtSprite);
-      sf::Color original = basicEnemySprite.getColor();
-      basicEnemySprite.setColor(sf::Color::Red);
-      this->window->draw(basicEnemySprite);
-      basicEnemySprite.setColor(original);
+    basicEnemySprite.move((sf::Vector2f)basicEnemyTexture.getSize() / 2.f);
+    if (i->direction == 0) {
+      basicEnemySprite.setRotation(0);
+    } else if (i->direction == 1) {
+      basicEnemySprite.setRotation(90);
+    } else if (i->direction == 2) {
+      basicEnemySprite.setRotation(180);
+    } else if (i->direction == 3) {
+      basicEnemySprite.setRotation(270);
     }
+    this->window->draw(basicEnemySprite);
   }
 
   for (auto i : towers) {
@@ -256,6 +268,7 @@ void Game::InitializeVariables() {
     std::cout << "Texture for enemy load failed" << std::endl;
   }
   basicEnemySprite.setTexture(basicEnemyTexture);
+  basicEnemySprite.setOrigin((sf::Vector2f)basicEnemyTexture.getSize() / 2.f);
 
   if (!basicEnemyHurtTexture.loadFromFile("pics/rabbit_basic_crop.png")) {
     std::cout << "Texture for enemy load failed" << std::endl;
