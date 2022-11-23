@@ -46,6 +46,8 @@ class Tile : public sf::RectangleShape {
   void addOccupant(Tower* tower);
   void addOccupant(Enemy* enemy);
 
+  void removeEnemy();
+
   Tower* GetTower();
   Enemy* GetEnemy();
 

@@ -2,10 +2,9 @@
 
 Road::Road(const sf::Vector2f& size) : Tile(size) {
   this->InitalizeColors();
-  this->occupantEnemy_ = nullptr;
 }
 
-Road::~Road() { delete occupantEnemy_; }
+Road::~Road() { }
 
 void Road::InitalizeColors() {
   this->setFillColor(sf::Color(223, 189, 110, 255));
@@ -15,7 +14,5 @@ void Road::InitalizeColors() {
 }
 
 void Road::EmptyTile() {
-  delete this->occupantEnemy_;
-  this->occupantEnemy_ = nullptr;
   this->MakeFree();
 }

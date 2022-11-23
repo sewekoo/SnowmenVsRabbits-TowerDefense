@@ -32,6 +32,11 @@ void Tile::addOccupant(Tower* tower) { occupantTower_ = tower; }
 
 void Tile::addOccupant(Enemy* enemy) { occupantEnemy_ = enemy; }
 
+void Tile::removeEnemy() {
+  delete occupantEnemy_;
+  this->MakeFree();
+}
+
 Enemy* Tile::GetEnemy() { return occupantEnemy_; }
 
 Tower* Tile::GetTower() { return occupantTower_; }

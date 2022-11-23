@@ -74,17 +74,27 @@ void Game::updateInput() {
             (this->level->tileMap[x][y].GetGridLocationX() == mousePosGrid.x) &&
             (this->level->tileMap[x][y].GetGridLocationY() == mousePosGrid.y)) {
           if (this->level->tileMap[x][y].GetEnemy()->TakeDamage(10)) {
-            std::cout << "Enemy is killed (but not deleted)" << std::endl;
-          }
+            auto size = enemies.size();
+            for (int i = 0; i != size; i++) {
+              if (enemies[i]->GetHP() <= 0) {
+                enemies.erase(enemies.begin() + i);
+              }
+            }
+            this->level->tileMap[x][y].removeEnemy();
+            enemyDestroyedThisTick = false;
+            std::cout << "Enemy is killed" << std::endl;
+          } else {
           std::cout << "Enemy hp: "
                     << this->level->tileMap[x][y].GetEnemy()->GetHP()
                     << std::endl;
+          }
         }
 
         if ((!this->level->tileMap[x][y].IsOccupied()) &&
             (this->level->tileMap[x][y].type_ == 1) &&
             (this->level->tileMap[x][y].GetGridLocationX() == mousePosGrid.x) &&
-            (this->level->tileMap[x][y].GetGridLocationY() == mousePosGrid.y)) {
+            (this->level->tileMap[x][y].GetGridLocationY() == mousePosGrid.y) &&
+            (this->enemyDestroyedThisTick)) {
           std::cout << "MousePos X & Y: " << mousePosGrid.x << " "
                     << mousePosGrid.y << std::endl;
           std::cout << "TilePos X & Y: "
@@ -115,6 +125,7 @@ void Game::updateInput() {
       }
     }
   }
+  enemyDestroyedThisTick = true;
 }
 
 void Game::updateDt() { dt = dtClock.restart().asSeconds(); }
