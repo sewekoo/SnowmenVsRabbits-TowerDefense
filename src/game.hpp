@@ -58,6 +58,8 @@ class Game {
  private:
   // Variables
 
+  double wallet = 0;
+
   // Grid size
   float gridSizeF;
   unsigned gridSizeU;
