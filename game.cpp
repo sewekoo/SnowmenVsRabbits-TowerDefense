@@ -80,6 +80,7 @@ void Game::updateInput() {
                 enemies.erase(enemies.begin() + i);
               }
             }
+            this->wallet += this->level->tileMap[x][y].GetEnemy()->GetValue();
             this->level->tileMap[x][y].removeEnemy();
             enemyDestroyedThisTick = false;
             std::cout << "Enemy is killed" << std::endl;
@@ -161,6 +162,7 @@ void Game::updateMousePosition() {
   }
   ss << "Enemies added: " << enemiesAdded << std::endl;
   ss << "Mouse clicked: " << mouseClicked << std::endl;
+  ss << "Wallet: " << wallet << std::endl;
   text.setString(ss.str());
 }
 
