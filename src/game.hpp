@@ -72,7 +72,10 @@ class Game {
   sf::Vector2u mousePosGrid;
 
   // Mouse clicker flag
-  bool mouseClicked = false;
+  bool mouseClicked = true;
+
+  // Enemy detroyer flag (so it doesnt create a new one straight away)
+  bool enemyDestroyedThisTick = false;
 
   // Enemies
   std::vector<Enemy*> enemies;
