@@ -8,6 +8,138 @@ meeting, you are required to discuss:
 3. Plan for the next week for everyone
 4. Deviations and changes to the project plan, if any
 
+
+# Meeting 2.11.2022 2H::0M
+
+**Participants**:
+
+1. Roosa Ahlroos
+2. Lauri Karanko
+3. Severi Koivumaa
+4. Karl Rass
+
+## Summary of works
+
+None of the members had done much prior work yet as the groups were formed a day
+ago. We had all read the requirements for the project and the tower defense game
+but all of us felt a little bit overwhelmed about where to begin.
+
+## Challenges
+
+1. The deadline for the project plan is 11th of november so a little over a week
+   away. This means that we have to acquaint ourselves to what exactly has to be
+   done (already written in the requirements) but more importantly what
+   libraries should be used to implement those features.
+2. After we have an understanding of what work needs to be done, we have to do
+   the work division and write the project plan document.
+
+## Actions
+
+1. First we are going to reach out to our instructor to see when they could
+   possibly meet with us.
+2. We agreed that everyone would all research the tower defense game topic and
+   try to find example implementations. This is important because it will give
+   us a better understanding of the architecture of the program since none of us
+   have designed a game before.
+3. We will also look into the SFML and Qt libraries to see what opportunities
+   they provide.
+
+> Please reflect these action decisions in your git commit messages so that your
+> group members and advisor can follow the progress.
+
+## Project status
+
+Short summary of current project status.
+
+### TODOs
+
+1. Everyone is going to research the libraries and ideas for implementation as
+   identified above. We will also send out the email to our advisor before the
+   end of this meeting.
+
+
+
+# Meeting 08.11.2022 2H::49M
+
+**Participants**:
+
+1. Roosa Ahlroos
+2. Lauri Karanko
+3. Severi Koivumaa
+4. Karl Rass
+
+## Summary of works
+
+We met in Teams and started out with creating a shared Word document to get
+started with the project plan. We went over different classes and attributes
+that we think would be useful in addition to general rules of the game.
+
+## Challenges
+
+1. How to set up libraries
+2. What classes to use
+3. Should we use a tile system
+
+## Actions
+
+We will all continue writing out the plan and research more about the subject.
+
+> Please reflect these action decisions in your git commit messages so that your
+> group members and advisor can follow the progress.
+
+## Project status
+
+We have currently only worked on the project plan and added meeting notes.
+
+### TODOs
+
+1. Continue research into the subject
+2. Meet again on Thursday and hopefully finish the plan
+
+
+
+# Meeting 11.11.2022 1H::4M
+
+**Participants**:
+
+1. Roosa Ahlroos
+2. Lauri Karanko
+3. Severi Koivumaa
+4. Karl Rass
+
+## Summary of works
+
+We finished the project plan and divided the work between the team members. The
+division is not done too strictly and will be up for discussion in the later
+meetings, when we have more of an idea just how much work they require.
+
+## Challenges
+
+1. Dividing the work into blocks of hopefully semi equal size
+2. Getting started with actual coding
+
+## Actions
+
+1. Roosa will start work on the GUI
+2. ... And Lauri with enemies-class
+3. ... And Severi with both the game loop and level & tile classes
+4. ... And Karl with towers-class and level design
+
+> Please reflect these action decisions in your git commit messages so that your
+> group members and advisor can follow the progress.
+
+## Project status
+
+We now have a base idea about what and who will be doing what. We have made
+decisions on some of the details of our game, but everything is still a work in
+progress.
+
+### TODOs
+
+The TODOs reflect the actions listed.
+
+
+
 # Meeting 16.11.2022 1H::17M
 
 **Participants**:
@@ -64,7 +196,10 @@ plan and we should have some sort of working GUI next week.
 2. How-to in the menu
 3. Having a menu with level selection
 
-# Meeting 2.11.2022 2H::0M
+
+
+
+# Meeting 23.11.2022 3H
 
 **Participants**:
 
@@ -75,119 +210,50 @@ plan and we should have some sort of working GUI next week.
 
 ## Summary of works
 
-None of the members had done much prior work yet as the groups were formed a day
-ago. We had all read the requirements for the project and the tower defense game
-but all of us felt a little bit overwhelmed about where to begin.
+1. Roosa
+Menu screen and implementation. Different level options behind a menu button.
+Generic button-class for ingame buttons.
+
+2. Severi
+Further development with the map with level, game and tile classes.
+Tiles can hold occupants. Enemies and towers emerge when clicked on the road or the grass.
+Texture-support. Enemy damage and tower upgrade when clicked
+
+3. Karl
+Tweaking of the tower-class. New sniper-tower. Research for game audio.
+
+4. Lauri
+Tweaking of the enemy-class. Making textures for enemies and towers.
 
 ## Challenges
 
-1. The deadline for the project plan is 11th of november so a little over a week
-   away. This means that we have to acquaint ourselves to what exactly has to be
-   done (already written in the requirements) but more importantly what
-   libraries should be used to implement those features.
-2. After we have an understanding of what work needs to be done, we have to do
-   the work division and write the project plan document.
+1. Still problems with trying to get SFML to compile with CMake.
+2. Getting the game to work on everyone's computers.
 
 ## Actions
 
-1. First we are going to reach out to our instructor to see when they could
-   possibly meet with us.
-2. We agreed that everyone would all research the tower defense game topic and
-   try to find example implementations. This is important because it will give
-   us a better understanding of the architecture of the program since none of us
-   have designed a game before.
-3. We will also look into the SFML and Qt libraries to see what opportunities
-   they provide.
-
-> Please reflect these action decisions in your git commit messages so that your
-> group members and advisor can follow the progress.
+1. Roosa: Menu and game interface and communication
+2. Karl will look more into audios and also towers detection range if needed
+3. Lauri will help with game class and do more textures. (Also maybe compiling research.)
+4. Severi will implement enemy-movement.
 
 ## Project status
 
-Short summary of current project status.
+Game has placeable towers and enemies. Enemies can be killed and towers can be upgraded by clicking them.
+Menu looks good and has interacable buttons, but doesn't yet connect to the game-object. 
+(We also asked Kasper help with CMake and compiling.)
 
 ### TODOs
 
-1. Everyone is going to research the libraries and ideas for implementation as
-   identified above. We will also send out the email to our advisor before the
-   end of this meeting.
+1. Add a wallet for storing cash
+2. Button from the menu starts a game
+3. Enemies emerge and go towards the end through the path
+4. Two different phases: fighting and shopping
+5. Towers detecting enemies
 
-# Meeting 08.11.2022 2H::49M
 
-**Participants**:
 
-1. Roosa Ahlroos
-2. Lauri Karanko
-3. Severi Koivumaa
-4. Karl Rass
 
-## Summary of works
-
-We met in Teams and started out with creating a shared Word document to get
-started with the project plan. We went over different classes and attributes
-that we think would be useful in addition to general rules of the game.
-
-## Challenges
-
-1. How to set up libraries
-2. What classes to use
-3. Should we use a tile system
-
-## Actions
-
-We will all continue writing out the plan and research more about the subject.
-
-> Please reflect these action decisions in your git commit messages so that your
-> group members and advisor can follow the progress.
-
-## Project status
-
-We have currently only worked on the project plan and added meeting notes.
-
-### TODOs
-
-1. Continue research into the subject
-2. Meet again on Thursday and hopefully finish the plan
-
-# Meeting 11.11.2022 1H::4M
-
-**Participants**:
-
-1. Roosa Ahlroos
-2. Lauri Karanko
-3. Severi Koivumaa
-4. Karl Rass
-
-## Summary of works
-
-We finished the project plan and divided the work between the team members. The
-division is not done too strictly and will be up for discussion in the later
-meetings, when we have more of an idea just how much work they require.
-
-## Challenges
-
-1. Dividing the work into blocks of hopefully semi equal size
-2. Getting started with actual coding
-
-## Actions
-
-1. Roosa will start work on the GUI
-2. ... And Lauri with enemies-class
-3. ... And Severi with both the game loop and level & tile classes
-4. ... And Karl with towers-class and level design
-
-> Please reflect these action decisions in your git commit messages so that your
-> group members and advisor can follow the progress.
-
-## Project status
-
-We now have a base idea about what and who will be doing what. We have made
-decisions on some of the details of our game, but everything is still a work in
-progress.
-
-### TODOs
-
-The TODOs reflect the actions listed.
 
 # Meeting dd.mm.2022 HH::MM
 
