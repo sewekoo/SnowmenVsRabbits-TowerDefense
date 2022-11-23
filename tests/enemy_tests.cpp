@@ -1,12 +1,12 @@
 #ifndef ENEMY_TESTER
 #define ENEMY_TESTER
 
-#include "enemy.hpp"
+#include "../src/enemy_types.hpp"
 #include <iostream>
 
 
 int mainEnemyTest() {
-Enemy enemy1(50, 10, 10);
+EasyEnemy enemy1;
 
 std::cout << "Enemy HP: " << enemy1.GetHP() << ", speed: " << enemy1.GetSpeed() << ", value: " << enemy1.GetValue() << std::endl;
 
