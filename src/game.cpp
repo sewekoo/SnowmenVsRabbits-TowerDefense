@@ -173,6 +173,7 @@ void Game::updateMousePosition() {
   }
   ss << "Enemies added: " << enemiesAdded << std::endl;
   ss << "Mouse clicked: " << mouseClicked << std::endl;
+  ss << "Wallet: " << wallet << std::endl;
   text.setString(ss.str());
 }
 
