@@ -57,8 +57,8 @@ class Enemy : public sf::RectangleShape {
     return value_;
   } /**< Getter function returns Value */
 
-  const float GetPosX() const { return posX_; }
-  const float GetPosY() const { return posY_; }
+  float GetPosX() { return posX_; }
+  float GetPosY() { return posY_; }
 
   void ChangePos(float newPosX, float newPosY) {
     posX_ = newPosX;

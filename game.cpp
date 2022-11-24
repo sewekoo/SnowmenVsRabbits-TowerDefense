@@ -112,6 +112,8 @@ void Game::updateInput() {
           enemiesAdded++;
           this->level->tileMap[x][y].MakeOccupied();
           std::cout << "Succesfully increased enemy counter" << std::endl;
+          std::cout << "Enemy x pos: " << (static_cast<unsigned>((this->level->tileMap[x][y].GetEnemy()->GetPosX()))) << std::endl;
+          std::cout << "Next x pos: " << (static_cast<unsigned>((this->level->tileMap[x][y].GetNext()->GetGridLocationX()))) << std::endl;
         }
         if ((!this->level->tileMap[x][y].IsOccupied()) &&
             (this->level->tileMap[x][y].type_ == 0) &&
@@ -133,8 +135,8 @@ void Game::updateDt() { dt = dtClock.restart().asSeconds(); }
 
 void Game::updateMoveClock() {
   sf::Time timeElapsed = MoveClock.getElapsedTime();
-  sf::Int32 moveTime = 100;
-  if (timeElapsed.asMilliseconds() >= moveTime) {
+  sf::Int64 moveTime = 6000;
+  if (timeElapsed.asMicroseconds() >= moveTime) {
     MoveClock.restart();
     // std::cout << "Move enemies" << std::endl;
     this->level->TurnEnemies();
