@@ -18,7 +18,15 @@ void Tile::MakeOccupied() { this->occupied_ = true; }
 
 void Tile::MakeFree() { this->occupied_ = false; }
 
+void Tile::enemyMoved() {
+  occupantEnemy_ = nullptr;
+  this->MakeFree();
+}
+
+
 void Tile::SetNeighbour(Tile* neighbour) { next_ = neighbour; }
+
+Tile* Tile::GetNext() { return next_; }
 
 void Tile::SetGridLocation(int x, int y) {
   gridLocationX_ = x;

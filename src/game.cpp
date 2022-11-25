@@ -141,6 +141,23 @@ void Game::updateInput() {
 // Updates game clock. May be useful with enemy movement for example
 void Game::updateDt() { dt = dtClock.restart().asSeconds(); }
 
+/**
+ * @brief Enemy movement clock
+ * Change moveTime variable to change all enemies speed
+ * (bigger = slower)
+ */
+void Game::updateMoveClock() {
+  sf::Time timeElapsed = MoveClock.getElapsedTime();
+  sf::Int64 moveTime = 6000;
+  if (timeElapsed.asMicroseconds() >= moveTime) {
+    MoveClock.restart();
+    // std::cout << "Move enemies" << std::endl;
+    this->level->TurnEnemies();
+    this->level->MoveEnemies();
+  }
+}
+
+
 // Tracks mouse movement
 void Game::updateMousePosition() {
   mousePosScreen.x = sf::Mouse::getPosition().x;
@@ -190,6 +207,7 @@ void Game::update() {
   this->pollEvents();
   this->updateInput();
   this->updateTileSelector();
+  this->updateMoveClock();
 }
 /**
  * @return void
@@ -212,18 +230,19 @@ void Game::render() {
   for (auto i : enemies) {
     basicEnemySprite.setPosition(i->GetPosX() * gridSizeF,
                                  i->GetPosY() * gridSizeF);
-    if (i->GetHP() >= 1) {
-      this->window->draw(basicEnemySprite);
-    } else {
-      // basicEnemyHurtSprite.setPosition(i->GetPosX() * gridSizeF,
-      //                                  i->GetPosY() * gridSizeF);
-      // this->window->draw(basicEnemyHurtSprite);
-      sf::Color original = basicEnemySprite.getColor();
-      basicEnemySprite.setColor(sf::Color::Red);
-      this->window->draw(basicEnemySprite);
-      basicEnemySprite.setColor(original);
+    basicEnemySprite.move((sf::Vector2f)basicEnemyTexture.getSize() / 2.f);
+    if (i->direction == 0) {
+      basicEnemySprite.setRotation(0);
+    } else if (i->direction == 1) {
+      basicEnemySprite.setRotation(90);
+    } else if (i->direction == 2) {
+      basicEnemySprite.setRotation(180);
+    } else if (i->direction == 3) {
+      basicEnemySprite.setRotation(270);
     }
+    this->window->draw(basicEnemySprite);
   }
+
 
   for (auto i : towers) {
     if (i->GetLevel() <= 1) {
@@ -281,23 +300,18 @@ void Game::InitializeVariables() {
   text.setPosition(20.f, 20.f);
   text.setString("Test");
 
-  if (!basicEnemyTexture.loadFromFile("pics/rabbit_basic_crop.png")) {
+  if (!basicEnemyTexture.loadFromFile("pics/rabbit_basic.png")) {
     std::cout << "Texture for enemy load failed" << std::endl;
   }
   basicEnemySprite.setTexture(basicEnemyTexture);
+  basicEnemySprite.setOrigin((sf::Vector2f)basicEnemyTexture.getSize() / 2.f);
 
-  if (!basicEnemyHurtTexture.loadFromFile("pics/rabbit_basic_crop.png")) {
-    std::cout << "Texture for enemy load failed" << std::endl;
-  }
-  basicEnemyHurtSprite.setTexture(basicEnemyHurtTexture);
-  basicEnemyHurtSprite.setColor(sf::Color::Red);
-
-  if (!basicTowerTexture.loadFromFile("pics/snowman_basic_crop.png")) {
+  if (!basicTowerTexture.loadFromFile("pics/snowman_basic.png")) {
     std::cout << "Texture for tower load failed" << std::endl;
   }
   basicTowerSprite.setTexture(basicTowerTexture);
 
-  if (!sniperTowerTexture.loadFromFile("pics/snowman_hat_crop.png")) {
+  if (!sniperTowerTexture.loadFromFile("pics/snowman_hat.png")) {
     std::cout << "Texture for sniper tower load failed" << std::endl;
   }
   sniperTowerSprite.setTexture(sniperTowerTexture);
