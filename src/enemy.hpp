@@ -69,20 +69,28 @@ class Enemy : public sf::RectangleShape {
    *Getter function
    @return Position x coordinate
   */
-  const float GetPosX() const { return posX_; }
+  float GetPosX() { return posX_; }
   /**
    *Getter function
    @return Position y coordinate
   */
-  const float GetPosY() const { return posY_; }
+  float GetPosY() { return posY_; }
+
+  void ChangePos(float newPosX, float newPosY) {
+    posX_ = newPosX;
+    posY_ = newPosY;
+  }
+
+  float posX_;
+  float posY_;
+
+  int direction = 0;
 
  private:
   double hp_;
   double speed_;
   double value_;
   std::string texture_;
-  float posX_;
-  float posY_;
   float gridSizeF = 100.f;
 };
 

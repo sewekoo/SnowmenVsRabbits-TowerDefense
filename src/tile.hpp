@@ -37,6 +37,8 @@ class Tile : public sf::RectangleShape {
 
   void SetNeighbour(Tile* neighbour);
 
+  Tile* GetNext();
+
   void SetGridLocation(int x, int y);
 
   int GetGridLocationX();
@@ -47,12 +49,15 @@ class Tile : public sf::RectangleShape {
   void addOccupant(Enemy* enemy);
 
   void removeEnemy();
+  void enemyMoved();
 
   Tower* GetTower();
   Enemy* GetEnemy();
 
   Tower* occupantTower_;
   Enemy* occupantEnemy_;
+
+  bool enemyMovedHere = true;
 
  private:
   bool occupied_ = false;
