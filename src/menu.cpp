@@ -81,7 +81,6 @@ int main()
                                 case Event::MouseButtonPressed:
                                     if (levelA.MouseOnButton(Play)) {
                                         Game game;
-                                        // Runs the game while window is open
                                         while (game.GetWindowIsOpen()) {
                                             game.update();
                                             game.render();
