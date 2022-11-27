@@ -11,7 +11,7 @@ void Tower::Upgrade() {
     damage_ = 1.5 * damage_;
 
     // Increase range
-    range_ = 1.1 * range_;
+    range_ = range_ + 1;
 
     // Increase upgrade price
     upgradePrice_ = 2 * upgradePrice_;

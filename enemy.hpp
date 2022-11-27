@@ -60,6 +60,9 @@ class Enemy : public sf::RectangleShape {
   float GetPosX() { return posX_; }
   float GetPosY() { return posY_; }
 
+  int GetGridPosX() { return posX_ * gridSizeF; }
+  int GetGridPosY() { return posY_ * gridSizeF; }
+
   void ChangePos(float newPosX, float newPosY) {
     posX_ = newPosX;
     posY_ = newPosY;

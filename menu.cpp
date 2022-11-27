@@ -1,18 +1,29 @@
 #include <SFML/Graphics.hpp>
 #include "button.hpp"
+#include "game.hpp"
 using namespace sf;
 
 int main() 
 { 
     RenderWindow MENU(VideoMode(960, 720), "MENU", Style::Default);
+
     Button bplay("Play", {100, 50}, 20, Color::Black, Color::White, Color::White);
     Button bexit("Exit", {100, 50}, 20, Color::Black, Color::White, Color::White);
     bplay.SetPosition({400, 200});
     bexit.SetPosition({400, 400});
+
     Font font;
     font.loadFromFile("Fonts/Sono-Regular.ttf");
     bplay.SetFont(font);
     bexit.SetFont(font);
+
+    Text levelText;
+    levelText.setString("CHOOSE YOUR LEVEL");
+    levelText.setPosition({200, 100});
+    levelText.setFont(font);
+    levelText.setScale(2, 2);
+    levelText.setFillColor(Color::White);
+    levelText.setStyle(Text::Bold);
 
     while (MENU.isOpen()) {
       Event event;
@@ -33,15 +44,21 @@ int main()
             case Event::MouseButtonPressed:
                 if (bplay.MouseOnButton(MENU)) {
                     RenderWindow Play(VideoMode(960, 720), "PLAY");
+
                     Button levelA("Level 1", {140, 50}, 20, Color::Black, Color::White, Color::White);
                     Button levelB("Level 2", {140, 50}, 20, Color::Black, Color::White, Color::White);
                     Button levelC("Level 3", {140, 50}, 20, Color::Black, Color::White, Color::White);
-                    levelA.SetPosition({210, 330});
-                    levelB.SetPosition({460, 330});
-                    levelC.SetPosition({710, 330});
+
+                    levelA.SetPosition({170, 330});
+                    levelB.SetPosition({420, 330});
+                    levelC.SetPosition({670, 330});
+
                     levelA.SetFont(font);
                     levelB.SetFont(font);
                     levelC.SetFont(font);
+
+                    MENU.close(); 
+
                     while (Play.isOpen()) {
                         Event p_event;
                         while (Play.pollEvent(p_event)) {
@@ -49,16 +66,26 @@ int main()
                                 case Event::Closed:
                                     Play.close();
                                 case Event::MouseMoved:
-                                    if (levelA.MouseOnButton(MENU)) {
+                                    if (levelA.MouseOnButton(Play)) {
                                         levelA.SetBGColor(Color::Yellow);
-                                    } else if (levelB.MouseOnButton(MENU)) {
+                                    } else if (levelB.MouseOnButton(Play)) {
                                         levelB.SetBGColor(Color::Yellow);
-                                    } else if (levelC.MouseOnButton(MENU)) {
+                                    } else if (levelC.MouseOnButton(Play)) {
                                         levelC.SetBGColor(Color::Yellow);
-                                    } else if (!levelA.MouseOnButton(MENU) || !levelB.MouseOnButton(MENU) || !levelC.MouseOnButton(MENU)) {
+                                    } else if (!levelA.MouseOnButton(Play) || !levelB.MouseOnButton(Play) || !levelC.MouseOnButton(Play)) {
                                         levelA.SetBGColor(Color::Black);
                                         levelB.SetBGColor(Color::Black);
                                         levelC.SetBGColor(Color::Black);
+                                    }
+                                    break;
+                                case Event::MouseButtonPressed:
+                                    if (levelA.MouseOnButton(Play)) {
+                                        Game game;
+                                        while (game.GetWindowIsOpen()) {
+                                            game.update();
+                                            game.render();
+                                        }
+                                        break;
                                     }
                             }
                         }
@@ -66,6 +93,7 @@ int main()
                         levelA.drawTo(Play);
                         levelB.drawTo(Play);
                         levelC.drawTo(Play);
+                        Play.draw(levelText);
                         Play.display();
                     }
                 } else if (bexit.MouseOnButton(MENU)) {
