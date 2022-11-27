@@ -84,6 +84,10 @@ class Enemy : public sf::RectangleShape {
   float posX_;
   float posY_;
 
+  int GetGridPosX() { return posX_ * gridSizeF; }
+  int GetGridPosY() { return posY_ * gridSizeF; }
+
+
   int direction = 0;
 
  private:

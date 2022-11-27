@@ -31,6 +31,10 @@ class Game {
    */
   void updateInput();
   /**
+   * @brief Fires towers on the map if enemy in range
+   */
+  void FireTowers();
+  /**
    * Updates clock.
    */
   void updateDt();
@@ -39,6 +43,11 @@ class Game {
    * 
    */
   void updateMoveClock();
+  /**
+   * @brief Updates tower firing timer.
+   * 
+   */
+  void updateFireClock();
   /**
    * Updates mouse postion
    * - Relative to screen
@@ -72,6 +81,7 @@ class Game {
   // Clock
   sf::Clock dtClock;
   sf::Clock MoveClock;
+  sf::Clock FireClock;
 
   // Mouse positions
   sf::Vector2u mousePosScreen;
@@ -91,6 +101,10 @@ class Game {
 
   // Towers
   std::vector<Tower*> towers;
+
+  // Towers' hit range
+  sf::RectangleShape rangeIndicator;
+
 
   // Textures
   sf::Texture basicEnemyTexture;

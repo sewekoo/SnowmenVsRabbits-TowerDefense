@@ -10,14 +10,14 @@ class Tower {
   // damage
   Tower()
       : damage_(20),
-        range_(50),
+        range_(1),
         attackSpeed_(1.2),
         value_(100),
         upgradePrice_(75),
         level_(1),
         texture_("snowman_basic.png") {}
 
-  Tower(double damage, double range, double attackSpeed, double value,
+  Tower(double damage, int range, double attackSpeed, double value,
         double upgradePrice, int level, std::string texture)
       : damage_(damage),
         range_(range),
@@ -29,7 +29,7 @@ class Tower {
 
   Tower(float posX, float posY)
       : damage_(20),
-        range_(50),
+        range_(1),
         attackSpeed_(1.2),
         value_(100),
         upgradePrice_(75),
@@ -44,7 +44,7 @@ class Tower {
 
   // Getter functions
   const double GetDamage() { return damage_; }
-  const double GetRange() { return range_; }
+  const int GetRange() { return range_; }
   const double GetSpeed() { return attackSpeed_; }
   const double GetValue() { return value_; }
   const double GetUpgradePrice() { return upgradePrice_; }
@@ -60,14 +60,21 @@ class Tower {
   float posX_;
   float posY_;
 
+  float GetGridPosX() { return posX_ * gridSizeF; }
+  float GetGridPosY() { return posY_ * gridSizeF; }
+
+  double CooldownValue = 0;
+  bool ReadyToFire = true;
+
  protected:
   double damage_;
-  double range_;
+  int range_;
   double attackSpeed_;
   double value_;
   double upgradePrice_;
   int level_;
   std::string texture_;
+  float gridSizeF = 100.f;
 };
 
 #endif
