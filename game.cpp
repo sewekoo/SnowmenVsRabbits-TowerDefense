@@ -7,6 +7,12 @@ Game::Game() {
   this->InitializeLevel();
 }
 
+Game::Game(int mapsize, std::vector<std::vector<std::string>> levelTiles, std::vector<std::tuple<std::tuple<int, int>, std::tuple<int, int>>> neighbourInfo) {
+  this->InitializeVariables();
+  this->InitializeWindow();
+  this->level = new Level(mapsize, levelTiles, neighbourInfo, gridSizeF);
+}
+
 // Destructors
 Game::~Game() {
   delete this->window;
