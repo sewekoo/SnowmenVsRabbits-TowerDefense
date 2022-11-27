@@ -308,7 +308,7 @@ void Game::render() {
       this->window->draw(this->level->tileMap[x][y]);
     }
   }
-
+/**
    for (int x = 0; x < this->level->GetMapSize(); x++) {
     for (int y = 0; y < this->level->GetMapSize(); y++) {
       if (this->level->tileMap[x][y].type_ = 0 &&
@@ -337,6 +337,7 @@ void Game::render() {
         }
       }
     }
+    */
 
   for (auto i : enemies) {
     basicEnemySprite.setPosition(i->GetPosX() * gridSizeF,
