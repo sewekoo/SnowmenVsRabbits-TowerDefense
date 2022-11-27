@@ -13,6 +13,15 @@ class Game {
   // Constructors
   Game();
 
+  /**
+   * @brief Construct a new Game object with custom Level
+   * 
+   * @param mapsize Size of one side of map
+   * @param levelTiles 2D tile info with different numbers corresponding different tiles
+   * @param neighbourInfo Info to save what road tile or exit is next from each road tile
+   */
+  Game(int mapsize, std::vector<std::vector<std::string>> levelTiles, std::vector<std::tuple<std::tuple<int, int>, std::tuple<int, int>>> neighbourInfo);
+
   // Destructors
   virtual ~Game();
   ;
