@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "button.hpp"
+#include "game.hpp"
 using namespace sf;
 
 int main() 
@@ -75,6 +76,17 @@ int main()
                                         levelA.SetBGColor(Color::Black);
                                         levelB.SetBGColor(Color::Black);
                                         levelC.SetBGColor(Color::Black);
+                                    }
+                                    break;
+                                case Event::MouseButtonPressed:
+                                    if (levelA.MouseOnButton(Play)) {
+                                        Game game;
+                                        // Runs the game while window is open
+                                        while (game.GetWindowIsOpen()) {
+                                            game.update();
+                                            game.render();
+                                        }
+                                        break;
                                     }
                             }
                         }
