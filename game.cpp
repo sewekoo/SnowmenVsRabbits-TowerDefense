@@ -429,8 +429,9 @@ void Game::InitializeVariables() {
     std::cout << "Texture for enemy load failed" << std::endl;
   }
   basicEnemySprite.setTexture(basicEnemyTexture);
-  basicEnemySprite.setOrigin((sf::Vector2f)basicEnemyTexture.getSize() / 2.f);
   basicEnemySprite.setScale(sf::Vector2f(gridSizeF / 100, gridSizeF / 100));
+  basicEnemySprite.setOrigin(((sf::Vector2f)basicEnemyTexture.getSize() / 2.f) *
+                             (gridSizeF / 100));
 
   if (!basicEnemyHurtTexture.loadFromFile("pics/rabbit_basic.png")) {
     std::cout << "Texture for enemy load failed" << std::endl;
