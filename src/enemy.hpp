@@ -87,7 +87,6 @@ class Enemy : public sf::RectangleShape {
   int GetGridPosX() { return posX_ * gridSizeF; }
   int GetGridPosY() { return posY_ * gridSizeF; }
 
-
   int direction = 0;
 
  private:
@@ -95,7 +94,7 @@ class Enemy : public sf::RectangleShape {
   double speed_;
   double value_;
   std::string texture_;
-  float gridSizeF = 100.f;
+  float gridSizeF = 80.f;
 };
 
 #endif

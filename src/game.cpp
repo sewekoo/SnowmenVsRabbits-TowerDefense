@@ -7,7 +7,9 @@ Game::Game() {
   this->InitializeLevel();
 }
 
-Game::Game(int mapsize, std::vector<std::vector<std::string>> levelTiles, std::vector<std::tuple<std::tuple<int, int>, std::tuple<int, int>>> neighbourInfo) {
+Game::Game(int mapsize, std::vector<std::vector<std::string>> levelTiles,
+           std::vector<std::tuple<std::tuple<int, int>, std::tuple<int, int>>>
+               neighbourInfo) {
   this->InitializeVariables();
   this->InitializeWindow();
   this->level = new Level(mapsize, levelTiles, neighbourInfo, gridSizeF);
@@ -95,9 +97,9 @@ void Game::updateInput() {
             enemyDestroyedThisTick = false;
             std::cout << "Enemy is killed" << std::endl;
           } else {
-          std::cout << "Enemy hp: "
-                    << this->level->tileMap[x][y].GetEnemy()->GetHP()
-                    << std::endl;
+            std::cout << "Enemy hp: "
+                      << this->level->tileMap[x][y].GetEnemy()->GetHP()
+                      << std::endl;
           }
 
           std::cout << "Enemy hp: "
@@ -110,7 +112,6 @@ void Game::updateInput() {
             (this->level->tileMap[x][y].GetGridLocationX() == mousePosGrid.x) &&
             (this->level->tileMap[x][y].GetGridLocationY() == mousePosGrid.y) &&
             (this->enemyDestroyedThisTick)) {
-
           std::cout << "MousePos X & Y: " << mousePosGrid.x << " "
                     << mousePosGrid.y << std::endl;
           std::cout << "TilePos X & Y: "
@@ -146,67 +147,93 @@ void Game::updateInput() {
 
 /**
  * @brief Fires all of the towers that are not on cooldown at enemies in range
- * 
+ *
  */
 void Game::FireTowers() {
   for (int x = 0; x < this->level->GetMapSize(); x++) {
     for (int y = 0; y < this->level->GetMapSize(); y++) {
       if (this->level->tileMap[x][y].type_ == 0 &&
           this->level->tileMap[x][y].IsOccupied()) {
-          //std::cout << "Firing func found tower" << std::endl;
-          for (int z = 0; z < this->level->GetMapSize(); z++) {
-            for (int q = 0; q < this->level->GetMapSize(); q++) {
-              //std::cout << "Road type check: " << (this->level->tileMap[z][q].type_ == 1) << std::endl;
-              if (this->level->tileMap[z][q].type_ == 1 &&
-                  this->level->tileMap[z][q].IsOccupied()) {
-                    //std::cout << "X difference: " << (this->level->tileMap[x][y].GetGridLocationX() - this->level->tileMap[z][q].GetGridLocationX()) << std::endl;
-                    //std::cout << "Y difference: " << (this->level->tileMap[x][y].GetGridLocationY() - this->level->tileMap[z][q].GetGridLocationY()) << std::endl;
-                    //std::cout << "Tower range: " << this->level->tileMap[x][y].GetTower()->GetRange() << std::endl;
-                    if ((((this->level->tileMap[x][y].GetGridLocationX() - this->level->tileMap[z][q].GetGridLocationX() <= this->level->tileMap[x][y].GetTower()->GetRange()) &&
-                          (this->level->tileMap[x][y].GetGridLocationX() - this->level->tileMap[z][q].GetGridLocationX() >= 0))
-                        ||
-                         ((this->level->tileMap[x][y].GetGridLocationX() - this->level->tileMap[z][q].GetGridLocationX() >= (-1 * this->level->tileMap[x][y].GetTower()->GetRange()))&&
-                         (this->level->tileMap[x][y].GetGridLocationX() - this->level->tileMap[z][q].GetGridLocationX() < 0))
-                        ) &&
-                        (((this->level->tileMap[x][y].GetGridLocationY() - this->level->tileMap[z][q].GetGridLocationY() <= this->level->tileMap[x][y].GetTower()->GetRange()) &&
-                         (this->level->tileMap[x][y].GetGridLocationY() - this->level->tileMap[z][q].GetGridLocationY() >= 0))
-                        ||
-                         ((this->level->tileMap[x][y].GetGridLocationY() - this->level->tileMap[z][q].GetGridLocationY() >= (-1 * this->level->tileMap[x][y].GetTower()->GetRange())) &&
-                          (this->level->tileMap[x][y].GetGridLocationY() - this->level->tileMap[z][q].GetGridLocationY() < 0))
-                          )
-                          )  {
-                          if (this->level->tileMap[x][y].GetTower()->ReadyToFire) {
-                            if (this->level->tileMap[z][q].GetEnemy()->TakeDamage(this->level->tileMap[x][y].GetTower()->GetDamage())) {
-                              auto size = enemies.size();
-                              for (int i = 0; i != size; i++) {
-                                if (enemies[i]->GetHP() <= 0) {
-                                  enemies.erase(enemies.begin() + i);
-                                }
-                              }
-                              this->wallet += this->level->tileMap[z][q].GetEnemy()->GetValue();
-                              this->level->tileMap[z][q].removeEnemy();
-                              std::cout << "Enemy is killed" << std::endl;
-                            } else {
-                              std::cout << "Enemy hp: "
-                               << this->level->tileMap[z][q].GetEnemy()->GetHP()
-                               << std::endl;
-                              }
-                            std::cout << "Tower at " << this->level->tileMap[x][y].GetGridLocationX()
-                            << " " << this->level->tileMap[x][y].GetGridLocationY() << " fired enemy at "
-                            << this->level->tileMap[z][q].GetGridLocationX() << " "
-                            << this->level->tileMap[z][q].GetGridLocationY() << std::endl;
-                            this->level->tileMap[x][y].GetTower()->ReadyToFire = false;
-                          } else {
-                            this->level->tileMap[x][y].GetTower()->CooldownValue += 0.1;
-                            if (this->level->tileMap[x][y].GetTower()->CooldownValue >= this->level->tileMap[x][y].GetTower()->GetSpeed()) {
-                              this->level->tileMap[x][y].GetTower()->CooldownValue = 0;
-                              this->level->tileMap[x][y].GetTower()->ReadyToFire = true;
-                            }
-                          }
+        // std::cout << "Firing func found tower" << std::endl;
+        for (int z = 0; z < this->level->GetMapSize(); z++) {
+          for (int q = 0; q < this->level->GetMapSize(); q++) {
+            // std::cout << "Road type check: " <<
+            // (this->level->tileMap[z][q].type_ == 1) << std::endl;
+            if (this->level->tileMap[z][q].type_ == 1 &&
+                this->level->tileMap[z][q].IsOccupied()) {
+              // std::cout << "X difference: " <<
+              // (this->level->tileMap[x][y].GetGridLocationX() -
+              // this->level->tileMap[z][q].GetGridLocationX()) << std::endl;
+              // std::cout << "Y difference: " <<
+              // (this->level->tileMap[x][y].GetGridLocationY() -
+              // this->level->tileMap[z][q].GetGridLocationY()) << std::endl;
+              // std::cout << "Tower range: " <<
+              // this->level->tileMap[x][y].GetTower()->GetRange() << std::endl;
+              if ((((this->level->tileMap[x][y].GetGridLocationX() -
+                         this->level->tileMap[z][q].GetGridLocationX() <=
+                     this->level->tileMap[x][y].GetTower()->GetRange()) &&
+                    (this->level->tileMap[x][y].GetGridLocationX() -
+                         this->level->tileMap[z][q].GetGridLocationX() >=
+                     0)) ||
+                   ((this->level->tileMap[x][y].GetGridLocationX() -
+                         this->level->tileMap[z][q].GetGridLocationX() >=
+                     (-1 *
+                      this->level->tileMap[x][y].GetTower()->GetRange())) &&
+                    (this->level->tileMap[x][y].GetGridLocationX() -
+                         this->level->tileMap[z][q].GetGridLocationX() <
+                     0))) &&
+                  (((this->level->tileMap[x][y].GetGridLocationY() -
+                         this->level->tileMap[z][q].GetGridLocationY() <=
+                     this->level->tileMap[x][y].GetTower()->GetRange()) &&
+                    (this->level->tileMap[x][y].GetGridLocationY() -
+                         this->level->tileMap[z][q].GetGridLocationY() >=
+                     0)) ||
+                   ((this->level->tileMap[x][y].GetGridLocationY() -
+                         this->level->tileMap[z][q].GetGridLocationY() >=
+                     (-1 *
+                      this->level->tileMap[x][y].GetTower()->GetRange())) &&
+                    (this->level->tileMap[x][y].GetGridLocationY() -
+                         this->level->tileMap[z][q].GetGridLocationY() <
+                     0)))) {
+                if (this->level->tileMap[x][y].GetTower()->ReadyToFire) {
+                  if (this->level->tileMap[z][q].GetEnemy()->TakeDamage(
+                          this->level->tileMap[x][y].GetTower()->GetDamage())) {
+                    auto size = enemies.size();
+                    for (int i = 0; i != size; i++) {
+                      if (enemies[i]->GetHP() <= 0) {
+                        enemies.erase(enemies.begin() + i);
+                      }
                     }
+                    this->wallet +=
+                        this->level->tileMap[z][q].GetEnemy()->GetValue();
+                    this->level->tileMap[z][q].removeEnemy();
+                    std::cout << "Enemy is killed" << std::endl;
+                  } else {
+                    std::cout << "Enemy hp: "
+                              << this->level->tileMap[z][q].GetEnemy()->GetHP()
+                              << std::endl;
+                  }
+                  std::cout
+                      << "Tower at "
+                      << this->level->tileMap[x][y].GetGridLocationX() << " "
+                      << this->level->tileMap[x][y].GetGridLocationY()
+                      << " fired enemy at "
+                      << this->level->tileMap[z][q].GetGridLocationX() << " "
+                      << this->level->tileMap[z][q].GetGridLocationY()
+                      << std::endl;
+                  this->level->tileMap[x][y].GetTower()->ReadyToFire = false;
+                } else {
+                  this->level->tileMap[x][y].GetTower()->CooldownValue += 0.1;
+                  if (this->level->tileMap[x][y].GetTower()->CooldownValue >=
+                      this->level->tileMap[x][y].GetTower()->GetSpeed()) {
+                    this->level->tileMap[x][y].GetTower()->CooldownValue = 0;
+                    this->level->tileMap[x][y].GetTower()->ReadyToFire = true;
+                  }
+                }
               }
             }
           }
+        }
       }
     }
   }
@@ -216,7 +243,7 @@ void Game::FireTowers() {
  * @brief Updates tower firing clock.
  * Change fireTime variable to change all towers' fire rate
  */
-void::Game::updateFireClock() {
+void ::Game::updateFireClock() {
   sf::Time timeElapsed = FireClock.getElapsedTime();
   sf::Int64 fireTime = 60000;
   if (timeElapsed.asMicroseconds() >= fireTime) {
@@ -243,7 +270,6 @@ void Game::updateMoveClock() {
     this->level->MoveEnemies();
   }
 }
-
 
 // Tracks mouse movement
 void Game::updateMousePosition() {
@@ -314,36 +340,46 @@ void Game::render() {
       this->window->draw(this->level->tileMap[x][y]);
     }
   }
-/**
-   for (int x = 0; x < this->level->GetMapSize(); x++) {
-    for (int y = 0; y < this->level->GetMapSize(); y++) {
-      if (this->level->tileMap[x][y].type_ = 0 &&
-        this->level->tileMap[x][y].IsOccupied()) {
-          for (int j = 1; j < (this->level->tileMap[x][y].GetTower()->GetRange() + 1); j++) {
-            if  ((mousePosGrid.x == this->level->tileMap[x][y].GetGridLocationX()) &&
-                 (mousePosGrid.y == this->level->tileMap[x][y].GetGridLocationY())) {
-              rangeIndicator.setPosition(sf::Vector2f((this->level->tileMap[x][y].GetGridLocationX() + j) * gridSizeF, (this->level->tileMap[x][y].GetGridLocationY()) * gridSizeF));
-              this->window->draw(rangeIndicator);
-              rangeIndicator.setPosition(sf::Vector2f((this->level->tileMap[x][y].GetGridLocationX() - j) * gridSizeF, (this->level->tileMap[x][y].GetGridLocationY()) * gridSizeF));
-              this->window->draw(rangeIndicator);
-              rangeIndicator.setPosition(sf::Vector2f((this->level->tileMap[x][y].GetGridLocationX()) * gridSizeF, (this->level->tileMap[x][y].GetGridLocationY() + j) * gridSizeF));
-              this->window->draw(rangeIndicator);
-              rangeIndicator.setPosition(sf::Vector2f((this->level->tileMap[x][y].GetGridLocationX()) * gridSizeF, (this->level->tileMap[x][y].GetGridLocationY() - j) * gridSizeF));
-              this->window->draw(rangeIndicator);
-              rangeIndicator.setPosition(sf::Vector2f((this->level->tileMap[x][y].GetGridLocationX() + j) * gridSizeF, (this->level->tileMap[x][y].GetGridLocationY() + j) * gridSizeF));
-              this->window->draw(rangeIndicator);
-              rangeIndicator.setPosition(sf::Vector2f((this->level->tileMap[x][y].GetGridLocationX() - j) * gridSizeF, (this->level->tileMap[x][y].GetGridLocationY() + j) * gridSizeF));
-              this->window->draw(rangeIndicator);
-              rangeIndicator.setPosition(sf::Vector2f((this->level->tileMap[x][y].GetGridLocationX() + j) * gridSizeF, (this->level->tileMap[x][y].GetGridLocationY() - j) * gridSizeF));
-              this->window->draw(rangeIndicator);
-              rangeIndicator.setPosition(sf::Vector2f((this->level->tileMap[x][y].GetGridLocationX() - j) * gridSizeF, (this->level->tileMap[x][y].GetGridLocationY() - j) * gridSizeF));
-              this->window->draw(rangeIndicator);
+  /**
+     for (int x = 0; x < this->level->GetMapSize(); x++) {
+      for (int y = 0; y < this->level->GetMapSize(); y++) {
+        if (this->level->tileMap[x][y].type_ = 0 &&
+          this->level->tileMap[x][y].IsOccupied()) {
+            for (int j = 1; j <
+     (this->level->tileMap[x][y].GetTower()->GetRange() + 1); j++) { if
+     ((mousePosGrid.x == this->level->tileMap[x][y].GetGridLocationX()) &&
+                   (mousePosGrid.y ==
+     this->level->tileMap[x][y].GetGridLocationY())) {
+                rangeIndicator.setPosition(sf::Vector2f((this->level->tileMap[x][y].GetGridLocationX()
+     + j) * gridSizeF, (this->level->tileMap[x][y].GetGridLocationY()) *
+     gridSizeF)); this->window->draw(rangeIndicator);
+                rangeIndicator.setPosition(sf::Vector2f((this->level->tileMap[x][y].GetGridLocationX()
+     - j) * gridSizeF, (this->level->tileMap[x][y].GetGridLocationY()) *
+     gridSizeF)); this->window->draw(rangeIndicator);
+                rangeIndicator.setPosition(sf::Vector2f((this->level->tileMap[x][y].GetGridLocationX())
+     * gridSizeF, (this->level->tileMap[x][y].GetGridLocationY() + j) *
+     gridSizeF)); this->window->draw(rangeIndicator);
+                rangeIndicator.setPosition(sf::Vector2f((this->level->tileMap[x][y].GetGridLocationX())
+     * gridSizeF, (this->level->tileMap[x][y].GetGridLocationY() - j) *
+     gridSizeF)); this->window->draw(rangeIndicator);
+                rangeIndicator.setPosition(sf::Vector2f((this->level->tileMap[x][y].GetGridLocationX()
+     + j) * gridSizeF, (this->level->tileMap[x][y].GetGridLocationY() + j) *
+     gridSizeF)); this->window->draw(rangeIndicator);
+                rangeIndicator.setPosition(sf::Vector2f((this->level->tileMap[x][y].GetGridLocationX()
+     - j) * gridSizeF, (this->level->tileMap[x][y].GetGridLocationY() + j) *
+     gridSizeF)); this->window->draw(rangeIndicator);
+                rangeIndicator.setPosition(sf::Vector2f((this->level->tileMap[x][y].GetGridLocationX()
+     + j) * gridSizeF, (this->level->tileMap[x][y].GetGridLocationY() - j) *
+     gridSizeF)); this->window->draw(rangeIndicator);
+                rangeIndicator.setPosition(sf::Vector2f((this->level->tileMap[x][y].GetGridLocationX()
+     - j) * gridSizeF, (this->level->tileMap[x][y].GetGridLocationY() - j) *
+     gridSizeF)); this->window->draw(rangeIndicator);
+              }
             }
           }
         }
       }
-    }
-    */
+      */
 
   for (auto i : enemies) {
     basicEnemySprite.setPosition(i->GetPosX() * gridSizeF,
@@ -360,7 +396,6 @@ void Game::render() {
     }
     this->window->draw(basicEnemySprite);
   }
-
 
   for (auto i : towers) {
     if (i->GetLevel() <= 1) {
@@ -397,7 +432,7 @@ void Game::InitializeVariables() {
   // Level first initalized to nullptr
   this->level = nullptr;
   // Size of tile in grid.
-  this->gridSizeF = 100.f;
+  this->gridSizeF = 80.f;
   // Size of tile in grid as unsigned value.
   this->gridSizeU = static_cast<unsigned>(gridSizeF);
 
@@ -426,29 +461,32 @@ void Game::InitializeVariables() {
   }
   basicEnemySprite.setTexture(basicEnemyTexture);
   basicEnemySprite.setOrigin((sf::Vector2f)basicEnemyTexture.getSize() / 2.f);
+  basicEnemySprite.setScale(sf::Vector2f(gridSizeF / 100, gridSizeF / 100));
 
   if (!basicTowerTexture.loadFromFile("pics/snowman_basic.png")) {
     std::cout << "Texture for tower load failed" << std::endl;
   }
   basicTowerSprite.setTexture(basicTowerTexture);
+  basicTowerSprite.setScale(sf::Vector2f(gridSizeF / 100, gridSizeF / 100));
 
   if (!sniperTowerTexture.loadFromFile("pics/snowman_hat.png")) {
     std::cout << "Texture for sniper tower load failed" << std::endl;
   }
   sniperTowerSprite.setTexture(sniperTowerTexture);
+  sniperTowerSprite.setScale(sf::Vector2f(gridSizeF / 100, gridSizeF / 100));
 }
 
 // Initalizes window with correct size
 void Game::InitializeWindow() {
-  this->videoMode.height = 1000;
-  this->videoMode.width = 1000;
+  this->videoMode.height = 960;
+  this->videoMode.width = 960;
   this->window = new sf::RenderWindow(this->videoMode, "Tower Defense",
                                       sf::Style::Titlebar | sf::Style::Close);
 }
 
 // Initalizes view with same size as window
 void Game::InitializeView() {
-  view.setSize(1000.f, 1000.f);
+  view.setSize(960.f, 960.f);
   view.setCenter(this->window->getSize().x / 2.f,
                  this->window->getSize().y / 2.f);
 }
@@ -471,16 +509,18 @@ void Game::InitializeView() {
 void Game::InitializeLevel() {
   // Default map. You can copy this to create your own levels
   std::vector<std::vector<std::string>> defaultLevel{
-      {"0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
-      {"0", "0", "0", "0", "1", "1", "1", "0", "0", "0"},
-      {"0", "0", "0", "0", "1", "0", "1", "0", "0", "0"},
-      {"2", "1", "1", "1", "1", "0", "1", "0", "0", "0"},
-      {"0", "0", "0", "0", "0", "0", "1", "0", "0", "0"},
-      {"0", "0", "0", "0", "0", "0", "1", "0", "0", "0"},
-      {"0", "0", "0", "0", "0", "0", "1", "0", "0", "0"},
-      {"0", "0", "0", "0", "0", "0", "1", "0", "0", "0"},
-      {"0", "0", "0", "0", "0", "0", "1", "0", "0", "0"},
-      {"0", "0", "0", "0", "0", "0", "3", "0", "0", "0"},
+      {"0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
+      {"0", "0", "0", "0", "1", "1", "1", "0", "0", "0", "0", "0"},
+      {"0", "0", "0", "0", "1", "0", "1", "0", "0", "0", "0", "0"},
+      {"2", "1", "1", "1", "1", "0", "1", "0", "0", "0", "0", "0"},
+      {"0", "0", "0", "0", "0", "0", "1", "0", "0", "0", "0", "0"},
+      {"0", "0", "0", "0", "0", "0", "1", "0", "0", "0", "0", "0"},
+      {"0", "0", "0", "0", "0", "0", "1", "0", "0", "0", "0", "0"},
+      {"0", "0", "0", "0", "0", "0", "1", "0", "0", "0", "0", "0"},
+      {"0", "0", "0", "0", "0", "0", "1", "0", "0", "0", "0", "0"},
+      {"0", "0", "0", "0", "0", "0", "3", "0", "0", "0", "0", "0"},
+      {"0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
+      {"0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
   };
   // Neighbour values for default map. You can copy this to create your own
   // neighbour values.:
@@ -504,5 +544,5 @@ void Game::InitializeLevel() {
           std::make_tuple(std::make_tuple(8, 6), std::make_tuple(9, 6)),
       };
   // Calls level class constructor.
-  this->level = new Level(10, defaultLevel, defaultNeighbours, gridSizeF);
+  this->level = new Level(12, defaultLevel, defaultNeighbours, gridSizeF);
 }
