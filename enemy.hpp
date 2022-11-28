@@ -77,8 +77,7 @@ class Enemy : public sf::RectangleShape {
   double hp_;
   double speed_;
   double value_;
-  float gridSizeF = 100.f;
-  
+  float gridSizeF = 80.f;
 };
 
 #endif

@@ -74,8 +74,7 @@ class Tower {
   double upgradePrice_;
   int level_;
   std::string texture_;
-  float gridSizeF = 100.f;
-
+  float gridSizeF = 80.f;
 };
 
 #endif
