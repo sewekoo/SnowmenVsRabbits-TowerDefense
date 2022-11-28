@@ -1,0 +1,52 @@
+[
+{
+  "directory": "/Users/lauri/IdeaProjects/Group_Project/build",
+  "command": "/usr/bin/clang++  -I/Users/lauri/IdeaProjects/Group_Project/libs/SFML-2.5.1/include -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk -o CMakeFiles/towerdef.dir/src/entrypoint.cpp.o -c /Users/lauri/IdeaProjects/Group_Project/src/entrypoint.cpp",
+  "file": "/Users/lauri/IdeaProjects/Group_Project/src/entrypoint.cpp"
+},
+{
+  "directory": "/Users/lauri/IdeaProjects/Group_Project/build",
+  "command": "/usr/bin/clang++  -I/Users/lauri/IdeaProjects/Group_Project/libs/SFML-2.5.1/include -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk -o CMakeFiles/towerdef.dir/src/game.cpp.o -c /Users/lauri/IdeaProjects/Group_Project/src/game.cpp",
+  "file": "/Users/lauri/IdeaProjects/Group_Project/src/game.cpp"
+},
+{
+  "directory": "/Users/lauri/IdeaProjects/Group_Project/build",
+  "command": "/usr/bin/clang++  -I/Users/lauri/IdeaProjects/Group_Project/libs/SFML-2.5.1/include -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk -o CMakeFiles/towerdef.dir/src/level.cpp.o -c /Users/lauri/IdeaProjects/Group_Project/src/level.cpp",
+  "file": "/Users/lauri/IdeaProjects/Group_Project/src/level.cpp"
+},
+{
+  "directory": "/Users/lauri/IdeaProjects/Group_Project/build",
+  "command": "/usr/bin/clang++  -I/Users/lauri/IdeaProjects/Group_Project/libs/SFML-2.5.1/include -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk -o CMakeFiles/towerdef.dir/src/tile.cpp.o -c /Users/lauri/IdeaProjects/Group_Project/src/tile.cpp",
+  "file": "/Users/lauri/IdeaProjects/Group_Project/src/tile.cpp"
+},
+{
+  "directory": "/Users/lauri/IdeaProjects/Group_Project/build",
+  "command": "/usr/bin/clang++  -I/Users/lauri/IdeaProjects/Group_Project/libs/SFML-2.5.1/include -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk -o CMakeFiles/towerdef.dir/src/tower_sniper.cpp.o -c /Users/lauri/IdeaProjects/Group_Project/src/tower_sniper.cpp",
+  "file": "/Users/lauri/IdeaProjects/Group_Project/src/tower_sniper.cpp"
+},
+{
+  "directory": "/Users/lauri/IdeaProjects/Group_Project/build",
+  "command": "/usr/bin/clang++  -I/Users/lauri/IdeaProjects/Group_Project/libs/SFML-2.5.1/include -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk -o CMakeFiles/towerdef.dir/src/exitpoint.cpp.o -c /Users/lauri/IdeaProjects/Group_Project/src/exitpoint.cpp",
+  "file": "/Users/lauri/IdeaProjects/Group_Project/src/exitpoint.cpp"
+},
+{
+  "directory": "/Users/lauri/IdeaProjects/Group_Project/build",
+  "command": "/usr/bin/clang++  -I/Users/lauri/IdeaProjects/Group_Project/libs/SFML-2.5.1/include -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk -o CMakeFiles/towerdef.dir/src/grass.cpp.o -c /Users/lauri/IdeaProjects/Group_Project/src/grass.cpp",
+  "file": "/Users/lauri/IdeaProjects/Group_Project/src/grass.cpp"
+},
+{
+  "directory": "/Users/lauri/IdeaProjects/Group_Project/build",
+  "command": "/usr/bin/clang++  -I/Users/lauri/IdeaProjects/Group_Project/libs/SFML-2.5.1/include -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk -o CMakeFiles/towerdef.dir/src/menu.cpp.o -c /Users/lauri/IdeaProjects/Group_Project/src/menu.cpp",
+  "file": "/Users/lauri/IdeaProjects/Group_Project/src/menu.cpp"
+},
+{
+  "directory": "/Users/lauri/IdeaProjects/Group_Project/build",
+  "command": "/usr/bin/clang++  -I/Users/lauri/IdeaProjects/Group_Project/libs/SFML-2.5.1/include -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk -o CMakeFiles/towerdef.dir/src/road.cpp.o -c /Users/lauri/IdeaProjects/Group_Project/src/road.cpp",
+  "file": "/Users/lauri/IdeaProjects/Group_Project/src/road.cpp"
+},
+{
+  "directory": "/Users/lauri/IdeaProjects/Group_Project/build",
+  "command": "/usr/bin/clang++  -I/Users/lauri/IdeaProjects/Group_Project/libs/SFML-2.5.1/include -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk -o CMakeFiles/towerdef.dir/src/tower.cpp.o -c /Users/lauri/IdeaProjects/Group_Project/src/tower.cpp",
+  "file": "/Users/lauri/IdeaProjects/Group_Project/src/tower.cpp"
+}
+]

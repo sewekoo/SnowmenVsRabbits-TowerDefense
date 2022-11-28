@@ -65,6 +65,36 @@ CMAKE_BINARY_DIR = /Users/lauri/IdeaProjects/Group_Project/build
 #=============================================================================
 # Targets provided globally by CMake.
 
+# Special rule for the target package
+package: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Run CPack packaging tool..."
+	/usr/local/Cellar/cmake/3.24.2/bin/cpack --config ./CPackConfig.cmake
+.PHONY : package
+
+# Special rule for the target package
+package/fast: package
+.PHONY : package/fast
+
+# Special rule for the target package_source
+package_source:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Run CPack packaging tool for source..."
+	/usr/local/Cellar/cmake/3.24.2/bin/cpack --config ./CPackSourceConfig.cmake /Users/lauri/IdeaProjects/Group_Project/build/CPackSourceConfig.cmake
+.PHONY : package_source
+
+# Special rule for the target package_source
+package_source/fast: package_source
+.PHONY : package_source/fast
+
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
+	/usr/local/Cellar/cmake/3.24.2/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+.PHONY : test/fast
+
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
@@ -116,6 +146,623 @@ depend:
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
+#=============================================================================
+# Target rules for targets named Experimental
+
+# Build rule for target.
+Experimental: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Experimental
+.PHONY : Experimental
+
+# fast build rule for target.
+Experimental/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Experimental.dir/build.make CMakeFiles/Experimental.dir/build
+.PHONY : Experimental/fast
+
+#=============================================================================
+# Target rules for targets named Nightly
+
+# Build rule for target.
+Nightly: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Nightly
+.PHONY : Nightly
+
+# fast build rule for target.
+Nightly/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Nightly.dir/build.make CMakeFiles/Nightly.dir/build
+.PHONY : Nightly/fast
+
+#=============================================================================
+# Target rules for targets named Continuous
+
+# Build rule for target.
+Continuous: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Continuous
+.PHONY : Continuous
+
+# fast build rule for target.
+Continuous/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Continuous.dir/build.make CMakeFiles/Continuous.dir/build
+.PHONY : Continuous/fast
+
+#=============================================================================
+# Target rules for targets named NightlyMemoryCheck
+
+# Build rule for target.
+NightlyMemoryCheck: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlyMemoryCheck
+.PHONY : NightlyMemoryCheck
+
+# fast build rule for target.
+NightlyMemoryCheck/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlyMemoryCheck.dir/build.make CMakeFiles/NightlyMemoryCheck.dir/build
+.PHONY : NightlyMemoryCheck/fast
+
+#=============================================================================
+# Target rules for targets named NightlyStart
+
+# Build rule for target.
+NightlyStart: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlyStart
+.PHONY : NightlyStart
+
+# fast build rule for target.
+NightlyStart/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlyStart.dir/build.make CMakeFiles/NightlyStart.dir/build
+.PHONY : NightlyStart/fast
+
+#=============================================================================
+# Target rules for targets named NightlyUpdate
+
+# Build rule for target.
+NightlyUpdate: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlyUpdate
+.PHONY : NightlyUpdate
+
+# fast build rule for target.
+NightlyUpdate/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlyUpdate.dir/build.make CMakeFiles/NightlyUpdate.dir/build
+.PHONY : NightlyUpdate/fast
+
+#=============================================================================
+# Target rules for targets named NightlyConfigure
+
+# Build rule for target.
+NightlyConfigure: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlyConfigure
+.PHONY : NightlyConfigure
+
+# fast build rule for target.
+NightlyConfigure/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlyConfigure.dir/build.make CMakeFiles/NightlyConfigure.dir/build
+.PHONY : NightlyConfigure/fast
+
+#=============================================================================
+# Target rules for targets named NightlyBuild
+
+# Build rule for target.
+NightlyBuild: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlyBuild
+.PHONY : NightlyBuild
+
+# fast build rule for target.
+NightlyBuild/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlyBuild.dir/build.make CMakeFiles/NightlyBuild.dir/build
+.PHONY : NightlyBuild/fast
+
+#=============================================================================
+# Target rules for targets named NightlyTest
+
+# Build rule for target.
+NightlyTest: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlyTest
+.PHONY : NightlyTest
+
+# fast build rule for target.
+NightlyTest/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlyTest.dir/build.make CMakeFiles/NightlyTest.dir/build
+.PHONY : NightlyTest/fast
+
+#=============================================================================
+# Target rules for targets named NightlyCoverage
+
+# Build rule for target.
+NightlyCoverage: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlyCoverage
+.PHONY : NightlyCoverage
+
+# fast build rule for target.
+NightlyCoverage/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlyCoverage.dir/build.make CMakeFiles/NightlyCoverage.dir/build
+.PHONY : NightlyCoverage/fast
+
+#=============================================================================
+# Target rules for targets named NightlyMemCheck
+
+# Build rule for target.
+NightlyMemCheck: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlyMemCheck
+.PHONY : NightlyMemCheck
+
+# fast build rule for target.
+NightlyMemCheck/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlyMemCheck.dir/build.make CMakeFiles/NightlyMemCheck.dir/build
+.PHONY : NightlyMemCheck/fast
+
+#=============================================================================
+# Target rules for targets named NightlySubmit
+
+# Build rule for target.
+NightlySubmit: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlySubmit
+.PHONY : NightlySubmit
+
+# fast build rule for target.
+NightlySubmit/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlySubmit.dir/build.make CMakeFiles/NightlySubmit.dir/build
+.PHONY : NightlySubmit/fast
+
+#=============================================================================
+# Target rules for targets named ExperimentalStart
+
+# Build rule for target.
+ExperimentalStart: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ExperimentalStart
+.PHONY : ExperimentalStart
+
+# fast build rule for target.
+ExperimentalStart/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ExperimentalStart.dir/build.make CMakeFiles/ExperimentalStart.dir/build
+.PHONY : ExperimentalStart/fast
+
+#=============================================================================
+# Target rules for targets named ExperimentalUpdate
+
+# Build rule for target.
+ExperimentalUpdate: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ExperimentalUpdate
+.PHONY : ExperimentalUpdate
+
+# fast build rule for target.
+ExperimentalUpdate/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ExperimentalUpdate.dir/build.make CMakeFiles/ExperimentalUpdate.dir/build
+.PHONY : ExperimentalUpdate/fast
+
+#=============================================================================
+# Target rules for targets named ExperimentalConfigure
+
+# Build rule for target.
+ExperimentalConfigure: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ExperimentalConfigure
+.PHONY : ExperimentalConfigure
+
+# fast build rule for target.
+ExperimentalConfigure/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ExperimentalConfigure.dir/build.make CMakeFiles/ExperimentalConfigure.dir/build
+.PHONY : ExperimentalConfigure/fast
+
+#=============================================================================
+# Target rules for targets named ExperimentalBuild
+
+# Build rule for target.
+ExperimentalBuild: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ExperimentalBuild
+.PHONY : ExperimentalBuild
+
+# fast build rule for target.
+ExperimentalBuild/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ExperimentalBuild.dir/build.make CMakeFiles/ExperimentalBuild.dir/build
+.PHONY : ExperimentalBuild/fast
+
+#=============================================================================
+# Target rules for targets named ExperimentalTest
+
+# Build rule for target.
+ExperimentalTest: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ExperimentalTest
+.PHONY : ExperimentalTest
+
+# fast build rule for target.
+ExperimentalTest/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ExperimentalTest.dir/build.make CMakeFiles/ExperimentalTest.dir/build
+.PHONY : ExperimentalTest/fast
+
+#=============================================================================
+# Target rules for targets named ExperimentalCoverage
+
+# Build rule for target.
+ExperimentalCoverage: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ExperimentalCoverage
+.PHONY : ExperimentalCoverage
+
+# fast build rule for target.
+ExperimentalCoverage/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ExperimentalCoverage.dir/build.make CMakeFiles/ExperimentalCoverage.dir/build
+.PHONY : ExperimentalCoverage/fast
+
+#=============================================================================
+# Target rules for targets named ExperimentalMemCheck
+
+# Build rule for target.
+ExperimentalMemCheck: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ExperimentalMemCheck
+.PHONY : ExperimentalMemCheck
+
+# fast build rule for target.
+ExperimentalMemCheck/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ExperimentalMemCheck.dir/build.make CMakeFiles/ExperimentalMemCheck.dir/build
+.PHONY : ExperimentalMemCheck/fast
+
+#=============================================================================
+# Target rules for targets named ExperimentalSubmit
+
+# Build rule for target.
+ExperimentalSubmit: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ExperimentalSubmit
+.PHONY : ExperimentalSubmit
+
+# fast build rule for target.
+ExperimentalSubmit/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ExperimentalSubmit.dir/build.make CMakeFiles/ExperimentalSubmit.dir/build
+.PHONY : ExperimentalSubmit/fast
+
+#=============================================================================
+# Target rules for targets named ContinuousStart
+
+# Build rule for target.
+ContinuousStart: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ContinuousStart
+.PHONY : ContinuousStart
+
+# fast build rule for target.
+ContinuousStart/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ContinuousStart.dir/build.make CMakeFiles/ContinuousStart.dir/build
+.PHONY : ContinuousStart/fast
+
+#=============================================================================
+# Target rules for targets named ContinuousUpdate
+
+# Build rule for target.
+ContinuousUpdate: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ContinuousUpdate
+.PHONY : ContinuousUpdate
+
+# fast build rule for target.
+ContinuousUpdate/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ContinuousUpdate.dir/build.make CMakeFiles/ContinuousUpdate.dir/build
+.PHONY : ContinuousUpdate/fast
+
+#=============================================================================
+# Target rules for targets named ContinuousConfigure
+
+# Build rule for target.
+ContinuousConfigure: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ContinuousConfigure
+.PHONY : ContinuousConfigure
+
+# fast build rule for target.
+ContinuousConfigure/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ContinuousConfigure.dir/build.make CMakeFiles/ContinuousConfigure.dir/build
+.PHONY : ContinuousConfigure/fast
+
+#=============================================================================
+# Target rules for targets named ContinuousBuild
+
+# Build rule for target.
+ContinuousBuild: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ContinuousBuild
+.PHONY : ContinuousBuild
+
+# fast build rule for target.
+ContinuousBuild/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ContinuousBuild.dir/build.make CMakeFiles/ContinuousBuild.dir/build
+.PHONY : ContinuousBuild/fast
+
+#=============================================================================
+# Target rules for targets named ContinuousTest
+
+# Build rule for target.
+ContinuousTest: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ContinuousTest
+.PHONY : ContinuousTest
+
+# fast build rule for target.
+ContinuousTest/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ContinuousTest.dir/build.make CMakeFiles/ContinuousTest.dir/build
+.PHONY : ContinuousTest/fast
+
+#=============================================================================
+# Target rules for targets named ContinuousCoverage
+
+# Build rule for target.
+ContinuousCoverage: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ContinuousCoverage
+.PHONY : ContinuousCoverage
+
+# fast build rule for target.
+ContinuousCoverage/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ContinuousCoverage.dir/build.make CMakeFiles/ContinuousCoverage.dir/build
+.PHONY : ContinuousCoverage/fast
+
+#=============================================================================
+# Target rules for targets named ContinuousMemCheck
+
+# Build rule for target.
+ContinuousMemCheck: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ContinuousMemCheck
+.PHONY : ContinuousMemCheck
+
+# fast build rule for target.
+ContinuousMemCheck/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ContinuousMemCheck.dir/build.make CMakeFiles/ContinuousMemCheck.dir/build
+.PHONY : ContinuousMemCheck/fast
+
+#=============================================================================
+# Target rules for targets named ContinuousSubmit
+
+# Build rule for target.
+ContinuousSubmit: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ContinuousSubmit
+.PHONY : ContinuousSubmit
+
+# fast build rule for target.
+ContinuousSubmit/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ContinuousSubmit.dir/build.make CMakeFiles/ContinuousSubmit.dir/build
+.PHONY : ContinuousSubmit/fast
+
+#=============================================================================
+# Target rules for targets named towerdef
+
+# Build rule for target.
+towerdef: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 towerdef
+.PHONY : towerdef
+
+# fast build rule for target.
+towerdef/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/build
+.PHONY : towerdef/fast
+
+src/entrypoint.o: src/entrypoint.cpp.o
+.PHONY : src/entrypoint.o
+
+# target to build an object file
+src/entrypoint.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/entrypoint.cpp.o
+.PHONY : src/entrypoint.cpp.o
+
+src/entrypoint.i: src/entrypoint.cpp.i
+.PHONY : src/entrypoint.i
+
+# target to preprocess a source file
+src/entrypoint.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/entrypoint.cpp.i
+.PHONY : src/entrypoint.cpp.i
+
+src/entrypoint.s: src/entrypoint.cpp.s
+.PHONY : src/entrypoint.s
+
+# target to generate assembly for a file
+src/entrypoint.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/entrypoint.cpp.s
+.PHONY : src/entrypoint.cpp.s
+
+src/exitpoint.o: src/exitpoint.cpp.o
+.PHONY : src/exitpoint.o
+
+# target to build an object file
+src/exitpoint.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/exitpoint.cpp.o
+.PHONY : src/exitpoint.cpp.o
+
+src/exitpoint.i: src/exitpoint.cpp.i
+.PHONY : src/exitpoint.i
+
+# target to preprocess a source file
+src/exitpoint.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/exitpoint.cpp.i
+.PHONY : src/exitpoint.cpp.i
+
+src/exitpoint.s: src/exitpoint.cpp.s
+.PHONY : src/exitpoint.s
+
+# target to generate assembly for a file
+src/exitpoint.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/exitpoint.cpp.s
+.PHONY : src/exitpoint.cpp.s
+
+src/game.o: src/game.cpp.o
+.PHONY : src/game.o
+
+# target to build an object file
+src/game.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/game.cpp.o
+.PHONY : src/game.cpp.o
+
+src/game.i: src/game.cpp.i
+.PHONY : src/game.i
+
+# target to preprocess a source file
+src/game.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/game.cpp.i
+.PHONY : src/game.cpp.i
+
+src/game.s: src/game.cpp.s
+.PHONY : src/game.s
+
+# target to generate assembly for a file
+src/game.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/game.cpp.s
+.PHONY : src/game.cpp.s
+
+src/grass.o: src/grass.cpp.o
+.PHONY : src/grass.o
+
+# target to build an object file
+src/grass.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/grass.cpp.o
+.PHONY : src/grass.cpp.o
+
+src/grass.i: src/grass.cpp.i
+.PHONY : src/grass.i
+
+# target to preprocess a source file
+src/grass.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/grass.cpp.i
+.PHONY : src/grass.cpp.i
+
+src/grass.s: src/grass.cpp.s
+.PHONY : src/grass.s
+
+# target to generate assembly for a file
+src/grass.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/grass.cpp.s
+.PHONY : src/grass.cpp.s
+
+src/level.o: src/level.cpp.o
+.PHONY : src/level.o
+
+# target to build an object file
+src/level.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/level.cpp.o
+.PHONY : src/level.cpp.o
+
+src/level.i: src/level.cpp.i
+.PHONY : src/level.i
+
+# target to preprocess a source file
+src/level.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/level.cpp.i
+.PHONY : src/level.cpp.i
+
+src/level.s: src/level.cpp.s
+.PHONY : src/level.s
+
+# target to generate assembly for a file
+src/level.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/level.cpp.s
+.PHONY : src/level.cpp.s
+
+src/menu.o: src/menu.cpp.o
+.PHONY : src/menu.o
+
+# target to build an object file
+src/menu.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/menu.cpp.o
+.PHONY : src/menu.cpp.o
+
+src/menu.i: src/menu.cpp.i
+.PHONY : src/menu.i
+
+# target to preprocess a source file
+src/menu.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/menu.cpp.i
+.PHONY : src/menu.cpp.i
+
+src/menu.s: src/menu.cpp.s
+.PHONY : src/menu.s
+
+# target to generate assembly for a file
+src/menu.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/menu.cpp.s
+.PHONY : src/menu.cpp.s
+
+src/road.o: src/road.cpp.o
+.PHONY : src/road.o
+
+# target to build an object file
+src/road.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/road.cpp.o
+.PHONY : src/road.cpp.o
+
+src/road.i: src/road.cpp.i
+.PHONY : src/road.i
+
+# target to preprocess a source file
+src/road.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/road.cpp.i
+.PHONY : src/road.cpp.i
+
+src/road.s: src/road.cpp.s
+.PHONY : src/road.s
+
+# target to generate assembly for a file
+src/road.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/road.cpp.s
+.PHONY : src/road.cpp.s
+
+src/tile.o: src/tile.cpp.o
+.PHONY : src/tile.o
+
+# target to build an object file
+src/tile.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/tile.cpp.o
+.PHONY : src/tile.cpp.o
+
+src/tile.i: src/tile.cpp.i
+.PHONY : src/tile.i
+
+# target to preprocess a source file
+src/tile.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/tile.cpp.i
+.PHONY : src/tile.cpp.i
+
+src/tile.s: src/tile.cpp.s
+.PHONY : src/tile.s
+
+# target to generate assembly for a file
+src/tile.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/tile.cpp.s
+.PHONY : src/tile.cpp.s
+
+src/tower.o: src/tower.cpp.o
+.PHONY : src/tower.o
+
+# target to build an object file
+src/tower.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/tower.cpp.o
+.PHONY : src/tower.cpp.o
+
+src/tower.i: src/tower.cpp.i
+.PHONY : src/tower.i
+
+# target to preprocess a source file
+src/tower.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/tower.cpp.i
+.PHONY : src/tower.cpp.i
+
+src/tower.s: src/tower.cpp.s
+.PHONY : src/tower.s
+
+# target to generate assembly for a file
+src/tower.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/tower.cpp.s
+.PHONY : src/tower.cpp.s
+
+src/tower_sniper.o: src/tower_sniper.cpp.o
+.PHONY : src/tower_sniper.o
+
+# target to build an object file
+src/tower_sniper.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/tower_sniper.cpp.o
+.PHONY : src/tower_sniper.cpp.o
+
+src/tower_sniper.i: src/tower_sniper.cpp.i
+.PHONY : src/tower_sniper.i
+
+# target to preprocess a source file
+src/tower_sniper.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/tower_sniper.cpp.i
+.PHONY : src/tower_sniper.cpp.i
+
+src/tower_sniper.s: src/tower_sniper.cpp.s
+.PHONY : src/tower_sniper.s
+
+# target to generate assembly for a file
+src/tower_sniper.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/tower_sniper.cpp.s
+.PHONY : src/tower_sniper.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -123,7 +770,69 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
+	@echo "... package"
+	@echo "... package_source"
 	@echo "... rebuild_cache"
+	@echo "... test"
+	@echo "... Continuous"
+	@echo "... ContinuousBuild"
+	@echo "... ContinuousConfigure"
+	@echo "... ContinuousCoverage"
+	@echo "... ContinuousMemCheck"
+	@echo "... ContinuousStart"
+	@echo "... ContinuousSubmit"
+	@echo "... ContinuousTest"
+	@echo "... ContinuousUpdate"
+	@echo "... Experimental"
+	@echo "... ExperimentalBuild"
+	@echo "... ExperimentalConfigure"
+	@echo "... ExperimentalCoverage"
+	@echo "... ExperimentalMemCheck"
+	@echo "... ExperimentalStart"
+	@echo "... ExperimentalSubmit"
+	@echo "... ExperimentalTest"
+	@echo "... ExperimentalUpdate"
+	@echo "... Nightly"
+	@echo "... NightlyBuild"
+	@echo "... NightlyConfigure"
+	@echo "... NightlyCoverage"
+	@echo "... NightlyMemCheck"
+	@echo "... NightlyMemoryCheck"
+	@echo "... NightlyStart"
+	@echo "... NightlySubmit"
+	@echo "... NightlyTest"
+	@echo "... NightlyUpdate"
+	@echo "... towerdef"
+	@echo "... src/entrypoint.o"
+	@echo "... src/entrypoint.i"
+	@echo "... src/entrypoint.s"
+	@echo "... src/exitpoint.o"
+	@echo "... src/exitpoint.i"
+	@echo "... src/exitpoint.s"
+	@echo "... src/game.o"
+	@echo "... src/game.i"
+	@echo "... src/game.s"
+	@echo "... src/grass.o"
+	@echo "... src/grass.i"
+	@echo "... src/grass.s"
+	@echo "... src/level.o"
+	@echo "... src/level.i"
+	@echo "... src/level.s"
+	@echo "... src/menu.o"
+	@echo "... src/menu.i"
+	@echo "... src/menu.s"
+	@echo "... src/road.o"
+	@echo "... src/road.i"
+	@echo "... src/road.s"
+	@echo "... src/tile.o"
+	@echo "... src/tile.i"
+	@echo "... src/tile.s"
+	@echo "... src/tower.o"
+	@echo "... src/tower.i"
+	@echo "... src/tower.s"
+	@echo "... src/tower_sniper.o"
+	@echo "... src/tower_sniper.i"
+	@echo "... src/tower_sniper.s"
 .PHONY : help
 
 

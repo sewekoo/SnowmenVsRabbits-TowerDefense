@@ -11,8 +11,8 @@
 #include "exitpoint.hpp"
 #include "grass.hpp"
 #include "road.hpp"
-#include "tuple"
-#include "vector"
+#include <tuple>
+#include <vector>
 
 class Level {
  public:
@@ -29,7 +29,7 @@ class Level {
   ~Level();
 
   // Values for drawing the level:
-  std::vector<std::vector<Tile>> tileMap;
+  std::vector<std::vector<Tile> > tileMap;
   EntryPoint entrypoint;
   ExitPoint exitpoint;
   std::vector<Road> roads;

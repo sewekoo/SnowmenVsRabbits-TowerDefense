@@ -37,7 +37,7 @@ class Enemy : public sf::RectangleShape {
     this->setPosition(posX * gridSizeF, posY * gridSizeF);
   }
 
-  ~Enemy();
+  ~Enemy() {}
 
   /**
    * TakeDamge takes int as a parameter that tells how much damage is dealt to

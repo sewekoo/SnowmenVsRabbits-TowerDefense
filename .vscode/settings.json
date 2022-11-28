@@ -49,6 +49,7 @@
         "type_traits": "cpp",
         "typeinfo": "cpp",
         "variant": "cpp",
-        "enemy.hpp": "c"
+        "enemy.hpp": "c",
+        "lauri_hello_test.C": "cpp"
     }
 }
