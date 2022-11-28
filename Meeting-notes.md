@@ -252,7 +252,56 @@ Menu looks good and has interacable buttons, but doesn't yet connect to the game
 5. Towers detecting enemies
 
 
+# Meeting 28.11.2022 0H::40M
 
+**Participants**:
+
+1. Roosa Ahlroos
+2. Severi Koivumaa
+3. Karl Rass
+
+## Summary of works
+
+1. Roosa
+
+   Worked on combining the menu together with the game
+
+2. Lauri
+
+   Added more pictures in the pics-folder and worked on the building process for mac
+
+3. Severi
+
+   Added the movement of the rabbit and the implementation of creating damage
+
+4. Karl
+
+   Work involving implementing audio
+
+## Challenges
+
+1. Looping the game for different rounds
+2. How to extend the game window to add a sidebar
+3. How to add audio
+4. Problems with cMake
+
+## Actions
+
+1. Roosa is going to start working on adding a sidebar for the game window
+2. Lauri might (since this meeting was a last minute decision and the timing of the meeting didn't work for him) start work on the background for the menu
+3. Severi is going to work on implementing the repeating rounds
+4. Karl will work on the maps for different levels
+
+> Please reflect these action decisions in your git commit messages so that your
+> group members and advisor can follow the progress.
+
+## Project status
+
+The project has most of the basic elements done but needs still some work
+
+### TODOs
+
+Reflected in the actions-section
 
 
 # Meeting dd.mm.2022 HH::MM
