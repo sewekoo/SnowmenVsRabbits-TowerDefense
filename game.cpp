@@ -4,6 +4,7 @@
 Game::Game() {
   this->InitializeVariables();
   this->InitializeWindow();
+  this->InitializeView();
   this->InitializeLevel();
 }
 
@@ -12,6 +13,7 @@ Game::Game(int mapsize, std::vector<std::vector<std::string>> levelTiles,
                neighbourInfo) {
   this->InitializeVariables();
   this->InitializeWindow();
+  this->InitializeView();
   this->level = new Level(mapsize, levelTiles, neighbourInfo, gridSizeF);
 }
 
@@ -475,13 +477,13 @@ void Game::InitializeVariables() {
 
 void Game::InitializeWindow() {
   this->videoMode.height = 960;
-  this->videoMode.width = 960;
+  this->videoMode.width = 1260;
   this->window = new sf::RenderWindow(this->videoMode, "Tower Defense",
                                       sf::Style::Titlebar | sf::Style::Close);
 }
 
 void Game::InitializeView() {
-  view.setSize(960.f, 960.f);
+  view.setSize(960.f, 1260.f);
   view.setCenter(this->window->getSize().x / 2.f,
                  this->window->getSize().y / 2.f);
 }
