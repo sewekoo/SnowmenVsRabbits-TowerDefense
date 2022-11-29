@@ -25,6 +25,11 @@ class Level {
             neighbourInfo,
         float gridSizeF);
 
+  Level(const int mapSize, std::vector<std::vector<std::string>> levelInfo,
+        std::vector<std::tuple<std::tuple<int, int>, std::tuple<int, int>>>
+            neighbourInfo,
+        float gridSizeF, std::vector<std::vector<int>> enemyInfo);
+
   // Destructor
   ~Level();
 
@@ -61,6 +66,8 @@ class Level {
   std::vector<std::tuple<std::tuple<int, int>, std::tuple<int, int>>>
       neighbourInfo_;
   float gridSizeF_;
+  std::vector<std::vector<int>> enemyInfo_;
+  int currentRound;
 };
 
 #endif
