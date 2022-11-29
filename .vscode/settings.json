@@ -50,6 +50,8 @@
         "typeinfo": "cpp",
         "variant": "cpp",
         "enemy.hpp": "c",
-        "lauri_hello_test.C": "cpp"
+        "lauri_hello_test.C": "cpp",
+        "array": "cpp",
+        "utility": "cpp"
     }
 }
