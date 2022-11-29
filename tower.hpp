@@ -17,6 +17,16 @@ class Tower {
         level_(1),
         texture_("snowman_basic.png") {}
 
+  Tower(double damage, int range, double attackSpeed, double value,
+        double upgradePrice, int level, std::string texture)
+      : damage_(damage),
+        range_(range),
+        attackSpeed_(attackSpeed),
+        value_(value),
+        upgradePrice_(upgradePrice),
+        level_(level),
+        texture_(texture) {}
+
   Tower(float posX, float posY)
       : damage_(20),
         range_(1),
@@ -28,16 +38,6 @@ class Tower {
     posX_ = posX;
     posY_ = posY;
   }
-
-  Tower(double damage, int range, double attackSpeed, double value,
-        double upgradePrice, int level, std::string texture)
-      : damage_(damage),
-        range_(range),
-        attackSpeed_(attackSpeed),
-        value_(value),
-        upgradePrice_(upgradePrice),
-        level_(level),
-        texture_(texture) {}
 
   // Destructor
   ~Tower() {}

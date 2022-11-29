@@ -7,6 +7,7 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <iostream>
+#include <string>
 
 /**
  * \class Enemy
@@ -19,6 +20,12 @@
 
 class Enemy : public sf::RectangleShape {
  public:
+  Enemy(double hp, double speed, double value, std::string texture)
+      : hp_(hp), speed_(speed), value_(value), texture_(texture) {}
+
+  /**
+   * Constructor with extra parameters for position in grid
+   */
   Enemy(float posX, float posY, double hp, double speed, double value)
       : sf::RectangleShape(sf::Vector2f(gridSizeF, gridSizeF)) {
     posX_ = posX;
@@ -30,7 +37,6 @@ class Enemy : public sf::RectangleShape {
     this->setPosition(posX * gridSizeF, posY * gridSizeF);
   }
 
-  std::string textureName = "pics/rabbit_basic.png";
   ~Enemy() {}
 
   /**
@@ -56,12 +62,19 @@ class Enemy : public sf::RectangleShape {
   const double GetValue() const {
     return value_;
   } /**< Getter function returns Value */
-
+  const std::string GetTexture() const {
+    return texture_;
+  } /**< Getter function returns texture */
+  /**
+   *Getter function
+   @return Position x coordinate
+  */
   float GetPosX() { return posX_; }
+  /**
+   *Getter function
+   @return Position y coordinate
+  */
   float GetPosY() { return posY_; }
-
-  int GetGridPosX() { return posX_ * gridSizeF; }
-  int GetGridPosY() { return posY_ * gridSizeF; }
 
   void ChangePos(float newPosX, float newPosY) {
     posX_ = newPosX;
@@ -71,12 +84,16 @@ class Enemy : public sf::RectangleShape {
   float posX_;
   float posY_;
 
+  int GetGridPosX() { return posX_ * gridSizeF; }
+  int GetGridPosY() { return posY_ * gridSizeF; }
+
   int direction = 0;
 
  private:
   double hp_;
   double speed_;
   double value_;
+  std::string texture_;
   float gridSizeF = 80.f;
 };
 

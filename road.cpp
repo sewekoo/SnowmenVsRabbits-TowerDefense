@@ -4,7 +4,7 @@ Road::Road(const sf::Vector2f& size) : Tile(size) {
   this->InitalizeColors();
 }
 
-Road::~Road() { }
+Road::~Road() {}
 
 void Road::InitalizeColors() {
   this->setFillColor(sf::Color(142, 242, 249, 255));

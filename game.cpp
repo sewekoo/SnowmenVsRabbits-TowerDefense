@@ -28,16 +28,19 @@ Game::~Game() {
 
 // Functions
 
+// Accessor to get Window status
 const bool Game::GetWindowIsOpen() const { return this->window->isOpen(); }
 
+// Update functions, split between functionalities
+
+// Polls all events (for example closing window)
 void Game::pollEvents() {
   while (this->window->pollEvent(event)) {
     switch (this->event.type) {
-      // Closes the window when closed
       case sf::Event::Closed:
         this->window->close();
         break;
-      // Closes the window with escape button
+
       case sf::Event::KeyPressed:
         if (this->event.key.code == sf::Keyboard::Escape) {
           this->window->close();
@@ -47,6 +50,7 @@ void Game::pollEvents() {
   }
 }
 
+// Updates users input. May be necessary to implement some inputs in future.
 void Game::updateInput() {
   if (!sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
     mouseClicked = false;
@@ -99,6 +103,10 @@ void Game::updateInput() {
                       << this->level->tileMap[x][y].GetEnemy()->GetHP()
                       << std::endl;
           }
+
+          std::cout << "Enemy hp: "
+                    << this->level->tileMap[x][y].GetEnemy()->GetHP()
+                    << std::endl;
         }
 
         if ((!this->level->tileMap[x][y].IsOccupied()) &&
@@ -123,15 +131,6 @@ void Game::updateInput() {
           enemiesAdded++;
           this->level->tileMap[x][y].MakeOccupied();
           std::cout << "Succesfully increased enemy counter" << std::endl;
-          std::cout << "Enemy x pos: "
-                    << (static_cast<unsigned>(
-                           (this->level->tileMap[x][y].GetEnemy()->GetPosX())))
-                    << std::endl;
-          std::cout
-              << "Next x pos: "
-              << (static_cast<unsigned>((
-                     this->level->tileMap[x][y].GetNext()->GetGridLocationX())))
-              << std::endl;
         }
         if ((!this->level->tileMap[x][y].IsOccupied()) &&
             (this->level->tileMap[x][y].type_ == 0) &&
@@ -149,6 +148,10 @@ void Game::updateInput() {
   enemyDestroyedThisTick = true;
 }
 
+/**
+ * @brief Fires all of the towers that are not on cooldown at enemies in range
+ *
+ */
 void Game::FireTowers() {
   for (int x = 0; x < this->level->GetMapSize(); x++) {
     for (int y = 0; y < this->level->GetMapSize(); y++) {
@@ -239,8 +242,10 @@ void Game::FireTowers() {
   }
 }
 
-// void Game::spawnEnemies() { for (auto i : this->level->) }
-
+/**
+ * @brief Updates tower firing clock.
+ * Change fireTime variable to change all towers' fire rate
+ */
 void ::Game::updateFireClock() {
   sf::Time timeElapsed = FireClock.getElapsedTime();
   sf::Int64 fireTime = 60000;
@@ -250,8 +255,14 @@ void ::Game::updateFireClock() {
   }
 }
 
+// Updates game clock. May be useful with enemy movement for example
 void Game::updateDt() { dt = dtClock.restart().asSeconds(); }
 
+/**
+ * @brief Enemy movement clock
+ * Change moveTime variable to change all enemies speed
+ * (bigger = slower)
+ */
 void Game::updateMoveClock() {
   sf::Time timeElapsed = MoveClock.getElapsedTime();
   sf::Int64 moveTime = 6000;
@@ -263,6 +274,7 @@ void Game::updateMoveClock() {
   }
 }
 
+// Tracks mouse movement
 void Game::updateMousePosition() {
   mousePosScreen.x = sf::Mouse::getPosition().x;
   mousePosScreen.y = sf::Mouse::getPosition().y;
@@ -298,16 +310,18 @@ void Game::updateMousePosition() {
   text.setString(ss.str());
 }
 
+// Updates tile selector that shows which tile mouse is on
 void Game::updateTileSelector() {
   tileSelector.setPosition(mousePosGrid.x * gridSizeF,
                            mousePosGrid.y * gridSizeF);
 }
 
+// Main game update loop
 void Game::update() {
   this->updateDt();
-  this->updateInput();
   this->updateMousePosition();
   this->pollEvents();
+  this->updateInput();
   this->updateTileSelector();
   this->updateFireClock();
   this->updateMoveClock();
@@ -317,13 +331,13 @@ void Game::update() {
  * Clear old frame, render, display
  */
 void Game::render() {
+  // Clears old frame
   this->window->clear(sf::Color(0, 0, 0, 255));
+  // Sets view to current view.
   this->window->setView(view);
 
   // Draw game elements
-
-  this->window->setView(this->window->getDefaultView());
-
+  // Draw every tile
   for (int x = 0; x < this->level->GetMapSize(); x++) {
     for (int y = 0; y < this->level->GetMapSize(); y++) {
       this->window->draw(this->level->tileMap[x][y]);
@@ -336,52 +350,53 @@ void Game::render() {
       }
     }
   }
-
   /**
-  for (int x = 0; x < this->level->GetMapSize(); x++) {
-    for (int y = 0; y < this->level->GetMapSize(); y++) {
-    if (this->level->tileMap[x][y].type_ = 0 &&
-        this->level->tileMap[x][y].IsOccupied()) {
-    for (int j = 1; j < (this->level->tileMap[x][y].GetTower()->GetRange() + 1);
-  j++) { if  ((mousePosGrid.x == this->level->tileMap[x][y].GetGridLocationX())
-  && (mousePosGrid.y == this->level->tileMap[x][y].GetGridLocationY())) {
-        rangeIndicator.setPosition(sf::Vector2f((this->level->tileMap[x][y].GetGridLocationX()
-  + j) * gridSizeF, (this->level->tileMap[x][y].GetGridLocationY()) *
-  gridSizeF)); this->window->draw(rangeIndicator);
-        rangeIndicator.setPosition(sf::Vector2f((this->level->tileMap[x][y].GetGridLocationX()
-  - j) * gridSizeF, (this->level->tileMap[x][y].GetGridLocationY()) *
-  gridSizeF)); this->window->draw(rangeIndicator);
-        rangeIndicator.setPosition(sf::Vector2f((this->level->tileMap[x][y].GetGridLocationX())
-  * gridSizeF, (this->level->tileMap[x][y].GetGridLocationY() + j) *
-  gridSizeF)); this->window->draw(rangeIndicator);
-        rangeIndicator.setPosition(sf::Vector2f((this->level->tileMap[x][y].GetGridLocationX())
-  * gridSizeF, (this->level->tileMap[x][y].GetGridLocationY() - j) *
-  gridSizeF)); this->window->draw(rangeIndicator);
-        rangeIndicator.setPosition(sf::Vector2f((this->level->tileMap[x][y].GetGridLocationX()
-  + j) * gridSizeF, (this->level->tileMap[x][y].GetGridLocationY() + j) *
-  gridSizeF)); this->window->draw(rangeIndicator);
-        rangeIndicator.setPosition(sf::Vector2f((this->level->tileMap[x][y].GetGridLocationX()
-  - j) * gridSizeF, (this->level->tileMap[x][y].GetGridLocationY() + j) *
-  gridSizeF)); this->window->draw(rangeIndicator);
-        rangeIndicator.setPosition(sf::Vector2f((this->level->tileMap[x][y].GetGridLocationX()
-  + j) * gridSizeF, (this->level->tileMap[x][y].GetGridLocationY() - j) *
-  gridSizeF)); this->window->draw(rangeIndicator);
-        rangeIndicator.setPosition(sf::Vector2f((this->level->tileMap[x][y].GetGridLocationX()
-  - j) * gridSizeF, (this->level->tileMap[x][y].GetGridLocationY() - j) *
-  gridSizeF)); this->window->draw(rangeIndicator);
+     for (int x = 0; x < this->level->GetMapSize(); x++) {
+      for (int y = 0; y < this->level->GetMapSize(); y++) {
+        if (this->level->tileMap[x][y].type_ = 0 &&
+          this->level->tileMap[x][y].IsOccupied()) {
+            for (int j = 1; j <
+     (this->level->tileMap[x][y].GetTower()->GetRange() + 1); j++) { if
+     ((mousePosGrid.x == this->level->tileMap[x][y].GetGridLocationX()) &&
+                   (mousePosGrid.y ==
+     this->level->tileMap[x][y].GetGridLocationY())) {
+                rangeIndicator.setPosition(sf::Vector2f((this->level->tileMap[x][y].GetGridLocationX()
+     + j) * gridSizeF, (this->level->tileMap[x][y].GetGridLocationY()) *
+     gridSizeF)); this->window->draw(rangeIndicator);
+                rangeIndicator.setPosition(sf::Vector2f((this->level->tileMap[x][y].GetGridLocationX()
+     - j) * gridSizeF, (this->level->tileMap[x][y].GetGridLocationY()) *
+     gridSizeF)); this->window->draw(rangeIndicator);
+                rangeIndicator.setPosition(sf::Vector2f((this->level->tileMap[x][y].GetGridLocationX())
+     * gridSizeF, (this->level->tileMap[x][y].GetGridLocationY() + j) *
+     gridSizeF)); this->window->draw(rangeIndicator);
+                rangeIndicator.setPosition(sf::Vector2f((this->level->tileMap[x][y].GetGridLocationX())
+     * gridSizeF, (this->level->tileMap[x][y].GetGridLocationY() - j) *
+     gridSizeF)); this->window->draw(rangeIndicator);
+                rangeIndicator.setPosition(sf::Vector2f((this->level->tileMap[x][y].GetGridLocationX()
+     + j) * gridSizeF, (this->level->tileMap[x][y].GetGridLocationY() + j) *
+     gridSizeF)); this->window->draw(rangeIndicator);
+                rangeIndicator.setPosition(sf::Vector2f((this->level->tileMap[x][y].GetGridLocationX()
+     - j) * gridSizeF, (this->level->tileMap[x][y].GetGridLocationY() + j) *
+     gridSizeF)); this->window->draw(rangeIndicator);
+                rangeIndicator.setPosition(sf::Vector2f((this->level->tileMap[x][y].GetGridLocationX()
+     + j) * gridSizeF, (this->level->tileMap[x][y].GetGridLocationY() - j) *
+     gridSizeF)); this->window->draw(rangeIndicator);
+                rangeIndicator.setPosition(sf::Vector2f((this->level->tileMap[x][y].GetGridLocationX()
+     - j) * gridSizeF, (this->level->tileMap[x][y].GetGridLocationY() - j) *
+     gridSizeF)); this->window->draw(rangeIndicator);
+              }
+            }
+          }
+        }
       }
-    }
-    }
-    }
-  }
-  */
+      */
 
   for (auto i : enemies) {
     basicEnemySprite.setPosition(i->GetPosX() * gridSizeF,
                                  i->GetPosY() * gridSizeF);
     basicEnemySprite.move((sf::Vector2f)basicEnemyTexture.getSize() / 2.f);
     if (i->direction == 0) {
-      basicEnemySprite.setRotation(0);
+      basicEnemySprite.setRotation(360);
     } else if (i->direction == 1) {
       basicEnemySprite.setRotation(90);
     } else if (i->direction == 2) {
@@ -402,9 +417,14 @@ void Game::render() {
     }
   }
 
+  // Draw the tile selector
   this->window->draw(tileSelector);
 
+  // Sets view back to default view
+  this->window->setView(this->window->getDefaultView());
+
   // Draw UI
+  // Draws info text of mouse position
   this->window->draw(text);
 
   // Done drawing, display to screen
@@ -412,22 +432,29 @@ void Game::render() {
 }
 
 // Private functions
+// Initialization of different variables used
 void Game::InitializeVariables() {
+  // Window first initalized to nullptr
   this->window = nullptr;
+  // Level first initalized to nullptr
   this->level = nullptr;
+  // Size of tile in grid.
   this->gridSizeF = 80.f;
+  // Size of tile in grid as unsigned value.
   this->gridSizeU = static_cast<unsigned>(gridSizeF);
 
+  // Sets size for a tileselector. (You can use this as an example for how tile
+  // size is set.)
   tileSelector.setSize(sf::Vector2f(gridSizeF, gridSizeF));
+  // Sets color and outline for tile selector.
   tileSelector.setFillColor(sf::Color::Transparent);
   tileSelector.setOutlineThickness(1.f);
   tileSelector.setOutlineColor(sf::Color::Green);
 
   rangeIndicator.setSize(sf::Vector2f(gridSizeF, gridSizeF));
   rangeIndicator.setFillColor(sf::Color(255, 0, 0, 20));
-  // rangeIndicator.setOutlineThickness(1.f);
-  // rangeIndicator.setOutlineColor(sf::Color(255, 0, 0, 100));
 
+  // Sets mouse position text information
   font.loadFromFile("Fonts/sansation.ttf");
   text.setCharacterSize(12);
   text.setFillColor(sf::Color::Green);
@@ -436,18 +463,21 @@ void Game::InitializeVariables() {
   text.setPosition(20.f, 20.f);
   text.setString("Test");
 
+  // Entry texture
   if (!entryPointTexture.loadFromFile("pics/rabbit_hole.png")) {
     std::cout << "Texture for entry point load failed" << std::endl;
   }
   entryPointSprite.setTexture(entryPointTexture);
   entryPointSprite.setScale(sf::Vector2f(gridSizeF / 100, gridSizeF / 100));
 
+  // Exit texture
   if (!exitPointTexture.loadFromFile("pics/carrots.png")) {
     std::cout << "Texture for exit point load failed" << std::endl;
   }
   exitPointSprite.setTexture(exitPointTexture);
   exitPointSprite.setScale(sf::Vector2f(gridSizeF / 100, gridSizeF / 100));
 
+  // Basic enemy texture
   if (!basicEnemyTexture.loadFromFile("pics/rabbit_basic.png")) {
     std::cout << "Texture for enemy load failed" << std::endl;
   }
@@ -456,18 +486,14 @@ void Game::InitializeVariables() {
   basicEnemySprite.setOrigin(((sf::Vector2f)basicEnemyTexture.getSize() / 2.f) *
                              (gridSizeF / 100));
 
-  if (!basicEnemyHurtTexture.loadFromFile("pics/rabbit_basic.png")) {
-    std::cout << "Texture for enemy load failed" << std::endl;
-  }
-  basicEnemyHurtSprite.setTexture(basicEnemyHurtTexture);
-  basicEnemyHurtSprite.setColor(sf::Color::Red);
-
+  // Basic tower texture
   if (!basicTowerTexture.loadFromFile("pics/snowman_basic.png")) {
     std::cout << "Texture for tower load failed" << std::endl;
   }
   basicTowerSprite.setTexture(basicTowerTexture);
   basicTowerSprite.setScale(sf::Vector2f(gridSizeF / 100, gridSizeF / 100));
 
+  // Sniper tower texture
   if (!sniperTowerTexture.loadFromFile("pics/snowman_hat.png")) {
     std::cout << "Texture for sniper tower load failed" << std::endl;
   }
@@ -475,21 +501,38 @@ void Game::InitializeVariables() {
   sniperTowerSprite.setScale(sf::Vector2f(gridSizeF / 100, gridSizeF / 100));
 }
 
+// Initalizes window with correct size
 void Game::InitializeWindow() {
   this->videoMode.height = 960;
-  this->videoMode.width = 1260;
+  this->videoMode.width = 960;
   this->window = new sf::RenderWindow(this->videoMode, "Tower Defense",
                                       sf::Style::Titlebar | sf::Style::Close);
 }
 
+// Initalizes view with same size as window
 void Game::InitializeView() {
-  view.setSize(960.f, 1260.f);
+  view.setSize(960.f, 960.f);
   view.setCenter(this->window->getSize().x / 2.f,
                  this->window->getSize().y / 2.f);
 }
-
+/**
+ * @return void
+ * Initializes level with default level.
+ * Level can be initialized with vector of vector of strings. Each string
+ * correspons to different tile type.
+ *
+ * 0 = Grass
+ * 1 = Road
+ * 2 = Entry point
+ * 3 = Exit point
+ *
+ * Also initializes the neighbors for each tile that requires this information
+ * (entry point & road). Neighbours can be initilized using vector of tuples of
+ * two tuples with ints. Two tuples inside a first correspond to two tiles: Tile
+ * that neighbour is going to be set and what the neighbouring tile is.
+ */
 void Game::InitializeLevel() {
-  // Default map:
+  // Default map. You can copy this to create your own levels
   std::vector<std::vector<std::string>> defaultLevel{
       {"0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
       {"0", "0", "0", "0", "1", "1", "1", "0", "0", "0", "0", "0"},
@@ -504,7 +547,8 @@ void Game::InitializeLevel() {
       {"0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
       {"0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"},
   };
-  // Neighbour values for default map:
+  // Neighbour values for default map. You can copy this to create your own
+  // neighbour values.:
   std::vector<std::tuple<std::tuple<int, int>, std::tuple<int, int>>>
       defaultNeighbours{
           std::make_tuple(std::make_tuple(3, 0), std::make_tuple(3, 1)),
@@ -524,7 +568,7 @@ void Game::InitializeLevel() {
           std::make_tuple(std::make_tuple(7, 6), std::make_tuple(8, 6)),
           std::make_tuple(std::make_tuple(8, 6), std::make_tuple(9, 6)),
       };
-  // Default enemies for rounds. 0 = basic, 1 = slow, 2, fast
+
   std::vector<std::vector<int>> defaultEnemies{
       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
       {0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1},
@@ -533,5 +577,6 @@ void Game::InitializeLevel() {
       {1, 1, 2, 1, 1, 2, 2, 2, 1, 1, 1, 2},
   };
 
+  // Calls level class constructor.
   this->level = new Level(12, defaultLevel, defaultNeighbours, gridSizeF);
 }

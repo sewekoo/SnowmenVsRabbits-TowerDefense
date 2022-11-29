@@ -6,13 +6,13 @@
 #include <SFML/Network.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
+#include <tuple>
+#include <vector>
 
 #include "entrypoint.hpp"
 #include "exitpoint.hpp"
 #include "grass.hpp"
 #include "road.hpp"
-#include "tuple"
-#include "vector"
 
 class Level {
  public:
@@ -53,8 +53,6 @@ class Level {
    * @return Map size as int
    */
   int GetMapSize();
-
-  void MoveEnemy(Tile tile);
 
   void MoveEnemies();
 

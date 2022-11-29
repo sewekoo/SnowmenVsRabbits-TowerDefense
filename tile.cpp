@@ -5,6 +5,7 @@ Tile::Tile(const sf::Vector2f& size) : sf::RectangleShape(size) {
   occupantEnemy_ = nullptr;
   occupantTower_ = nullptr;
 }
+
 Tile::~Tile() {
   delete next_;
   delete occupantEnemy_;
@@ -16,6 +17,12 @@ bool Tile::IsOccupied() { return occupied_; }
 void Tile::MakeOccupied() { this->occupied_ = true; }
 
 void Tile::MakeFree() { this->occupied_ = false; }
+
+void Tile::enemyMoved() {
+  occupantEnemy_ = nullptr;
+  this->MakeFree();
+}
+
 
 void Tile::SetNeighbour(Tile* neighbour) { next_ = neighbour; }
 
@@ -36,11 +43,6 @@ void Tile::addOccupant(Enemy* enemy) { occupantEnemy_ = enemy; }
 
 void Tile::removeEnemy() {
   delete occupantEnemy_;
-  this->MakeFree();
-}
-
-void Tile::enemyMoved() {
-  occupantEnemy_ = nullptr;
   this->MakeFree();
 }
 

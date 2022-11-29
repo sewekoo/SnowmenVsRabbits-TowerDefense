@@ -30,6 +30,9 @@
  */
 class EasyEnemy : public Enemy {
  public:
+  EasyEnemy()
+      : Enemy(EASY_HEALTH, EASY_SPEED, EASY_VALUE, "rabbit_basic.png") {}
+
   EasyEnemy(float posX, float posY)
       : Enemy(posX, posY, EASY_HEALTH, EASY_SPEED, EASY_VALUE) {}
 };
@@ -39,6 +42,9 @@ class EasyEnemy : public Enemy {
  */
 class FastEnemy : public Enemy {
  public:
+  FastEnemy()
+      : Enemy(FAST_HEALTH, FAST_SPEED, FAST_VALUE, "rabbit_small.png") {}
+
   FastEnemy(float posX, float posY)
       : Enemy(posX, posY, FAST_HEALTH, FAST_SPEED, FAST_VALUE) {}
 };
@@ -48,6 +54,8 @@ class FastEnemy : public Enemy {
  */
 class SlowEnemy : public Enemy {
  public:
+  SlowEnemy() : Enemy(SLOW_HEALTH, SLOW_SPEED, SLOW_VALUE, "rabbit_dark.png") {}
+
   SlowEnemy(float posX, float posY)
       : Enemy(posX, posY, SLOW_HEALTH, SLOW_SPEED, SLOW_VALUE) {}
 };

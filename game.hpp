@@ -51,13 +51,20 @@ class Game {
    * Updates clock.
    */
   void updateDt();
-
+  /**
+   * @brief Updates enemy move timer.
+   *
+   */
   void updateMoveClock();
-
+  /**
+   * @brief Updates tower firing timer.
+   *
+   */
   void updateFireClock();
-
+  /**
+   * Spawns enemies
+   */
   void spawnEnemies();
-
   /**
    * Updates mouse postion
    * - Relative to screen
@@ -88,12 +95,10 @@ class Game {
   float gridSizeF;
   unsigned gridSizeU;
   float dt = 0.f;
-
   // Clock
   sf::Clock dtClock;
   sf::Clock MoveClock;
   sf::Clock FireClock;
-  sf::Clock SpawnClock;
 
   // Mouse positions
   sf::Vector2u mousePosScreen;
@@ -103,6 +108,8 @@ class Game {
 
   // Mouse clicker flag
   bool mouseClicked = true;
+
+  // Enemy detroyer flag (so it doesnt create a new one straight away)
   bool enemyDestroyedThisTick = false;
 
   // Enemies
@@ -114,10 +121,6 @@ class Game {
 
   // Towers' hit range
   sf::RectangleShape rangeIndicator;
-
-  // Text
-  sf::Text text;
-  sf::Font font;
 
   // Textures
   sf::Texture basicEnemyTexture;
@@ -137,6 +140,10 @@ class Game {
 
   sf::Texture exitPointTexture;
   sf::Sprite exitPointSprite;
+
+  // Text
+  sf::Text text;
+  sf::Font font;
 
   // Level
   Level* level;
@@ -158,6 +165,22 @@ class Game {
   void InitializeVariables();
   void InitializeWindow();
   void InitializeView();
+  /**
+   * @return void
+   * Initializes level with default level.
+   * Level can be initialized with vector of vector of strings. Each string
+   * correspons to different tile type.
+   *
+   * 0 = Grass
+   * 1 = Road
+   * 2 = Entry point
+   * 3 = Exit point
+   *
+   * Also initializes the neighbors for each tile that requires this information
+   * (entry point & road). Neighbours can be initilized using vector of tuples
+   * of two tuples with ints. Two tuples inside a first correspond to two tiles:
+   * Tile that neighbour is going to be set and what the neighbouring tile is.
+   */
   void InitializeLevel();
 };
 
