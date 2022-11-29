@@ -4,6 +4,7 @@
 Game::Game() {
   this->InitializeVariables();
   this->InitializeWindow();
+  this->InitializeView();
   this->InitializeLevel();
 }
 
@@ -12,6 +13,7 @@ Game::Game(int mapsize, std::vector<std::vector<std::string>> levelTiles,
                neighbourInfo) {
   this->InitializeVariables();
   this->InitializeWindow();
+  this->InitializeView();
   this->level = new Level(mapsize, levelTiles, neighbourInfo, gridSizeF);
 }
 
@@ -414,9 +416,6 @@ void Game::render() {
       this->window->draw(sniperTowerSprite);
     }
   }
-
-  // Draw entry point agains so that it's outlines go on top of its neihbours
-  this->window->draw(this->level->entrypoint);
 
   // Draw the tile selector
   this->window->draw(tileSelector);
