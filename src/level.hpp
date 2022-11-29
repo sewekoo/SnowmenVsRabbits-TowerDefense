@@ -6,13 +6,13 @@
 #include <SFML/Network.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
+#include <tuple>
+#include <vector>
 
 #include "entrypoint.hpp"
 #include "exitpoint.hpp"
 #include "grass.hpp"
 #include "road.hpp"
-#include <tuple>
-#include <vector>
 
 class Level {
  public:
@@ -25,11 +25,16 @@ class Level {
             neighbourInfo,
         float gridSizeF);
 
+  Level(const int mapSize, std::vector<std::vector<std::string>> levelInfo,
+        std::vector<std::tuple<std::tuple<int, int>, std::tuple<int, int>>>
+            neighbourInfo,
+        float gridSizeF, std::vector<std::vector<int>> enemyInfo);
+
   // Destructor
   ~Level();
 
   // Values for drawing the level:
-  std::vector<std::vector<Tile> > tileMap;
+  std::vector<std::vector<Tile>> tileMap;
   EntryPoint entrypoint;
   ExitPoint exitpoint;
   std::vector<Road> roads;
@@ -53,13 +58,14 @@ class Level {
 
   void TurnEnemies();
 
-
  private:
   const int mapSize_;
   std::vector<std::vector<std::string>> levelInfo_;
   std::vector<std::tuple<std::tuple<int, int>, std::tuple<int, int>>>
       neighbourInfo_;
   float gridSizeF_;
+  std::vector<std::vector<int>> enemyInfo_;
+  int currentRound;
 };
 
 #endif

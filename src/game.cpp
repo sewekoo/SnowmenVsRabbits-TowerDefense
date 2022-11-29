@@ -108,7 +108,8 @@ void Game::updateInput() {
         }
 
         if ((!this->level->tileMap[x][y].IsOccupied()) &&
-            (this->level->tileMap[x][y].type_ == 1) &&
+            ((this->level->tileMap[x][y].type_ == 1) ||
+             (this->level->tileMap[x][y].type_ == 2)) &&
             (this->level->tileMap[x][y].GetGridLocationX() == mousePosGrid.x) &&
             (this->level->tileMap[x][y].GetGridLocationY() == mousePosGrid.y) &&
             (this->enemyDestroyedThisTick)) {
@@ -338,6 +339,13 @@ void Game::render() {
   for (int x = 0; x < this->level->GetMapSize(); x++) {
     for (int y = 0; y < this->level->GetMapSize(); y++) {
       this->window->draw(this->level->tileMap[x][y]);
+      if (this->level->tileMap[x][y].type_ == 2) {
+        entryPointSprite.setPosition(this->level->tileMap[x][y].getPosition());
+        this->window->draw(entryPointSprite);
+      } else if (this->level->tileMap[x][y].type_ == 3) {
+        exitPointSprite.setPosition(this->level->tileMap[x][y].getPosition());
+        this->window->draw(exitPointSprite);
+      }
     }
   }
   /**
@@ -456,6 +464,21 @@ void Game::InitializeVariables() {
   text.setPosition(20.f, 20.f);
   text.setString("Test");
 
+  // Entry texture
+  if (!entryPointTexture.loadFromFile("pics/rabbit_hole.png")) {
+    std::cout << "Texture for entry point load failed" << std::endl;
+  }
+  entryPointSprite.setTexture(entryPointTexture);
+  entryPointSprite.setScale(sf::Vector2f(gridSizeF / 100, gridSizeF / 100));
+
+  // Exit texture
+  if (!exitPointTexture.loadFromFile("pics/carrots.png")) {
+    std::cout << "Texture for exit point load failed" << std::endl;
+  }
+  exitPointSprite.setTexture(exitPointTexture);
+  exitPointSprite.setScale(sf::Vector2f(gridSizeF / 100, gridSizeF / 100));
+
+  // Basic enemy texture
   if (!basicEnemyTexture.loadFromFile("pics/rabbit_basic.png")) {
     std::cout << "Texture for enemy load failed" << std::endl;
   }
@@ -464,12 +487,14 @@ void Game::InitializeVariables() {
   basicEnemySprite.setOrigin(((sf::Vector2f)basicEnemyTexture.getSize() / 2.f) *
                              (gridSizeF / 100));
 
+  // Basic tower texture
   if (!basicTowerTexture.loadFromFile("pics/snowman_basic.png")) {
     std::cout << "Texture for tower load failed" << std::endl;
   }
   basicTowerSprite.setTexture(basicTowerTexture);
   basicTowerSprite.setScale(sf::Vector2f(gridSizeF / 100, gridSizeF / 100));
 
+  // Sniper tower texture
   if (!sniperTowerTexture.loadFromFile("pics/snowman_hat.png")) {
     std::cout << "Texture for sniper tower load failed" << std::endl;
   }
@@ -544,6 +569,15 @@ void Game::InitializeLevel() {
           std::make_tuple(std::make_tuple(7, 6), std::make_tuple(8, 6)),
           std::make_tuple(std::make_tuple(8, 6), std::make_tuple(9, 6)),
       };
+
+  std::vector<std::vector<int>> defaultEnemies{
+      {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+      {0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1},
+      {0, 2, 0, 2, 0, 2, 0, 0, 2, 0, 2, 2},
+      {1, 0, 2, 0, 1, 2, 0, 0, 2, 0, 1, 1},
+      {1, 1, 2, 1, 1, 2, 2, 2, 1, 1, 1, 2},
+  };
+
   // Calls level class constructor.
   this->level = new Level(12, defaultLevel, defaultNeighbours, gridSizeF);
 }

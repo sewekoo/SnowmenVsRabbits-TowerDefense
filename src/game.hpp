@@ -15,12 +15,16 @@ class Game {
 
   /**
    * @brief Construct a new Game object with custom Level
-   * 
+   *
    * @param mapsize Size of one side of map
-   * @param levelTiles 2D tile info with different numbers corresponding different tiles
-   * @param neighbourInfo Info to save what road tile or exit is next from each road tile
+   * @param levelTiles 2D tile info with different numbers corresponding
+   * different tiles
+   * @param neighbourInfo Info to save what road tile or exit is next from each
+   * road tile
    */
-  Game(int mapsize, std::vector<std::vector<std::string>> levelTiles, std::vector<std::tuple<std::tuple<int, int>, std::tuple<int, int>>> neighbourInfo);
+  Game(int mapsize, std::vector<std::vector<std::string>> levelTiles,
+       std::vector<std::tuple<std::tuple<int, int>, std::tuple<int, int>>>
+           neighbourInfo);
 
   // Destructors
   virtual ~Game();
@@ -49,14 +53,18 @@ class Game {
   void updateDt();
   /**
    * @brief Updates enemy move timer.
-   * 
+   *
    */
   void updateMoveClock();
   /**
    * @brief Updates tower firing timer.
-   * 
+   *
    */
   void updateFireClock();
+  /**
+   * Spawns enemies
+   */
+  void spawnEnemies();
   /**
    * Updates mouse postion
    * - Relative to screen
@@ -114,7 +122,6 @@ class Game {
   // Towers' hit range
   sf::RectangleShape rangeIndicator;
 
-
   // Textures
   sf::Texture basicEnemyTexture;
   sf::Sprite basicEnemySprite;
@@ -127,6 +134,12 @@ class Game {
 
   sf::Texture sniperTowerTexture;
   sf::Sprite sniperTowerSprite;
+
+  sf::Texture entryPointTexture;
+  sf::Sprite entryPointSprite;
+
+  sf::Texture exitPointTexture;
+  sf::Sprite exitPointSprite;
 
   // Text
   sf::Text text;
