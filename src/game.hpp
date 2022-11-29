@@ -26,6 +26,11 @@ class Game {
        std::vector<std::tuple<std::tuple<int, int>, std::tuple<int, int>>>
            neighbourInfo);
 
+  Game(int mapsize, std::vector<std::vector<std::string>> levelTiles,
+       std::vector<std::tuple<std::tuple<int, int>, std::tuple<int, int>>>
+           neighbourInfo,
+       std::vector<std::vector<int>> enemyInfo);
+
   // Destructors
   virtual ~Game();
   ;
@@ -47,6 +52,14 @@ class Game {
    * @brief Fires towers on the map if enemy in range
    */
   void FireTowers();
+  /**
+   * @brief Updates spawn timer.
+   */
+  void updateSpawnClock();
+  /**
+   * @brief Updates building phase timer.
+   */
+  void updateBuildClock();
   /**
    * Updates clock.
    */
@@ -89,7 +102,12 @@ class Game {
  private:
   // Variables
 
-  double wallet = 0;
+  // 0 => building phase, 1 => active wave, 2 => level won
+  int gameState = 0;
+
+  double wallet = 100;
+
+  std::string latestMessage = "";
 
   // Grid size
   float gridSizeF;
@@ -99,6 +117,8 @@ class Game {
   sf::Clock dtClock;
   sf::Clock MoveClock;
   sf::Clock FireClock;
+  sf::Clock SpawnClock;
+  sf::Clock BuildClock;
 
   // Mouse positions
   sf::Vector2u mousePosScreen;
@@ -126,8 +146,11 @@ class Game {
   sf::Texture basicEnemyTexture;
   sf::Sprite basicEnemySprite;
 
-  sf::Texture basicEnemyHurtTexture;
-  sf::Sprite basicEnemyHurtSprite;
+  sf::Texture fastEnemyTexture;
+  sf::Sprite fastEnemySprite;
+
+  sf::Texture slowEnemyTexture;
+  sf::Sprite slowEnemySprite;
 
   sf::Texture basicTowerTexture;
   sf::Sprite basicTowerSprite;

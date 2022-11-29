@@ -58,6 +58,16 @@ class Level {
 
   void TurnEnemies();
 
+  int SpawnNext();
+
+  void ConfigureRound();
+
+  bool EndRound();
+
+  int GetCurrentRound();
+
+  bool LevelLost = false;
+
  private:
   const int mapSize_;
   std::vector<std::vector<std::string>> levelInfo_;
@@ -65,6 +75,7 @@ class Level {
       neighbourInfo_;
   float gridSizeF_;
   std::vector<std::vector<int>> enemyInfo_;
+  std::vector<int> roundEnemies;
   int currentRound;
 };
 

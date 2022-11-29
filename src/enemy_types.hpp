@@ -6,15 +6,15 @@
 // Define enemy type's base stats:
 // Easy enemy:
 #define EASY_HEALTH 30
-#define EASY_SPEED 10
+#define EASY_SPEED 1
 #define EASY_VALUE 10
 // Fast enemy:
-#define FAST_HEALTH 25
-#define FAST_SPEED 20
+#define FAST_HEALTH 20
+#define FAST_SPEED 2
 #define FAST_VALUE 10
 // slow enemy:
 #define SLOW_HEALTH 50
-#define SLOW_SPEED 5
+#define SLOW_SPEED 1
 #define SLOW_VALUE 20
 
 /**
@@ -30,11 +30,14 @@
  */
 class EasyEnemy : public Enemy {
  public:
-  EasyEnemy()
-      : Enemy(EASY_HEALTH, EASY_SPEED, EASY_VALUE, "rabbit_basic.png") {}
+  EasyEnemy() : Enemy(EASY_HEALTH, EASY_SPEED, EASY_VALUE, "rabbit_basic.png") {
+    this->type_ = 1;
+  }
 
   EasyEnemy(float posX, float posY)
-      : Enemy(posX, posY, EASY_HEALTH, EASY_SPEED, EASY_VALUE) {}
+      : Enemy(posX, posY, EASY_HEALTH, EASY_SPEED, EASY_VALUE) {
+    this->type_ = 1;
+  }
 };
 
 /** \class FastEnemy
@@ -42,11 +45,14 @@ class EasyEnemy : public Enemy {
  */
 class FastEnemy : public Enemy {
  public:
-  FastEnemy()
-      : Enemy(FAST_HEALTH, FAST_SPEED, FAST_VALUE, "rabbit_small.png") {}
+  FastEnemy() : Enemy(FAST_HEALTH, FAST_SPEED, FAST_VALUE, "rabbit_small.png") {
+    this->type_ = 2;
+  }
 
   FastEnemy(float posX, float posY)
-      : Enemy(posX, posY, FAST_HEALTH, FAST_SPEED, FAST_VALUE) {}
+      : Enemy(posX, posY, FAST_HEALTH, FAST_SPEED, FAST_VALUE) {
+    this->type_ = 2;
+  }
 };
 
 /** \class FastEnemy
@@ -54,10 +60,14 @@ class FastEnemy : public Enemy {
  */
 class SlowEnemy : public Enemy {
  public:
-  SlowEnemy() : Enemy(SLOW_HEALTH, SLOW_SPEED, SLOW_VALUE, "rabbit_dark.png") {}
+  SlowEnemy() : Enemy(SLOW_HEALTH, SLOW_SPEED, SLOW_VALUE, "rabbit_dark.png") {
+    this->type_ = 3;
+  }
 
   SlowEnemy(float posX, float posY)
-      : Enemy(posX, posY, SLOW_HEALTH, SLOW_SPEED, SLOW_VALUE) {}
+      : Enemy(posX, posY, SLOW_HEALTH, SLOW_SPEED, SLOW_VALUE) {
+    this->type_ = 3;
+  }
 };
 
 #endif

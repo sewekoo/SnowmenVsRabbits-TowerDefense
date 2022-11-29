@@ -4,6 +4,7 @@ Level::Level(const int mapSize, std::vector<std::vector<std::string>> levelInfo,
              float gridSizeF)
     : mapSize_(mapSize), levelInfo_(levelInfo), gridSizeF_(gridSizeF) {
   this->initializeLevel();
+  this->currentRound = 0;
 }
 
 Level::Level(const int mapSize, std::vector<std::vector<std::string>> levelInfo,
@@ -16,6 +17,7 @@ Level::Level(const int mapSize, std::vector<std::vector<std::string>> levelInfo,
       gridSizeF_(gridSizeF) {
   this->initializeLevel();
   this->initalizeNeighbours();
+  this->currentRound = 0;
 }
 
 Level::Level(const int mapSize, std::vector<std::vector<std::string>> levelInfo,
@@ -35,6 +37,8 @@ Level::Level(const int mapSize, std::vector<std::vector<std::string>> levelInfo,
 Level::~Level() {}
 
 int Level::GetMapSize() { return mapSize_; }
+
+int Level::GetCurrentRound() { return currentRound; }
 
 void Level::initializeLevel() {
   for (int x = 0; x < this->mapSize_; x++) {
@@ -128,7 +132,8 @@ void Level::MoveEnemies() {
            tileMap[x][y].GetEnemy()->GetPosY() !=
                tileMap[x][y].GetNext()->GetGridLocationY() * 1.f)) {
         tileMap[x][y].GetEnemy()->ChangePos(
-            tileMap[x][y].GetEnemy()->GetPosX() + (1.f / 100.f),
+            tileMap[x][y].GetEnemy()->GetPosX() +
+                ((tileMap[x][y].GetEnemy()->GetSpeed()) / 100.f),
             tileMap[x][y].GetEnemy()->GetPosY());
       } else if (((tileMap[x][y].type_ == 1) || (tileMap[x][y].type_ == 2)) &&
                  tileMap[x][y].IsOccupied() &&
@@ -140,7 +145,8 @@ void Level::MoveEnemies() {
                       tileMap[x][y].GetNext()->GetGridLocationY() * 1.f)) {
         tileMap[x][y].GetEnemy()->ChangePos(
             tileMap[x][y].GetEnemy()->GetPosX(),
-            tileMap[x][y].GetEnemy()->GetPosY() + (1.f / 100.f));
+            tileMap[x][y].GetEnemy()->GetPosY() +
+                ((tileMap[x][y].GetEnemy()->GetSpeed()) / 100.f));
       } else if (((tileMap[x][y].type_ == 1) || (tileMap[x][y].type_ == 2)) &&
                  tileMap[x][y].IsOccupied() &&
                  tileMap[x][y].GetEnemy()->direction == 2 &&
@@ -151,7 +157,7 @@ void Level::MoveEnemies() {
                       tileMap[x][y].GetNext()->GetGridLocationY() * 1.f)) {
         tileMap[x][y].GetEnemy()->ChangePos(
             static_cast<float>(tileMap[x][y].GetEnemy()->GetPosX()) -
-                (1.f / 100),
+                ((tileMap[x][y].GetEnemy()->GetSpeed()) / 100),
             tileMap[x][y].GetEnemy()->GetPosY());
       } else if (((tileMap[x][y].type_ == 1) || (tileMap[x][y].type_ == 2)) &&
                  tileMap[x][y].IsOccupied() &&
@@ -163,7 +169,8 @@ void Level::MoveEnemies() {
                       tileMap[x][y].GetNext()->GetGridLocationY() * 1.f)) {
         tileMap[x][y].GetEnemy()->ChangePos(
             tileMap[x][y].GetEnemy()->GetPosX(),
-            tileMap[x][y].GetEnemy()->GetPosY() - (1.f / 100.f));
+            tileMap[x][y].GetEnemy()->GetPosY() -
+                ((tileMap[x][y].GetEnemy()->GetSpeed()) / 100.f));
       }
 
       if (((tileMap[x][y].type_ == 1) || (tileMap[x][y].type_ == 2)) &&
@@ -189,6 +196,9 @@ void Level::MoveEnemies() {
         tileMap[x][y].GetNext()->MakeOccupied();
         tileMap[x][y].GetNext()->enemyMovedHere = false;
         tileMap[x][y].enemyMoved();
+        if (tileMap[x][y].GetNext()->type_ == 3) {
+          LevelLost = true;
+        }
       }
     }
   }
@@ -196,5 +206,28 @@ void Level::MoveEnemies() {
     for (int y = 0; y < GetMapSize(); y++) {
       tileMap[x][y].enemyMovedHere = true;
     }
+  }
+}
+
+bool Level::EndRound() {
+  this->currentRound += 1;
+  if (enemyInfo_.size() <= currentRound) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+void Level::ConfigureRound() {
+  this->roundEnemies = this->enemyInfo_[currentRound];
+}
+
+int Level::SpawnNext() {
+  if (!roundEnemies.empty()) {
+    int returnValue = roundEnemies[0];
+    roundEnemies.erase(roundEnemies.begin());
+    return returnValue;
+  } else {
+    return 0;
   }
 }
