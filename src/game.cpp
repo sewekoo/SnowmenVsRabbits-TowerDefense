@@ -417,9 +417,6 @@ void Game::render() {
     }
   }
 
-  // Draw entry point agains so that it's outlines go on top of its neihbours
-  this->window->draw(this->level->entrypoint);
-
   // Draw the tile selector
   this->window->draw(tileSelector);
 
