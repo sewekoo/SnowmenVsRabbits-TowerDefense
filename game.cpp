@@ -17,6 +17,17 @@ Game::Game(int mapsize, std::vector<std::vector<std::string>> levelTiles,
   this->level = new Level(mapsize, levelTiles, neighbourInfo, gridSizeF);
 }
 
+Game::Game(int mapsize, std::vector<std::vector<std::string>> levelTiles,
+           std::vector<std::tuple<std::tuple<int, int>, std::tuple<int, int>>>
+               neighbourInfo,
+           std::vector<std::vector<int>> enemyInfo) {
+  this->InitializeVariables();
+  this->InitializeWindow();
+  this->InitializeView();
+  this->level =
+      new Level(mapsize, levelTiles, neighbourInfo, gridSizeF, enemyInfo);
+}
+
 // Destructors
 Game::~Game() {
   delete this->window;
@@ -64,22 +75,28 @@ void Game::updateInput() {
             (this->level->tileMap[x][y].type_ == 0) &&
             (this->level->tileMap[x][y].GetGridLocationX() == mousePosGrid.x) &&
             (this->level->tileMap[x][y].GetGridLocationY() == mousePosGrid.y)) {
-          std::cout << "Tower upgrade sequence began" << std::endl;
-          if (this->level->tileMap[x][y].GetTower() != nullptr) {
-            std::cout << "Tile tower value is not nullptr. Trying to upgrade:"
-                      << std::endl;
-            try {
-              std::cout << this->level->tileMap[x][y].occupantTower_
-                        << "level: "
-                        << this->level->tileMap[x][y].occupantTower_->GetLevel()
+          if (this->wallet >=
+              this->level->tileMap[x][y].GetTower()->GetUpgradePrice()) {
+            std::cout << "Tower upgrade sequence began" << std::endl;
+            if (this->level->tileMap[x][y].GetTower() != nullptr) {
+              std::cout << "Tile tower value is not nullptr. Trying to upgrade:"
                         << std::endl;
-              this->level->tileMap[x][y].occupantTower_->Upgrade();
-              std::cout << "Upgrade success. New level: "
-                        << this->level->tileMap[x][y].occupantTower_->GetLevel()
-                        << std::endl;
-            } catch (const std::exception& e) {
-              std::cout << "Upgrade failed" << std::endl;
+              try {
+                std::cout
+                    << this->level->tileMap[x][y].occupantTower_ << "level: "
+                    << this->level->tileMap[x][y].occupantTower_->GetLevel()
+                    << std::endl;
+                this->level->tileMap[x][y].occupantTower_->Upgrade();
+                std::cout
+                    << "Upgrade success. New level: "
+                    << this->level->tileMap[x][y].occupantTower_->GetLevel()
+                    << std::endl;
+              } catch (const std::exception& e) {
+                std::cout << "Upgrade failed" << std::endl;
+              }
             }
+          } else {
+            latestMessage = "Not enough money.";
           }
         }
 
@@ -136,11 +153,16 @@ void Game::updateInput() {
             (this->level->tileMap[x][y].type_ == 0) &&
             (this->level->tileMap[x][y].GetGridLocationX() == mousePosGrid.x) &&
             (this->level->tileMap[x][y].GetGridLocationY() == mousePosGrid.y)) {
-          Tower* newTower =
-              new Tower(this->mousePosGrid.x, this->mousePosGrid.y);
-          towers.push_back(newTower);
-          this->level->tileMap[x][y].addOccupant(newTower);
-          this->level->tileMap[x][y].MakeOccupied();
+          if (this->wallet >= 100.0) {
+            Tower* newTower =
+                new Tower(this->mousePosGrid.x, this->mousePosGrid.y);
+            towers.push_back(newTower);
+            this->level->tileMap[x][y].addOccupant(newTower);
+            this->level->tileMap[x][y].MakeOccupied();
+            this->wallet -= 100;
+          } else {
+            latestMessage = "Not enough money";
+          }
         }
       }
     }
@@ -242,6 +264,51 @@ void Game::FireTowers() {
   }
 }
 
+void Game::spawnEnemies() {
+  for (int x = 0; x < this->level->GetMapSize(); x++) {
+    for (int y = 0; y < this->level->GetMapSize(); y++) {
+      if (this->level->tileMap[x][y].type_ == 2 &&
+          !this->level->tileMap[x][y].IsOccupied()) {
+        std::cout << "Enemy adding sequence began" << std::endl;
+        int nextEnemyType = this->level->SpawnNext();
+        Enemy* newEnemy;
+        if (nextEnemyType == 1) {
+          newEnemy =
+              new EasyEnemy(this->level->tileMap[x][y].GetGridLocationX(),
+                            this->level->tileMap[x][y].GetGridLocationY());
+        } else if (nextEnemyType == 2) {
+          newEnemy =
+              new FastEnemy(this->level->tileMap[x][y].GetGridLocationX(),
+                            this->level->tileMap[x][y].GetGridLocationY());
+        } else if (nextEnemyType == 3) {
+          newEnemy =
+              new SlowEnemy(this->level->tileMap[x][y].GetGridLocationX(),
+                            this->level->tileMap[x][y].GetGridLocationY());
+        } else if (nextEnemyType == 0) {
+          if (enemies.empty()) {
+            if (this->level->EndRound()) {
+              latestMessage = "Level won!";
+              this->gameState = 2;
+            } else {
+              this->BuildClock.restart();
+              this->gameState = 0;
+            }
+          }
+        }
+        if (nextEnemyType != 0) {
+          std::cout << "Enemy created into variable succesful" << std::endl;
+          enemies.push_back(newEnemy);
+          std::cout << "Enemy pushed to enemies vector succesful" << std::endl;
+          this->level->tileMap[x][y].addOccupant(newEnemy);
+          enemiesAdded++;
+          this->level->tileMap[x][y].MakeOccupied();
+          std::cout << "Succesfully increased enemy counter" << std::endl;
+        }
+      }
+    }
+  }
+}
+
 /**
  * @brief Updates tower firing clock.
  * Change fireTime variable to change all towers' fire rate
@@ -250,8 +317,31 @@ void ::Game::updateFireClock() {
   sf::Time timeElapsed = FireClock.getElapsedTime();
   sf::Int64 fireTime = 60000;
   if (timeElapsed.asMicroseconds() >= fireTime) {
-    FireClock.restart();
-    FireTowers();
+    if (!this->level->LevelLost) {
+      FireClock.restart();
+      FireTowers();
+    } else {
+      latestMessage = "Level lost.";
+    }
+  }
+}
+
+void Game::updateBuildClock() {
+  sf::Time timeElapsed = SpawnClock.getElapsedTime();
+  float buildingTime = 5;
+  if (timeElapsed.asSeconds() >= buildingTime && gameState == 0) {
+    SpawnClock.restart();
+    this->level->ConfigureRound();
+    gameState = 1;
+  }
+}
+
+void Game::updateSpawnClock() {
+  sf::Time timeElapsed = SpawnClock.getElapsedTime();
+  float spawnTime = 2;
+  if (timeElapsed.asSeconds() >= spawnTime && gameState == 1) {
+    SpawnClock.restart();
+    this->spawnEnemies();
   }
 }
 
@@ -267,10 +357,12 @@ void Game::updateMoveClock() {
   sf::Time timeElapsed = MoveClock.getElapsedTime();
   sf::Int64 moveTime = 6000;
   if (timeElapsed.asMicroseconds() >= moveTime) {
-    MoveClock.restart();
-    // std::cout << "Move enemies" << std::endl;
-    this->level->TurnEnemies();
-    this->level->MoveEnemies();
+    if (!this->level->LevelLost) {
+      MoveClock.restart();
+      // std::cout << "Move enemies" << std::endl;
+      this->level->TurnEnemies();
+      this->level->MoveEnemies();
+    }
   }
 }
 
@@ -307,6 +399,13 @@ void Game::updateMousePosition() {
   ss << "Enemies added: " << enemiesAdded << std::endl;
   ss << "Mouse clicked: " << mouseClicked << std::endl;
   ss << "Wallet: " << wallet << std::endl;
+  ss << "Game state: " << gameState << std::endl;
+  ss << "Current round: " << (this->level->GetCurrentRound() + 1) << std::endl;
+  if (gameState == 0) {
+    ss << "Building time: " << (5 - BuildClock.getElapsedTime().asSeconds())
+       << std::endl;
+  }
+  ss << latestMessage << std::endl;
   text.setString(ss.str());
 }
 
@@ -325,6 +424,8 @@ void Game::update() {
   this->updateTileSelector();
   this->updateFireClock();
   this->updateMoveClock();
+  this->updateBuildClock();
+  this->updateSpawnClock();
 }
 /**
  * @return void
@@ -392,19 +493,50 @@ void Game::render() {
       */
 
   for (auto i : enemies) {
-    basicEnemySprite.setPosition(i->GetPosX() * gridSizeF,
-                                 i->GetPosY() * gridSizeF);
-    basicEnemySprite.move((sf::Vector2f)basicEnemyTexture.getSize() / 2.f);
-    if (i->direction == 0) {
-      basicEnemySprite.setRotation(360);
-    } else if (i->direction == 1) {
-      basicEnemySprite.setRotation(90);
-    } else if (i->direction == 2) {
-      basicEnemySprite.setRotation(180);
-    } else if (i->direction == 3) {
-      basicEnemySprite.setRotation(270);
+    if (i->type_ == 1) {
+      basicEnemySprite.setPosition(i->GetPosX() * gridSizeF,
+                                   i->GetPosY() * gridSizeF);
+      basicEnemySprite.move((sf::Vector2f)basicEnemyTexture.getSize() / 2.f);
+      if (i->direction == 0) {
+        basicEnemySprite.setRotation(360);
+      } else if (i->direction == 1) {
+        basicEnemySprite.setRotation(90);
+      } else if (i->direction == 2) {
+        basicEnemySprite.setRotation(180);
+      } else if (i->direction == 3) {
+        basicEnemySprite.setRotation(270);
+      }
+      this->window->draw(basicEnemySprite);
+
+    } else if (i->type_ == 2) {
+      fastEnemySprite.setPosition(i->GetPosX() * gridSizeF,
+                                  i->GetPosY() * gridSizeF);
+      fastEnemySprite.move((sf::Vector2f)fastEnemyTexture.getSize() / 2.f);
+      if (i->direction == 0) {
+        fastEnemySprite.setRotation(360);
+      } else if (i->direction == 1) {
+        fastEnemySprite.setRotation(90);
+      } else if (i->direction == 2) {
+        fastEnemySprite.setRotation(180);
+      } else if (i->direction == 3) {
+        fastEnemySprite.setRotation(270);
+      }
+      this->window->draw(fastEnemySprite);
+    } else if (i->type_ == 3) {
+      slowEnemySprite.setPosition(i->GetPosX() * gridSizeF,
+                                  i->GetPosY() * gridSizeF);
+      slowEnemySprite.move((sf::Vector2f)slowEnemyTexture.getSize() / 2.f);
+      if (i->direction == 0) {
+        slowEnemySprite.setRotation(360);
+      } else if (i->direction == 1) {
+        slowEnemySprite.setRotation(90);
+      } else if (i->direction == 2) {
+        slowEnemySprite.setRotation(180);
+      } else if (i->direction == 3) {
+        slowEnemySprite.setRotation(270);
+      }
+      this->window->draw(slowEnemySprite);
     }
-    this->window->draw(basicEnemySprite);
   }
 
   for (auto i : towers) {
@@ -485,6 +617,24 @@ void Game::InitializeVariables() {
   basicEnemySprite.setScale(sf::Vector2f(gridSizeF / 100, gridSizeF / 100));
   basicEnemySprite.setOrigin(((sf::Vector2f)basicEnemyTexture.getSize() / 2.f) *
                              (gridSizeF / 100));
+
+  // Fast enemy texture
+  if (!fastEnemyTexture.loadFromFile("pics/rabbit_small.png")) {
+    std::cout << "Texture for enemy load failed" << std::endl;
+  }
+  fastEnemySprite.setTexture(fastEnemyTexture);
+  fastEnemySprite.setScale(sf::Vector2f(gridSizeF / 100, gridSizeF / 100));
+  fastEnemySprite.setOrigin(((sf::Vector2f)fastEnemyTexture.getSize() / 2.f) *
+                            (gridSizeF / 100));
+
+  // Slow enemy texture
+  if (!slowEnemyTexture.loadFromFile("pics/rabbit_black.png")) {
+    std::cout << "Texture for enemy load failed" << std::endl;
+  }
+  slowEnemySprite.setTexture(slowEnemyTexture);
+  slowEnemySprite.setScale(sf::Vector2f(gridSizeF / 100, gridSizeF / 100));
+  slowEnemySprite.setOrigin(((sf::Vector2f)slowEnemyTexture.getSize() / 2.f) *
+                            (gridSizeF / 100));
 
   // Basic tower texture
   if (!basicTowerTexture.loadFromFile("pics/snowman_basic.png")) {
@@ -570,13 +720,14 @@ void Game::InitializeLevel() {
       };
 
   std::vector<std::vector<int>> defaultEnemies{
-      {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-      {0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1},
-      {0, 2, 0, 2, 0, 2, 0, 0, 2, 0, 2, 2},
-      {1, 0, 2, 0, 1, 2, 0, 0, 2, 0, 1, 1},
-      {1, 1, 2, 1, 1, 2, 2, 2, 1, 1, 1, 2},
+      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+      {1, 2, 1, 1, 2, 1, 1, 2, 1, 1, 2, 2},
+      {1, 3, 1, 3, 1, 3, 1, 1, 3, 1, 3, 3},
+      {2, 1, 3, 1, 2, 3, 1, 1, 3, 1, 2, 2},
+      {2, 2, 3, 2, 2, 3, 3, 3, 2, 2, 2, 3},
   };
 
   // Calls level class constructor.
-  this->level = new Level(12, defaultLevel, defaultNeighbours, gridSizeF);
+  this->level =
+      new Level(12, defaultLevel, defaultNeighbours, gridSizeF, defaultEnemies);
 }

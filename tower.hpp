@@ -9,7 +9,7 @@ class Tower {
   // TODO: figure out range unit, also coordinate enemy health pool and tower
   // damage
   Tower()
-      : damage_(20),
+      : damage_(10),
         range_(1),
         attackSpeed_(1.2),
         value_(100),
@@ -28,7 +28,7 @@ class Tower {
         texture_(texture) {}
 
   Tower(float posX, float posY)
-      : damage_(20),
+      : damage_(10),
         range_(1),
         attackSpeed_(1.2),
         value_(100),

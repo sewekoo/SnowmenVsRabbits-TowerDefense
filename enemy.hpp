@@ -20,13 +20,13 @@
 
 class Enemy : public sf::RectangleShape {
  public:
-  Enemy(double hp, double speed, double value, std::string texture)
+  Enemy(double hp, double speed, float value, std::string texture)
       : hp_(hp), speed_(speed), value_(value), texture_(texture) {}
 
   /**
    * Constructor with extra parameters for position in grid
    */
-  Enemy(float posX, float posY, double hp, double speed, double value)
+  Enemy(float posX, float posY, double hp, float speed, double value)
       : sf::RectangleShape(sf::Vector2f(gridSizeF, gridSizeF)) {
     posX_ = posX;
     posY_ = posY;
@@ -56,7 +56,7 @@ class Enemy : public sf::RectangleShape {
   }
 
   const double GetHP() const { return hp_; } /**< Getter function returns HP */
-  const double GetSpeed() const {
+  const float GetSpeed() const {
     return speed_;
   } /**< Getter function returns Speed */
   const double GetValue() const {
@@ -89,9 +89,11 @@ class Enemy : public sf::RectangleShape {
 
   int direction = 0;
 
+  int type_;
+
  private:
   double hp_;
-  double speed_;
+  float speed_;
   double value_;
   std::string texture_;
   float gridSizeF = 80.f;
