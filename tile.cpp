@@ -23,7 +23,6 @@ void Tile::enemyMoved() {
   this->MakeFree();
 }
 
-
 void Tile::SetNeighbour(Tile* neighbour) { next_ = neighbour; }
 
 Tile* Tile::GetNext() { return next_; }

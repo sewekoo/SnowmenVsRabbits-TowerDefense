@@ -338,8 +338,8 @@ void Game::updateBuildClock() {
 
 void Game::updateSpawnClock() {
   sf::Time timeElapsed = SpawnClock.getElapsedTime();
-  float spawnTime = 2;
-  if (timeElapsed.asSeconds() >= spawnTime && gameState == 1) {
+  sf::Int32 spawnTime = 1500;
+  if (timeElapsed.asMilliseconds() >= spawnTime && gameState == 1) {
     SpawnClock.restart();
     this->spawnEnemies();
   }
@@ -496,9 +496,10 @@ void Game::render() {
     if (i->type_ == 1) {
       basicEnemySprite.setPosition(i->GetPosX() * gridSizeF,
                                    i->GetPosY() * gridSizeF);
-      basicEnemySprite.move((sf::Vector2f)basicEnemyTexture.getSize() / 2.f);
+      basicEnemySprite.move((sf::Vector2f)fastEnemyTexture.getSize() / 2.f);
       if (i->direction == 0) {
-        basicEnemySprite.setRotation(360);
+        basicEnemySprite.setRotation(0);
+        basicEnemySprite.move(sf::Vector2f(2.f / 2.f, 4 * -gridSizeF / 20.f));
       } else if (i->direction == 1) {
         basicEnemySprite.setRotation(90);
       } else if (i->direction == 2) {
@@ -513,7 +514,8 @@ void Game::render() {
                                   i->GetPosY() * gridSizeF);
       fastEnemySprite.move((sf::Vector2f)fastEnemyTexture.getSize() / 2.f);
       if (i->direction == 0) {
-        fastEnemySprite.setRotation(360);
+        fastEnemySprite.setRotation(0);
+        fastEnemySprite.move(sf::Vector2f(2.f / 2.f, 4 * -gridSizeF / 20.f));
       } else if (i->direction == 1) {
         fastEnemySprite.setRotation(90);
       } else if (i->direction == 2) {
@@ -527,7 +529,8 @@ void Game::render() {
                                   i->GetPosY() * gridSizeF);
       slowEnemySprite.move((sf::Vector2f)slowEnemyTexture.getSize() / 2.f);
       if (i->direction == 0) {
-        slowEnemySprite.setRotation(360);
+        slowEnemySprite.setRotation(0);
+        slowEnemySprite.move(sf::Vector2f(2.f / 2.f, 4 * -gridSizeF / 20.f));
       } else if (i->direction == 1) {
         slowEnemySprite.setRotation(90);
       } else if (i->direction == 2) {
@@ -615,8 +618,7 @@ void Game::InitializeVariables() {
   }
   basicEnemySprite.setTexture(basicEnemyTexture);
   basicEnemySprite.setScale(sf::Vector2f(gridSizeF / 100, gridSizeF / 100));
-  basicEnemySprite.setOrigin(((sf::Vector2f)basicEnemyTexture.getSize() / 2.f) *
-                             (gridSizeF / 100));
+  basicEnemySprite.setOrigin(sf::Vector2f(gridSizeF / 2.f, gridSizeF / 2.f));
 
   // Fast enemy texture
   if (!fastEnemyTexture.loadFromFile("pics/rabbit_small.png")) {
