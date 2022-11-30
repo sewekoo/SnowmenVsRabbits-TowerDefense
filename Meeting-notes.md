@@ -252,6 +252,8 @@ Menu looks good and has interacable buttons, but doesn't yet connect to the game
 5. Towers detecting enemies
 
 
+
+
 # Meeting 28.11.2022 0H::40M
 
 **Participants**:
@@ -302,6 +304,67 @@ The project has most of the basic elements done but needs still some work
 ### TODOs
 
 Reflected in the actions-section
+
+
+
+
+# Meeting 30.11.2022 18->
+
+**Participants**:
+
+1. Roosa Ahlroos
+2. Severi Koivumaa
+3. Karl Rass
+4. Lauri Karanko
+
+## Summary of works
+
+1. Roosa
+   Worked on adding background image to menu screen
+
+2. Lauri
+   Menu screen image
+
+3. Severi
+   wave implementation and working money usage
+   Spawning enemies during waves
+
+4. Karl
+   Implementing nonhardcoded levels and a function to read them from a file
+   Creating a few level types
+
+5. During the meeting: Some start/ideas on reading files and creating levels based on it
+
+## Challenges
+
+1. Sidebar
+2. How/where to read the level-design files
+
+## Actions
+
+1. Roosa: Looking into getting the sidebar to the game.
+2. Lauri: Looking into pop up -windows / other additional features.
+3. Severi: Adding the animations for the snowballs and features regarding the winning/losing condition.
+4. Karl: Balancing values for money and HP etc. so that game dynamic works better. Also sound effects.
+
+> Please reflect these action decisions in your git commit messages so that your
+> group members and advisor can follow the progress.
+
+## Project status
+
+The project has large portion of the mandatory features in it, although values for damage, HP and speed need adjusting.
+Animations for towers shooting the enemies would be nice.
+
+### TODOs
+
+Some changes are needed also in upgrading process of the towers.
+Animation, sounds, moving projectiles.
+Maybe multiple paths for enemies.
+Other TODOs reflected in the actions-section.
+
+
+
+
 
 
 # Meeting dd.mm.2022 HH::MM
