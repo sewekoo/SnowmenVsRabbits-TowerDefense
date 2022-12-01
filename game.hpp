@@ -143,6 +143,9 @@ class Game {
   sf::RectangleShape rangeIndicator;
 
   // Textures
+  sf::Texture roadTexture;
+  sf::Sprite roadSprite;
+
   sf::Texture basicEnemyTexture;
   sf::Sprite basicEnemySprite;
 
