@@ -35,6 +35,9 @@ Game::~Game() {
   for (auto i : towers) {
     delete i;
   }
+  for (auto i : snowballs) {
+    delete i;
+  }
 }
 
 // Functions
@@ -221,31 +224,13 @@ void Game::FireTowers() {
                          this->level->tileMap[z][q].GetGridLocationY() <
                      0)))) {
                 if (this->level->tileMap[x][y].GetTower()->ReadyToFire) {
-                  if (this->level->tileMap[z][q].GetEnemy()->TakeDamage(
-                          this->level->tileMap[x][y].GetTower()->GetDamage())) {
-                    auto size = enemies.size();
-                    for (int i = 0; i != size; i++) {
-                      if (enemies[i]->GetHP() <= 0) {
-                        enemies.erase(enemies.begin() + i);
-                      }
-                    }
-                    this->wallet +=
-                        this->level->tileMap[z][q].GetEnemy()->GetValue();
-                    this->level->tileMap[z][q].removeEnemy();
-                    std::cout << "Enemy is killed" << std::endl;
-                  } else {
-                    std::cout << "Enemy hp: "
-                              << this->level->tileMap[z][q].GetEnemy()->GetHP()
-                              << std::endl;
-                  }
-                  std::cout
-                      << "Tower at "
-                      << this->level->tileMap[x][y].GetGridLocationX() << " "
-                      << this->level->tileMap[x][y].GetGridLocationY()
-                      << " fired enemy at "
-                      << this->level->tileMap[z][q].GetGridLocationX() << " "
-                      << this->level->tileMap[z][q].GetGridLocationY()
-                      << std::endl;
+                  spawnSnowball(
+                      this->level->tileMap[x][y].GetTower()->posX_,
+                      this->level->tileMap[x][y].GetTower()->posY_,
+                      this->level->tileMap[z][q].GetEnemy(),
+                      this->level->tileMap[z][q].GetGridLocationX(),
+                      this->level->tileMap[z][q].GetGridLocationY(),
+                      this->level->tileMap[x][y].GetTower()->GetDamage());
                   this->level->tileMap[x][y].GetTower()->ReadyToFire = false;
                 } else {
                   this->level->tileMap[x][y].GetTower()->CooldownValue += 0.1;
@@ -264,12 +249,118 @@ void Game::FireTowers() {
   }
 }
 
+void Game::spawnSnowball(float posX, float posY, Enemy* enemy, int targetGridX,
+                         int targetGridY, int damage) {
+  Snowball* newSnowball =
+      new Snowball(posX, posY, targetGridX, targetGridY, damage);
+  // std::cout << "New snowball at pos: " << posX << " " << posY << std::endl;
+  // std::cout << "Target pos at: " << targetGridX << " " << targetGridY
+  //<< std::endl;
+  newSnowball->AddTarget(enemy);
+  snowballs.push_back(newSnowball);
+}
+
+void Game::updateSnowballs() {
+  int flightLength = 30;
+  for (auto ball : snowballs) {
+    // std::cout << "Ball targetPosX: " << ball->targetPosX << std::endl;
+    // std::cout << "Ball initialPosX: " << ball->initialPosX << std::endl;
+    // std::cout << "Ball maxFlightX: " << ball->maxFlightX() << std::endl;
+    // std::cout << "Ball moved from " << ball->GetPosX() << " "
+    //  << ball->GetPosY();
+    ball->move(ball->maxFlightX() / flightLength,
+               ball->maxFlightY() / flightLength);
+    // std::cout << " to: " << ball->GetPosX() << " " << ball->GetPosY()
+    //       << std::endl;
+    if (ball->GetFlightTicks() >= flightLength) {
+      if (this->level->tileMap[ball->GetTargetGridX()][ball->GetTargetGridY()]
+              .IsOccupied() &&
+          this->level->tileMap[ball->GetTargetGridX()][ball->GetTargetGridY()]
+                  .type_ == 1) {
+        if (this->level->tileMap[ball->GetTargetGridX()][ball->GetTargetGridY()]
+                .GetEnemy()
+                ->TakeDamage(ball->GetDamage())) {
+          auto size = enemies.size();
+          for (int i = 0; i != size; i++) {
+            if (enemies[i]->GetHP() <= 0) {
+              enemies.erase(enemies.begin() + i);
+            }
+          }
+          this->wallet +=
+              this->level
+                  ->tileMap[ball->GetTargetGridX()][ball->GetTargetGridY()]
+                  .GetEnemy()
+                  ->GetValue();
+          this->level->tileMap[ball->GetTargetGridX()][ball->GetTargetGridY()]
+              .removeEnemy();
+          // std::cout << "Enemy is killed" << std::endl;
+        } else {
+          // std::cout
+          //<< "Enemy hp: "
+          //<< this->level
+          //      ->tileMap[ball->GetTargetGridX()][ball->GetTargetGridY()]
+          //      .GetEnemy()
+          //       ->GetHP()
+          //<< std::endl;
+        }
+      } else if (this->level
+                     ->tileMap[ball->GetTargetGridX()][ball->GetTargetGridY()]
+                     .GetNext()
+                     ->IsOccupied() &&
+                 this->level
+                         ->tileMap[ball->GetTargetGridX()]
+                                  [ball->GetTargetGridY()]
+                         .GetNext()
+                         ->type_ == 1) {
+        if (this->level->tileMap[ball->GetTargetGridX()][ball->GetTargetGridY()]
+                .GetNext()
+                ->GetEnemy()
+                ->TakeDamage(ball->GetDamage())) {
+          auto size = enemies.size();
+          for (int i = 0; i != size; i++) {
+            if (enemies[i]->GetHP() <= 0) {
+              enemies.erase(enemies.begin() + i);
+            }
+          }
+          this->wallet +=
+              this->level
+                  ->tileMap[ball->GetTargetGridX()][ball->GetTargetGridY()]
+                  .GetNext()
+                  ->GetEnemy()
+                  ->GetValue();
+          this->level->tileMap[ball->GetTargetGridX()][ball->GetTargetGridY()]
+              .GetNext()
+              ->removeEnemy();
+          // std::cout << "Enemy is killed" << std::endl;
+        } else {
+          // std::cout
+          //    << "Enemy hp: "
+          //    << this->level
+          //          ->tileMap[ball->GetTargetGridX()][ball->GetTargetGridY()]
+          //          .GetNext()
+          //           ->GetEnemy()
+          //            ->GetHP()
+          //   << std::endl;
+        }
+      }
+      auto size = snowballs.size();
+      for (int i = 0; i != size; i++) {
+        if (snowballs[i]->GetFlightTicks() >= flightLength) {
+          Snowball* it = snowballs.at(i);
+          delete it;
+          snowballs.erase(snowballs.begin() + i);
+        }
+      }
+    }
+  }
+}
+
 void Game::spawnEnemies() {
   for (int x = 0; x < this->level->GetMapSize(); x++) {
     for (int y = 0; y < this->level->GetMapSize(); y++) {
       if (this->level->tileMap[x][y].type_ == 2 &&
           !this->level->tileMap[x][y].IsOccupied()) {
-        std::cout << "Enemy adding sequence began" << std::endl;
+        // std::cout << "Enemy adding sequence began" << std::endl;
         int nextEnemyType = this->level->SpawnNext();
         Enemy* newEnemy;
         if (nextEnemyType == 1) {
@@ -296,13 +387,14 @@ void Game::spawnEnemies() {
           }
         }
         if (nextEnemyType != 0) {
-          std::cout << "Enemy created into variable succesful" << std::endl;
+          // std::cout << "Enemy created into variable succesful" << std::endl;
           enemies.push_back(newEnemy);
-          std::cout << "Enemy pushed to enemies vector succesful" << std::endl;
+          // std::cout << "Enemy pushed to enemies vector succesful" <<
+          // std::endl;
           this->level->tileMap[x][y].addOccupant(newEnemy);
           enemiesAdded++;
           this->level->tileMap[x][y].MakeOccupied();
-          std::cout << "Succesfully increased enemy counter" << std::endl;
+          // std::cout << "Succesfully increased enemy counter" << std::endl;
         }
       }
     }
@@ -315,7 +407,7 @@ void Game::spawnEnemies() {
  */
 void ::Game::updateFireClock() {
   sf::Time timeElapsed = FireClock.getElapsedTime();
-  sf::Int64 fireTime = 60000;
+  sf::Int64 fireTime = 40000;
   if (timeElapsed.asMicroseconds() >= fireTime) {
     if (!this->level->LevelLost) {
       FireClock.restart();
@@ -323,6 +415,15 @@ void ::Game::updateFireClock() {
     } else {
       latestMessage = "Level lost.";
     }
+  }
+}
+
+void Game::updateSnowballClock() {
+  sf::Time timeElapsed = SnowballClock.getElapsedTime();
+  sf::Int64 snowballSpeed = 10000;
+  if (timeElapsed.asMicroseconds() >= snowballSpeed) {
+    SnowballClock.restart();
+    updateSnowballs();
   }
 }
 
@@ -422,6 +523,7 @@ void Game::update() {
   this->pollEvents();
   this->updateInput();
   this->updateTileSelector();
+  this->updateSnowballClock();
   this->updateFireClock();
   this->updateMoveClock();
   this->updateBuildClock();
@@ -559,6 +661,15 @@ void Game::render() {
     }
   }
 
+  for (auto i : snowballs) {
+    snowballSprite.setPosition(i->GetPosX() * gridSizeF,
+                               i->GetPosY() * gridSizeF);
+    snowballSprite.move((sf::Vector2f)snowballTexture.getSize() / 2.f);
+    this->window->draw(snowballSprite);
+    // std::cout << "Snowball drawn at pos: " << i->GetPosX() << " & "
+    //           << i->GetPosY() << std::endl;
+  }
+
   // Draw the tile selector
   this->window->draw(tileSelector);
 
@@ -625,6 +736,15 @@ void Game::InitializeVariables() {
   }
   roadSprite.setTexture(roadTexture);
   roadSprite.setScale(sf::Vector2f(gridSizeF / 100, gridSizeF / 100));
+
+  // Snowball texture
+  if (!snowballTexture.loadFromFile("pics/snowball.png")) {
+    std::cout << "Texture for snowball load failed" << std::endl;
+  }
+  snowballSprite.setTexture(snowballTexture);
+  snowballSprite.setScale(sf::Vector2f(gridSizeF / 100, gridSizeF / 100));
+  snowballSprite.setOrigin(((sf::Vector2f)snowballTexture.getSize() / 2.f) *
+                           (gridSizeF / 100));
 
   // Basic enemy texture
   if (!basicEnemyTexture.loadFromFile("pics/rabbit_basic.png")) {
