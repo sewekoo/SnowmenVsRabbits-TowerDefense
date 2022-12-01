@@ -27,6 +27,10 @@ public:
         text.setFillColor(color);
     }
 
+    void SetTexture(sf::Texture texture) { 
+        button.setTexture(&texture); 
+    }
+
     void SetPosition(sf::Vector2f pos) { 
         button.setPosition(pos);
         float posX = (pos.x + button.getLocalBounds().width / 6) -

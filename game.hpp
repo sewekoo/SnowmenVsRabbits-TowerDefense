@@ -53,6 +53,14 @@ class Game {
    */
   void FireTowers();
   /**
+   * @brief Updates spawn timer.
+   */
+  void updateSpawnClock();
+  /**
+   * @brief Updates building phase timer.
+   */
+  void updateBuildClock();
+  /**
    * Updates clock.
    */
   void updateDt();
@@ -66,14 +74,6 @@ class Game {
    *
    */
   void updateFireClock();
-  /**
-   * @brief Updates spawn timer.
-   */
-  void updateSpawnClock();
-  /**
-   * @brief Updates building phase timer.
-   */
-  void updateBuildClock();
   /**
    * Spawns enemies
    */

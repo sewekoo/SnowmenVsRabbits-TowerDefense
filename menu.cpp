@@ -111,10 +111,16 @@ void loadLevel(std::string levelName) {
 int main() {
   RenderWindow MENU(VideoMode(960, 720), "MENU", Style::Default);
 
+  RectangleShape background;
+  background.setSize(Vector2f(960, 650));
+  Texture Picture;
+  Picture.loadFromFile("pics/menuscreen.png");
+  background.setTexture(&Picture);
+
   Button bplay("Play", {100, 50}, 20, Color::Black, Color::White, Color::White);
   Button bexit("Exit", {100, 50}, 20, Color::Black, Color::White, Color::White);
-  bplay.SetPosition({400, 200});
-  bexit.SetPosition({400, 400});
+  bplay.SetPosition({300, 500});
+  bexit.SetPosition({550, 500});
 
   Font font;
   font.loadFromFile("Fonts/Sono-Regular.ttf");
@@ -215,6 +221,7 @@ int main() {
       }
     }
     MENU.clear();
+    MENU.draw(background);
     bplay.drawTo(MENU);
     bexit.drawTo(MENU);
     MENU.display();

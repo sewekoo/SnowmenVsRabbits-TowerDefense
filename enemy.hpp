@@ -20,7 +20,7 @@
 
 class Enemy : public sf::RectangleShape {
  public:
-  Enemy(double hp, double speed, float value, std::string texture)
+  Enemy(double hp, float speed, double value, std::string texture)
       : hp_(hp), speed_(speed), value_(value), texture_(texture) {}
 
   /**

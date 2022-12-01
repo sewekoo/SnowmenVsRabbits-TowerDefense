@@ -57,8 +57,6 @@ class Tile : public sf::RectangleShape {
   Tower* occupantTower_;
   Enemy* occupantEnemy_;
 
-  std::vector<Enemy*> occupantEnemies;
-
   bool enemyMovedHere = true;
 
  private:

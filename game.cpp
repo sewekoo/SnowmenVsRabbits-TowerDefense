@@ -159,7 +159,6 @@ void Game::updateInput() {
             towers.push_back(newTower);
             this->level->tileMap[x][y].addOccupant(newTower);
             this->level->tileMap[x][y].MakeOccupied();
-            this->wallet -= 100;
           } else {
             latestMessage = "Not enough money";
           }
@@ -338,8 +337,8 @@ void Game::updateBuildClock() {
 
 void Game::updateSpawnClock() {
   sf::Time timeElapsed = SpawnClock.getElapsedTime();
-  sf::Int32 spawnTime = 1500;
-  if (timeElapsed.asMilliseconds() >= spawnTime && gameState == 1) {
+  float spawnTime = 2;
+  if (timeElapsed.asSeconds() >= spawnTime && gameState == 1) {
     SpawnClock.restart();
     this->spawnEnemies();
   }
@@ -496,7 +495,7 @@ void Game::render() {
     if (i->type_ == 1) {
       basicEnemySprite.setPosition(i->GetPosX() * gridSizeF,
                                    i->GetPosY() * gridSizeF);
-      basicEnemySprite.move((sf::Vector2f)fastEnemyTexture.getSize() / 2.f);
+      basicEnemySprite.move((sf::Vector2f)basicEnemyTexture.getSize() / 2.f);
       if (i->direction == 0) {
         basicEnemySprite.setRotation(0);
         basicEnemySprite.move(sf::Vector2f(2.f / 2.f, 4 * -gridSizeF / 20.f));
@@ -506,6 +505,7 @@ void Game::render() {
         basicEnemySprite.setRotation(180);
       } else if (i->direction == 3) {
         basicEnemySprite.setRotation(270);
+        basicEnemySprite.move(sf::Vector2f(4 * -gridSizeF / 20.f, 1.f));
       }
       this->window->draw(basicEnemySprite);
 
@@ -522,8 +522,10 @@ void Game::render() {
         fastEnemySprite.setRotation(180);
       } else if (i->direction == 3) {
         fastEnemySprite.setRotation(270);
+        fastEnemySprite.move(sf::Vector2f(4 * -gridSizeF / 20.f, 1.f));
       }
       this->window->draw(fastEnemySprite);
+
     } else if (i->type_ == 3) {
       slowEnemySprite.setPosition(i->GetPosX() * gridSizeF,
                                   i->GetPosY() * gridSizeF);
@@ -537,6 +539,7 @@ void Game::render() {
         slowEnemySprite.setRotation(180);
       } else if (i->direction == 3) {
         slowEnemySprite.setRotation(270);
+        slowEnemySprite.move(sf::Vector2f(4 * -gridSizeF / 20.f, 1.f));
       }
       this->window->draw(slowEnemySprite);
     }
@@ -618,7 +621,8 @@ void Game::InitializeVariables() {
   }
   basicEnemySprite.setTexture(basicEnemyTexture);
   basicEnemySprite.setScale(sf::Vector2f(gridSizeF / 100, gridSizeF / 100));
-  basicEnemySprite.setOrigin(sf::Vector2f(gridSizeF / 2.f, gridSizeF / 2.f));
+  basicEnemySprite.setOrigin(((sf::Vector2f)basicEnemyTexture.getSize() / 2.f) *
+                             (gridSizeF / 100));
 
   // Fast enemy texture
   if (!fastEnemyTexture.loadFromFile("pics/rabbit_small.png")) {
