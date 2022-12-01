@@ -4,6 +4,7 @@
 #include <sstream>
 
 #include "level.hpp"
+#include "snowball.hpp"
 
 /**
  * Class that updates the game and handles "core logic".
@@ -75,6 +76,19 @@ class Game {
    */
   void updateFireClock();
   /**
+   * @brief Updates snowball clock.
+   */
+  void updateSnowballClock();
+  /**
+   * @brief Updates snowball animation clock.
+   */
+  void updateSnowballs();
+  /**
+   * @brief Spawns snowball on specified spot
+   */
+  void spawnSnowball(float posX, float posY, Enemy* enemy, int targetGridX,
+                     int targetGridY, int damage);
+  /**
    * Spawns enemies
    */
   void spawnEnemies();
@@ -116,6 +130,7 @@ class Game {
   // Clock
   sf::Clock dtClock;
   sf::Clock MoveClock;
+  sf::Clock SnowballClock;
   sf::Clock FireClock;
   sf::Clock SpawnClock;
   sf::Clock BuildClock;
@@ -136,6 +151,9 @@ class Game {
   std::vector<Enemy*> enemies;
   int enemiesAdded = 0;
 
+  // Snowballs
+  std::vector<Snowball*> snowballs;
+
   // Towers
   std::vector<Tower*> towers;
 
@@ -145,6 +163,9 @@ class Game {
   // Textures
   sf::Texture roadTexture;
   sf::Sprite roadSprite;
+
+  sf::Texture snowballTexture;
+  sf::Sprite snowballSprite;
 
   sf::Texture basicEnemyTexture;
   sf::Sprite basicEnemySprite;
