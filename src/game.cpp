@@ -448,6 +448,9 @@ void Game::render() {
       } else if (this->level->tileMap[x][y].type_ == 3) {
         exitPointSprite.setPosition(this->level->tileMap[x][y].getPosition());
         this->window->draw(exitPointSprite);
+      } else if (this->level->tileMap[x][y].type_ == 1) {
+        roadSprite.setPosition(this->level->tileMap[x][y].getPosition());
+        this->window->draw(roadSprite);
       }
     }
   }
@@ -615,6 +618,13 @@ void Game::InitializeVariables() {
   }
   exitPointSprite.setTexture(exitPointTexture);
   exitPointSprite.setScale(sf::Vector2f(gridSizeF / 100, gridSizeF / 100));
+
+  // Road texture
+  if (!roadTexture.loadFromFile("pics/path.png")) {
+    std::cout << "Texture for road load failed" << std::endl;
+  }
+  roadSprite.setTexture(roadTexture);
+  roadSprite.setScale(sf::Vector2f(gridSizeF / 100, gridSizeF / 100));
 
   // Basic enemy texture
   if (!basicEnemyTexture.loadFromFile("pics/rabbit_basic.png")) {
