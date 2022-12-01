@@ -159,6 +159,7 @@ void Game::updateInput() {
             towers.push_back(newTower);
             this->level->tileMap[x][y].addOccupant(newTower);
             this->level->tileMap[x][y].MakeOccupied();
+            this->wallet -= 100;
           } else {
             latestMessage = "Not enough money";
           }
@@ -497,13 +498,15 @@ void Game::render() {
                                    i->GetPosY() * gridSizeF);
       basicEnemySprite.move((sf::Vector2f)basicEnemyTexture.getSize() / 2.f);
       if (i->direction == 0) {
-        basicEnemySprite.setRotation(360);
+        basicEnemySprite.setRotation(0);
+        basicEnemySprite.move(sf::Vector2f(2.f / 2.f, 4 * -gridSizeF / 20.f))
       } else if (i->direction == 1) {
         basicEnemySprite.setRotation(90);
       } else if (i->direction == 2) {
         basicEnemySprite.setRotation(180);
       } else if (i->direction == 3) {
         basicEnemySprite.setRotation(270);
+        basicEnemySprite.move(sf::Vector2f(4 * -gridSizeF / 20.f, 1.f));
       }
       this->window->draw(basicEnemySprite);
 
@@ -512,13 +515,15 @@ void Game::render() {
                                   i->GetPosY() * gridSizeF);
       fastEnemySprite.move((sf::Vector2f)fastEnemyTexture.getSize() / 2.f);
       if (i->direction == 0) {
-        fastEnemySprite.setRotation(360);
+        fastEnemySprite.setRotation(0);
+        fastEnemySprite.move(sf::Vector2f(2.f / 2.f, 4 * -gridSizeF / 20.f));
       } else if (i->direction == 1) {
         fastEnemySprite.setRotation(90);
       } else if (i->direction == 2) {
         fastEnemySprite.setRotation(180);
       } else if (i->direction == 3) {
         fastEnemySprite.setRotation(270);
+        fastEnemySprite.move(sf::Vector2f(4 * -gridSizeF / 20.f, 1.f));
       }
       this->window->draw(fastEnemySprite);
 
@@ -527,13 +532,15 @@ void Game::render() {
                                   i->GetPosY() * gridSizeF);
       slowEnemySprite.move((sf::Vector2f)slowEnemyTexture.getSize() / 2.f);
       if (i->direction == 0) {
-        slowEnemySprite.setRotation(360);
+        slowEnemySprite.setRotation(0);
+        slowEnemySprite.move(sf::Vector2f(2.f / 2.f, 4 * -gridSizeF / 20.f));
       } else if (i->direction == 1) {
         slowEnemySprite.setRotation(90);
       } else if (i->direction == 2) {
         slowEnemySprite.setRotation(180);
       } else if (i->direction == 3) {
         slowEnemySprite.setRotation(270);
+        slowEnemySprite.move(sf::Vector2f(4 * -gridSizeF / 20.f, 1.f));
       }
       this->window->draw(slowEnemySprite);
     }
