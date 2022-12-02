@@ -5,6 +5,7 @@
 
 #include "level.hpp"
 #include "snowball.hpp"
+#include "sidebar.hpp"
 
 /**
  * Class that updates the game and handles "core logic".
@@ -119,7 +120,7 @@ class Game {
   // 0 => building phase, 1 => active wave, 2 => level won
   int gameState = 0;
 
-  double wallet = 100;
+  double wallet = 100000;
 
   std::string latestMessage = "";
 
@@ -160,6 +161,18 @@ class Game {
   // Towers' hit range
   sf::RectangleShape rangeIndicator;
 
+  // Sidebar
+  Sidebar sidebar;
+  sf::Font sidebarFont;
+
+  // Choosing towers to be placed
+  bool basic_clicked = false;
+  bool hat_clicked = false;
+  bool scarf_clicked = false;
+
+  // Pressing go
+  bool go_clicked = false;
+
   // Textures
   sf::Texture roadTexture;
   sf::Sprite roadSprite;
@@ -179,8 +192,20 @@ class Game {
   sf::Texture basicTowerTexture;
   sf::Sprite basicTowerSprite;
 
-  sf::Texture sniperTowerTexture;
-  sf::Sprite sniperTowerSprite;
+  sf::Texture basic3TowerTexture;
+  sf::Sprite basic3TowerSprite;
+
+  sf::Texture hatTowerTexture;
+  sf::Sprite hatTowerSprite;
+
+  sf::Texture hat3TowerTexture;
+  sf::Sprite hat3TowerSprite;
+
+  sf::Texture scarfTowerTexture;
+  sf::Sprite scarfTowerSprite;
+
+  sf::Texture scarf3TowerTexture;
+  sf::Sprite scarf3TowerSprite;
 
   sf::Texture entryPointTexture;
   sf::Sprite entryPointSprite;
