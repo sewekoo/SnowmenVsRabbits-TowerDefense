@@ -116,6 +116,12 @@ int main() {
   Texture Picture;
   Picture.loadFromFile("pics/menuscreen.png");
   background.setTexture(&Picture);
+  RectangleShape levelbackground;
+  levelbackground.setSize(Vector2f(960, 650));
+  Texture PictureLevel;
+  PictureLevel.loadFromFile("pics/carrotbackground.png");
+  levelbackground.setTexture(&PictureLevel);
+
 
   Button bplay("Play", {100, 50}, 20, Color::Black, Color::White, Color::White);
   Button bexit("Exit", {100, 50}, 20, Color::Black, Color::White, Color::White);
@@ -208,6 +214,7 @@ int main() {
                 }
               }
               Play.clear();
+              Play.draw(levelbackground);
               levelA.drawTo(Play);
               levelB.drawTo(Play);
               levelC.drawTo(Play);
