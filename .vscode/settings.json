@@ -50,6 +50,25 @@
         "typeinfo": "cpp",
         "variant": "cpp",
         "enemy.hpp": "c",
-        "lauri_hello_test.C": "cpp"
+        "lauri_hello_test.C": "cpp",
+        "array": "cpp",
+        "bit": "cpp",
+        "*.tcc": "cpp",
+        "cmath": "cpp",
+        "deque": "cpp",
+        "map": "cpp",
+        "set": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp",
+        "algorithm": "cpp",
+        "functional": "cpp",
+        "iterator": "cpp",
+        "memory_resource": "cpp",
+        "numeric": "cpp",
+        "optional": "cpp",
+        "random": "cpp",
+        "utility": "cpp",
+        "fstream": "cpp",
+        "sstream": "cpp"
     }
 }

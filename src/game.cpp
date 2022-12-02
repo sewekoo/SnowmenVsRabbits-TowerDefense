@@ -761,6 +761,7 @@ void Game::render() {
   this->window->draw(text);
 
   // Draw sidebar
+  sidebar.UpdateRoundCount(this->level->GetCurrentRound() + 1);
   sidebar.drawTo(*(this->window));
 
   // Done drawing, display to screen

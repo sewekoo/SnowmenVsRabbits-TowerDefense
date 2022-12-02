@@ -45,24 +45,26 @@ public:
     sidebar.setOutlineThickness(3);
     sidebar.setPosition(960, 0);
 
-    username.setString("username");
-    username.setPosition({970, 10});
+    roundCount.setString("Round: 1 / 5");
+    roundCount.setPosition({970, 10});
 
     line.setSize(sf::Vector2f(200, 3));
     line.setFillColor(sf::Color::Black);
     /*line.setOutlineColor(sf::Color::Black);
     line.setOutlineThickness(3);*/
-    line.setPosition(960, 50);
+    line.setPosition(970, 50);
 }
 
 void SetFont(sf::Font &font) { 
-    username.setFont(font);
+    roundCount.setFont(font);
     goButtonText.setFont(font);
 }
 
+void UpdateRoundCount(int round) { roundCount.setString("Round: " + std::to_string(round) + " / 5"); }
+
 void drawTo(sf::RenderWindow &window) { 
     window.draw(sidebar);
-    window.draw(username);
+    window.draw(roundCount);
     window.draw(line);
     window.draw(tower1B);
     window.draw(tower2B);
@@ -100,7 +102,7 @@ void CenterText(sf::Vector2f posOfGoButton) {
 
 //private:
     sf::RectangleShape sidebar;
-    sf::Text username;
+    sf::Text roundCount;
     sf::RectangleShape line;
     sf::Sprite tower1;
     sf::Sprite tower2;
