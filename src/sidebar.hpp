@@ -52,7 +52,7 @@ public:
     line.setFillColor(sf::Color::Black);
     /*line.setOutlineColor(sf::Color::Black);
     line.setOutlineThickness(3);*/
-    line.setPosition(970, 50);
+    line.setPosition(960, 50);
 }
 
 void SetFont(sf::Font &font) { 
