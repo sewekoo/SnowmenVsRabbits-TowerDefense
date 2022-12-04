@@ -70,6 +70,10 @@ class Tower {
   double CooldownValue = 0;
   bool ReadyToFire = true;
 
+  float targetPosX;
+  float targetPosY;
+  bool hasTarget = false;
+
  protected:
   double damage_;
   int range_;

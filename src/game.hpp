@@ -2,6 +2,7 @@
 #define GAME_HPP
 
 #include <sstream>
+#include <math.h>
 
 #include "level.hpp"
 #include "snowball.hpp"
@@ -120,7 +121,7 @@ class Game {
   // 0 => building phase, 1 => active wave, 2 => level won
   int gameState = 0;
 
-  double wallet = 100000;
+  double wallet = 100;
 
   std::string latestMessage = "";
 
