@@ -77,25 +77,39 @@ void loadLevel(std::string levelName) {
     }
 
     // Read the neighbor values in from the file
-    while (levelFile.good()) {
-      int index = 0;
-      getline(levelFile, line);
-      value.clear();
-      value.push_back(line[0]);
-      one = std::stoi(value);
-      value.clear();
-      value.push_back(line[2]);
-      two = std::stoi(value);
-      value.clear();
-      value.push_back(line[4]);
-      three = std::stoi(value);
-      value.clear();
-      value.push_back(line[6]);
-      four = std::stoi(value);
-
-      oneTuple = std::make_tuple(std::make_tuple(one, two),
-                                 std::make_tuple(three, four));
-      defaultNeighbours2.push_back(oneTuple);
+    while(levelFile.good()) {
+        getline(levelFile, line);
+        int var = 1;
+        value.clear();
+        for (auto ii = 0; ii < line.size(); ii++) {
+            if(line[ii] != ',') {
+                value.push_back(line[ii]);
+            }
+            else {
+                if (var == 1) {
+                    one = std::stoi(value);
+                    value.clear();
+                }
+                else if (var == 2) {
+                    two = std::stoi(value);
+                    value.clear();
+                }
+                else if (var == 3) {
+                    three = std::stoi(value);
+                    value.clear();
+                }
+                else if (var == 4) {
+                    four = std::stoi(value);
+                    value.clear();
+                }
+                else {
+                    // do nothing
+                }
+                var++;
+            }
+        }
+        oneTuple = std::make_tuple(std::make_tuple(one, two), std::make_tuple(three, four));
+        defaultNeighbours2.push_back(oneTuple);
     }
   }
 
