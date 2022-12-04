@@ -72,6 +72,7 @@ class Tower {
 
   float targetPosX;
   float targetPosY;
+  bool hasTarget = false;
 
  protected:
   double damage_;

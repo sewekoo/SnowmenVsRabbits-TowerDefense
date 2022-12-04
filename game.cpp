@@ -286,6 +286,7 @@ void Game::FireTowers() {
                     this->level->tileMap[z][q].GetEnemy()->posX_;
                 this->level->tileMap[x][y].GetTower()->targetPosY =
                     this->level->tileMap[z][q].GetEnemy()->posY_;
+                this->level->tileMap[x][y].GetTower()->hasTarget = true;
                 if (this->level->tileMap[x][y].GetTower()->ReadyToFire) {
                   spawnSnowball(
                       this->level->tileMap[x][y].GetTower()->posX_,
@@ -722,40 +723,91 @@ void Game::render() {
         basicTowerSprite.setPosition(i->posX_ * gridSizeF,
                                      i->posY_ * gridSizeF);
         basicTowerSprite.move(gridSizeF / 2.f, gridSizeF / 2.f);
-        float theta =
+        auto originalRotation = basicTowerSprite.getRotation();
+        if (i->hasTarget) {
+          float theta =
             atan2(i->targetPosY - i->posY_, i->targetPosX - i->posX_) * 180 /
             3.141;
-        theta += 75;
-        basicTowerSprite.setRotation(theta);
+          theta += 90;
+          basicTowerSprite.setRotation(theta);
+        }
         this->window->draw(basicTowerSprite);
+        basicTowerSprite.setRotation(originalRotation);
+
       } else if (i->GetLevel() > 1) {
         basic3TowerSprite.setPosition(i->posX_ * gridSizeF,
                                       i->posY_ * gridSizeF);
         basic3TowerSprite.move(gridSizeF / 2.f, gridSizeF / 2.f);
-        float theta =
+        auto originalRotation = basic3TowerSprite.getRotation();
+        if (i->hasTarget){
+          float theta =
             atan2(i->targetPosY - i->posY_, i->targetPosX - i->posX_) * 180 /
             3.141;
-        theta += 90;
-        basic3TowerSprite.setRotation(theta);
+          theta += 90;
+          basic3TowerSprite.setRotation(theta);
+        }
         this->window->draw(basic3TowerSprite);
+        basic3TowerSprite.setRotation(originalRotation);
       }
     } else if (i->GetType() == "hat") {
       if (i->GetLevel() <= 1) {
         hatTowerSprite.setPosition(i->posX_ * gridSizeF, i->posY_ * gridSizeF);
+        hatTowerSprite.move(gridSizeF / 2.f, gridSizeF / 2.f);
+        auto originalRotation = hatTowerSprite.getRotation();
+        if (i->hasTarget) {
+          float theta =
+            atan2(i->targetPosY - i->posY_, i->targetPosX - i->posX_) * 180 /
+            3.141;
+          theta += 90;
+          hatTowerSprite.setRotation(theta);
+        }
         this->window->draw(hatTowerSprite);
+        hatTowerSprite.setRotation(originalRotation);
+
       } else if (i->GetLevel() > 1) {
         hat3TowerSprite.setPosition(i->posX_ * gridSizeF, i->posY_ * gridSizeF);
+        hat3TowerSprite.move(gridSizeF / 2.f, gridSizeF / 2.f);
+        auto originalRotation = hat3TowerSprite.getRotation();
+        if (i->hasTarget) {
+          float theta =
+            atan2(i->targetPosY - i->posY_, i->targetPosX - i->posX_) * 180 /
+            3.141;
+          theta += 90;
+          hat3TowerSprite.setRotation(theta);
+        }
         this->window->draw(hat3TowerSprite);
+        hat3TowerSprite.setRotation(originalRotation);
       }
     } else if (i->GetType() == "scarf") {
       if (i->GetLevel() <= 1) {
         scarfTowerSprite.setPosition(i->posX_ * gridSizeF,
                                      i->posY_ * gridSizeF);
+        scarfTowerSprite.move(gridSizeF / 2.f, gridSizeF / 2.f);
+        auto originalRotation = scarfTowerSprite.getRotation();
+        if (i->hasTarget) {
+          float theta =
+            atan2(i->targetPosY - i->posY_, i->targetPosX - i->posX_) * 180 /
+            3.141;
+          theta += 90;
+          scarfTowerSprite.setRotation(theta);
+        }
         this->window->draw(scarfTowerSprite);
+        scarfTowerSprite.setRotation(originalRotation);
+        
       } else if (i->GetLevel() > 1) {
         scarf3TowerSprite.setPosition(i->posX_ * gridSizeF,
                                       i->posY_ * gridSizeF);
+        scarf3TowerSprite.move(gridSizeF / 2.f, gridSizeF / 2.f);
+        auto originalRotation = scarf3TowerSprite.getRotation();
+        if (i->hasTarget) {
+          float theta =
+            atan2(i->targetPosY - i->posY_, i->targetPosX - i->posX_) * 180 /
+            3.141;
+          theta += 90;
+          scarf3TowerSprite.setRotation(theta);
+        }
         this->window->draw(scarf3TowerSprite);
+        scarf3TowerSprite.setRotation(originalRotation);
       }
     }
   }
@@ -891,7 +943,7 @@ void Game::InitializeVariables() {
     std::cout << "Texture for sniper tower load failed" << std::endl;
   }
   basic3TowerSprite.setTexture(basic3TowerTexture);
-  basic3TowerSprite.setOrigin(gridSizeF / 2, gridSizeF / 2);
+  basic3TowerSprite.setOrigin((sf::Vector2f)basic3TowerTexture.getSize() / 2.f);
   basic3TowerSprite.setScale(sf::Vector2f(gridSizeF / 100, gridSizeF / 100));
 
   // Hat tower texture
@@ -899,6 +951,7 @@ void Game::InitializeVariables() {
     std::cout << "Texture for sniper tower load failed" << std::endl;
   }
   hatTowerSprite.setTexture(hatTowerTexture);
+  hatTowerSprite.setOrigin((sf::Vector2f)hatTowerTexture.getSize() / 2.f);
   hatTowerSprite.setScale(sf::Vector2f(gridSizeF / 100, gridSizeF / 100));
 
   // Hat tower texture upgrade
@@ -906,6 +959,7 @@ void Game::InitializeVariables() {
     std::cout << "Texture for sniper tower load failed" << std::endl;
   }
   hat3TowerSprite.setTexture(hat3TowerTexture);
+  hat3TowerSprite.setOrigin((sf::Vector2f)hat3TowerTexture.getSize() / 2.f);
   hat3TowerSprite.setScale(sf::Vector2f(gridSizeF / 100, gridSizeF / 100));
 
   // Scarf tower texture
@@ -913,6 +967,7 @@ void Game::InitializeVariables() {
     std::cout << "Texture for scarf tower load failed" << std::endl;
   }
   scarfTowerSprite.setTexture(scarfTowerTexture);
+  scarfTowerSprite.setOrigin((sf::Vector2f)scarfTowerTexture.getSize() / 2.f);
   scarfTowerSprite.setScale(sf::Vector2f(gridSizeF / 100, gridSizeF / 100));
 
   // Scarf tower texture upgrade
@@ -920,6 +975,7 @@ void Game::InitializeVariables() {
     std::cout << "Texture for scarf tower load failed" << std::endl;
   }
   scarf3TowerSprite.setTexture(scarf3TowerTexture);
+  scarf3TowerSprite.setOrigin((sf::Vector2f)scarf3TowerTexture.getSize() / 2.f);
   scarf3TowerSprite.setScale(sf::Vector2f(gridSizeF / 100, gridSizeF / 100));
 
   // Set the font for sidebar text
