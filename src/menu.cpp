@@ -178,19 +178,25 @@ int main() {
             Button levelA("1", 140, 140, Color(0, 0, 0, 10), Color(0, 0, 0, 30), Color(0, 0, 0, 30));
             Button levelB("2", 140, 140, Color(0, 0, 0, 10), Color(0, 0, 0, 30), Color(0, 0, 0, 30));
             Button levelC("3", 140, 140, Color(0, 0, 0, 10), Color(0, 0, 0, 30), Color(0, 0, 0, 30));
-            levelA.getText().setScale(2, 2);
-            levelB.getText().setScale(2, 2);
-            levelC.getText().setScale(2, 2);
+            Button levelD("4", 140, 140, Color(0, 0, 0, 10), Color(0, 0, 0, 30), Color(0, 0, 0, 30));
+            Button levelE("5", 140, 140, Color(0, 0, 0, 10), Color(0, 0, 0, 30), Color(0, 0, 0, 30));
+            levelA.SetScale(2, 2);
+            levelB.SetScale(2, 2);
+            levelC.SetScale(2, 2);
+            levelD.SetScale(2, 2);
+            levelE.SetScale(2, 2);
 
-            levelA.SetPosition({170, 330});
-            levelB.SetPosition({420, 330});
-            levelC.SetPosition({670, 330});
+            levelA.SetPosition({25, 330});
+            levelB.SetPosition({200, 330});
+            levelC.SetPosition({375, 330});
+            levelD.SetPosition({550, 330});
+            levelE.SetPosition({725, 330});
 
             levelA.SetFont(font);
             levelB.SetFont(font);
             levelC.SetFont(font);
-
-            MENU.close();
+            levelD.SetFont(font);
+            levelE.SetFont(font);
 
             while (Play.isOpen()) {
               Event p_event;
@@ -205,12 +211,20 @@ int main() {
                       levelB.SetBGColor(Color(0, 0, 255, 30));
                     } else if (levelC.MouseOnButton(Play)) {
                       levelC.SetBGColor(Color(0, 0, 255, 30));
+                    } else if (levelD.MouseOnButton(Play)) {
+                      levelD.SetBGColor(Color(0, 0, 255, 30));
+                    } else if (levelE.MouseOnButton(Play)) {
+                      levelE.SetBGColor(Color(0, 0, 255, 30));
                     } else if (!levelA.MouseOnButton(Play) ||
                                !levelB.MouseOnButton(Play) ||
-                               !levelC.MouseOnButton(Play)) {
+                               !levelC.MouseOnButton(Play) ||
+                               !levelD.MouseOnButton(Play) ||
+                               !levelE.MouseOnButton(Play)) {
                       levelA.SetBGColor(Color(0, 0, 0, 10));
                       levelB.SetBGColor(Color(0, 0, 0, 10));
                       levelC.SetBGColor(Color(0, 0, 0, 10));
+                      levelD.SetBGColor(Color(0, 0, 0, 10));
+                      levelE.SetBGColor(Color(0, 0, 0, 10));
                     }
                     break;
                   case Event::MouseButtonPressed:
@@ -223,7 +237,47 @@ int main() {
                         game.update();
                         game.render();
                       }
-                      break;
+                      //break;
+                    } else if (levelB.MouseOnButton(Play)) {
+                      int size = 12;
+                      loadLevel("src/level2.txt");
+                      Game game{size, defaultLevel2, defaultNeighbours2,
+                                defaultEnemies};
+                      while (game.GetWindowIsOpen()) {
+                        game.update();
+                        game.render();
+                      }
+                      //break;
+                    } else if (levelC.MouseOnButton(Play)) {
+                      int size = 12;
+                      loadLevel("src/level3.txt");
+                      Game game{size, defaultLevel2, defaultNeighbours2,
+                                defaultEnemies};
+                      while (game.GetWindowIsOpen()) {
+                        game.update();
+                        game.render();
+                      }
+                      //break;
+                    } else if (levelD.MouseOnButton(Play)) {
+                      int size = 12;
+                      loadLevel("src/level4.txt");
+                      Game game{size, defaultLevel2, defaultNeighbours2,
+                                defaultEnemies};
+                      while (game.GetWindowIsOpen()) {
+                        game.update();
+                        game.render();
+                      }
+                      //break;
+                    } else if (levelE.MouseOnButton(Play)) {
+                      int size = 12;
+                      loadLevel("src/level5.txt");
+                      Game game{size, defaultLevel2, defaultNeighbours2,
+                                defaultEnemies};
+                      while (game.GetWindowIsOpen()) {
+                        game.update();
+                        game.render();
+                      }
+                      //break;
                     }
                 }
               }
@@ -232,6 +286,8 @@ int main() {
               levelA.drawTo(Play);
               levelB.drawTo(Play);
               levelC.drawTo(Play);
+              levelD.drawTo(Play);
+              levelE.drawTo(Play);
               Play.draw(levelText);
               Play.display();
             }
