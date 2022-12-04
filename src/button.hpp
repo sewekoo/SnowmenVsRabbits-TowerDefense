@@ -8,13 +8,29 @@ class Button {
 public:
     Button() { }
 
-    Button(std::string Text, sf::Vector2f size, int charSize, sf::Color backround, sf::Color outline, sf::Color textColor) {
+    Button(std::string Text, float width, float height, sf::Color backround, sf::Color outline, sf::Color textColor) {
       text.setString(Text);
       text.setFillColor(textColor);
-      button.setSize(size);
+
+      button.setPointCount(13);
+      button.setPosition({20, 20});
+      button.setPoint(0, {20, 20});
+      button.setPoint(1, {25, 13});
+      button.setPoint(2, {30, 10});
+      button.setPoint(3, {10 + width, 10});
+      button.setPoint(4, {15 + width, 13});
+      button.setPoint(5, {20 + width, 20});
+      button.setPoint(6, {20 + width, height - 10});
+      button.setPoint(7, {15 + width, height - 3});
+      button.setPoint(8, {10 + width, height});
+      button.setPoint(9, {30, height});
+      button.setPoint(10, {25, height - 3});
+      button.setPoint(11, {20, height - 10});
+      button.setPoint(12, {20, 20});
+
       button.setFillColor(backround);
       button.setOutlineColor(outline);
-      button.setOutlineThickness(3);
+      button.setOutlineThickness(5);
     }
 
     void SetFont(sf::Font &font) { text.setFont(font); }
@@ -33,12 +49,14 @@ public:
 
     void SetPosition(sf::Vector2f pos) { 
         button.setPosition(pos);
-        float posX = (pos.x + button.getLocalBounds().width / 6) -
+        float posX = (pos.x + button.getLocalBounds().width / 2.5) -
                      (text.getLocalBounds().width / 2);
-        float posY = (pos.y + button.getLocalBounds().height / 7) -
+        float posY = (pos.y + button.getLocalBounds().height / 3) -
                      (text.getLocalBounds().height / 2);
         text.setPosition(posX, posY);
     }
+
+    sf::Text getText() { return text; }
 
     void drawTo(sf::RenderWindow &window) { 
         window.draw(button);
@@ -49,11 +67,11 @@ public:
         float MPosX = sf::Mouse::getPosition(window).x;
         float MPosY = sf::Mouse::getPosition(window).y;
 
-        float BPosX = button.getPosition().x;
-        float BPosY = button.getPosition().y;
+        float BPosX = button.getPosition().x + 20;
+        float BPosY = button.getPosition().y + 8;
 
-        float BPosXWithWidth = button.getPosition().x + button.getLocalBounds().width;
-        float BPosYWithHeight = button.getPosition().y + button.getLocalBounds().height;
+        float BPosXWithWidth = BPosX + button.getLocalBounds().width;
+        float BPosYWithHeight = BPosY + button.getLocalBounds().height;
 
         if (MPosX > BPosX && MPosX < BPosXWithWidth && MPosY > BPosY && MPosY < BPosYWithHeight) {
           return true;
@@ -62,6 +80,6 @@ public:
     }
 
    private:
-    sf::RectangleShape button;
+    sf::ConvexShape button;
     sf::Text text;
 };
