@@ -56,7 +56,7 @@ public:
         text.setPosition(posX, posY);
     }
 
-    sf::Text getText() { return text; }
+    void SetScale(float x, float y) { text.setScale(x, y); }
 
     void drawTo(sf::RenderWindow &window) { 
         window.draw(button);
