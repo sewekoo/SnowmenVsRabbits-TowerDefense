@@ -60,6 +60,20 @@ void Game::pollEvents() {
           this->window->close();
         }
         break;
+      case sf::Event::MouseButtonPressed:
+        if (sidebar.MouseOnButton(*(this->window), sidebar.tower1B)) {
+          basic_clicked = true;
+          std::cout << "1B pressed" << std::endl;
+        } else if (sidebar.MouseOnButton(*(this->window), sidebar.tower2B)) {
+          hat_clicked = true;
+          std::cout << "2B pressed" << std::endl;
+        } else if (sidebar.MouseOnButton(*(this->window), sidebar.tower3B)) {
+          scarf_clicked = true;
+          std::cout << "3B pressed" << std::endl;
+        } else if (sidebar.MouseOnButton(*(this->window), sidebar.goButton)) {
+          go_clicked = true;
+        }
+        break;
     }
   }
 }
@@ -152,13 +166,15 @@ void Game::updateInput() {
           this->level->tileMap[x][y].MakeOccupied();
           std::cout << "Succesfully increased enemy counter" << std::endl;
         }
+
         if ((!this->level->tileMap[x][y].IsOccupied()) &&
             (this->level->tileMap[x][y].type_ == 0) &&
             (this->level->tileMap[x][y].GetGridLocationX() == mousePosGrid.x) &&
-            (this->level->tileMap[x][y].GetGridLocationY() == mousePosGrid.y)) {
+            (this->level->tileMap[x][y].GetGridLocationY() == mousePosGrid.y) &&
+            (basic_clicked == true)) {
           if (this->wallet >= 100.0) {
             Tower* newTower =
-                new Tower(this->mousePosGrid.x, this->mousePosGrid.y);
+                new Tower(this->mousePosGrid.x, this->mousePosGrid.y, "basic");
             towers.push_back(newTower);
             this->level->tileMap[x][y].addOccupant(newTower);
             this->level->tileMap[x][y].MakeOccupied();
@@ -166,6 +182,49 @@ void Game::updateInput() {
           } else {
             latestMessage = "Not enough money";
           }
+          basic_clicked = false;
+          hat_clicked = false;
+          scarf_clicked = false;
+        }
+
+        if ((!this->level->tileMap[x][y].IsOccupied()) &&
+            (this->level->tileMap[x][y].type_ == 0) &&
+            (this->level->tileMap[x][y].GetGridLocationX() == mousePosGrid.x) &&
+            (this->level->tileMap[x][y].GetGridLocationY() == mousePosGrid.y) &&
+            (hat_clicked == true)) {
+          if (this->wallet >= 100.0) {
+            Tower* newTower =
+                new Tower(this->mousePosGrid.x, this->mousePosGrid.y, "hat");
+            towers.push_back(newTower);
+            this->level->tileMap[x][y].addOccupant(newTower);
+            this->level->tileMap[x][y].MakeOccupied();
+            this->wallet -= 100;
+          } else {
+            latestMessage = "Not enough money";
+          }
+          basic_clicked = false;
+          hat_clicked = false;
+          scarf_clicked = false;
+        }
+
+        if ((!this->level->tileMap[x][y].IsOccupied()) &&
+            (this->level->tileMap[x][y].type_ == 0) &&
+            (this->level->tileMap[x][y].GetGridLocationX() == mousePosGrid.x) &&
+            (this->level->tileMap[x][y].GetGridLocationY() == mousePosGrid.y) &&
+            (scarf_clicked == true)) {
+          if (this->wallet >= 100.0) {
+            Tower* newTower =
+                new Tower(this->mousePosGrid.x, this->mousePosGrid.y, "scarf");
+            towers.push_back(newTower);
+            this->level->tileMap[x][y].addOccupant(newTower);
+            this->level->tileMap[x][y].MakeOccupied();
+            this->wallet -= 100;
+          } else {
+            latestMessage = "Not enough money";
+          }
+          basic_clicked = false;
+          hat_clicked = false;
+          scarf_clicked = false;
         }
       }
     }
@@ -223,6 +282,10 @@ void Game::FireTowers() {
                     (this->level->tileMap[x][y].GetGridLocationY() -
                          this->level->tileMap[z][q].GetGridLocationY() <
                      0)))) {
+                this->level->tileMap[x][y].GetTower()->targetPosX =
+                    this->level->tileMap[z][q].GetEnemy()->posX_;
+                this->level->tileMap[x][y].GetTower()->targetPosY =
+                    this->level->tileMap[z][q].GetEnemy()->posY_;
                 if (this->level->tileMap[x][y].GetTower()->ReadyToFire) {
                   spawnSnowball(
                       this->level->tileMap[x][y].GetTower()->posX_,
@@ -231,14 +294,6 @@ void Game::FireTowers() {
                       this->level->tileMap[z][q].GetGridLocationX(),
                       this->level->tileMap[z][q].GetGridLocationY(),
                       this->level->tileMap[x][y].GetTower()->GetDamage());
-                  // std::cout
-                  //     << "Tower at "
-                  //     << this->level->tileMap[x][y].GetGridLocationX() << " "
-                  //     << this->level->tileMap[x][y].GetGridLocationY()
-                  //     << " fired enemy at "
-                  //     << this->level->tileMap[z][q].GetGridLocationX() << " "
-                  //     << this->level->tileMap[z][q].GetGridLocationY()
-                  //     << std::endl;
                   this->level->tileMap[x][y].GetTower()->ReadyToFire = false;
                 } else {
                   this->level->tileMap[x][y].GetTower()->CooldownValue += 0.1;
@@ -438,10 +493,12 @@ void Game::updateSnowballClock() {
 void Game::updateBuildClock() {
   sf::Time timeElapsed = SpawnClock.getElapsedTime();
   float buildingTime = 5;
-  if (timeElapsed.asSeconds() >= buildingTime && gameState == 0) {
+  if ((timeElapsed.asSeconds() >= buildingTime && gameState == 0) ||
+      (go_clicked == true && gameState == 0)) {
     SpawnClock.restart();
     this->level->ConfigureRound();
     gameState = 1;
+    go_clicked = false;
   }
 }
 
@@ -660,12 +717,46 @@ void Game::render() {
   }
 
   for (auto i : towers) {
-    if (i->GetLevel() <= 1) {
-      basicTowerSprite.setPosition(i->posX_ * gridSizeF, i->posY_ * gridSizeF);
-      this->window->draw(basicTowerSprite);
-    } else {
-      sniperTowerSprite.setPosition(i->posX_ * gridSizeF, i->posY_ * gridSizeF);
-      this->window->draw(sniperTowerSprite);
+    if (i->GetType() == "basic") {
+      if (i->GetLevel() <= 1) {
+        basicTowerSprite.setPosition(i->posX_ * gridSizeF,
+                                     i->posY_ * gridSizeF);
+        basicTowerSprite.move(gridSizeF / 2.f, gridSizeF / 2.f);
+        float theta =
+            atan2(i->targetPosY - i->posY_, i->targetPosX - i->posX_) * 180 /
+            3.141;
+        theta += 75;
+        basicTowerSprite.setRotation(theta);
+        this->window->draw(basicTowerSprite);
+      } else if (i->GetLevel() > 1) {
+        basic3TowerSprite.setPosition(i->posX_ * gridSizeF,
+                                      i->posY_ * gridSizeF);
+        basic3TowerSprite.move(gridSizeF / 2.f, gridSizeF / 2.f);
+        float theta =
+            atan2(i->targetPosY - i->posY_, i->targetPosX - i->posX_) * 180 /
+            3.141;
+        theta += 90;
+        basic3TowerSprite.setRotation(theta);
+        this->window->draw(basic3TowerSprite);
+      }
+    } else if (i->GetType() == "hat") {
+      if (i->GetLevel() <= 1) {
+        hatTowerSprite.setPosition(i->posX_ * gridSizeF, i->posY_ * gridSizeF);
+        this->window->draw(hatTowerSprite);
+      } else if (i->GetLevel() > 1) {
+        hat3TowerSprite.setPosition(i->posX_ * gridSizeF, i->posY_ * gridSizeF);
+        this->window->draw(hat3TowerSprite);
+      }
+    } else if (i->GetType() == "scarf") {
+      if (i->GetLevel() <= 1) {
+        scarfTowerSprite.setPosition(i->posX_ * gridSizeF,
+                                     i->posY_ * gridSizeF);
+        this->window->draw(scarfTowerSprite);
+      } else if (i->GetLevel() > 1) {
+        scarf3TowerSprite.setPosition(i->posX_ * gridSizeF,
+                                      i->posY_ * gridSizeF);
+        this->window->draw(scarf3TowerSprite);
+      }
     }
   }
 
@@ -678,8 +769,10 @@ void Game::render() {
     //           << i->GetPosY() << std::endl;
   }
 
-  // Draw the tile selector
-  this->window->draw(tileSelector);
+  // Draw the tile selector unless mouse is on top of sidebar
+  if (mousePosWindow.x < 960) {
+    this->window->draw(tileSelector);
+  }
 
   // Sets view back to default view
   this->window->setView(this->window->getDefaultView());
@@ -687,6 +780,10 @@ void Game::render() {
   // Draw UI
   // Draws info text of mouse position
   this->window->draw(text);
+
+  // Draw sidebar
+  sidebar.UpdateRoundCount(this->level->GetCurrentRound() + 1);
+  sidebar.drawTo(*(this->window));
 
   // Done drawing, display to screen
   this->window->display();
@@ -782,31 +879,69 @@ void Game::InitializeVariables() {
                             (gridSizeF / 100));
 
   // Basic tower texture
-  if (!basicTowerTexture.loadFromFile("pics/snowman_basic.png")) {
+  if (!basicTowerTexture.loadFromFile("pics/snowman_basic1.png")) {
     std::cout << "Texture for tower load failed" << std::endl;
   }
   basicTowerSprite.setTexture(basicTowerTexture);
+  basicTowerSprite.setOrigin((sf::Vector2f)basicTowerTexture.getSize() / 2.f);
   basicTowerSprite.setScale(sf::Vector2f(gridSizeF / 100, gridSizeF / 100));
 
-  // Sniper tower texture
-  if (!sniperTowerTexture.loadFromFile("pics/snowman_hat.png")) {
+  // Basic tower texture upgrade
+  if (!basic3TowerTexture.loadFromFile("pics/snowman_basic3.png")) {
     std::cout << "Texture for sniper tower load failed" << std::endl;
   }
-  sniperTowerSprite.setTexture(sniperTowerTexture);
-  sniperTowerSprite.setScale(sf::Vector2f(gridSizeF / 100, gridSizeF / 100));
+  basic3TowerSprite.setTexture(basic3TowerTexture);
+  basic3TowerSprite.setOrigin(gridSizeF / 2, gridSizeF / 2);
+  basic3TowerSprite.setScale(sf::Vector2f(gridSizeF / 100, gridSizeF / 100));
+
+  // Hat tower texture
+  if (!hatTowerTexture.loadFromFile("pics/snowman_hat1.png")) {
+    std::cout << "Texture for sniper tower load failed" << std::endl;
+  }
+  hatTowerSprite.setTexture(hatTowerTexture);
+  hatTowerSprite.setScale(sf::Vector2f(gridSizeF / 100, gridSizeF / 100));
+
+  // Hat tower texture upgrade
+  if (!hat3TowerTexture.loadFromFile("pics/snowman_hat3.png")) {
+    std::cout << "Texture for sniper tower load failed" << std::endl;
+  }
+  hat3TowerSprite.setTexture(hat3TowerTexture);
+  hat3TowerSprite.setScale(sf::Vector2f(gridSizeF / 100, gridSizeF / 100));
+
+  // Scarf tower texture
+  if (!scarfTowerTexture.loadFromFile("pics/snowman_scarf1.png")) {
+    std::cout << "Texture for scarf tower load failed" << std::endl;
+  }
+  scarfTowerSprite.setTexture(scarfTowerTexture);
+  scarfTowerSprite.setScale(sf::Vector2f(gridSizeF / 100, gridSizeF / 100));
+
+  // Scarf tower texture upgrade
+  if (!scarf3TowerTexture.loadFromFile("pics/snowman_scarf3.png")) {
+    std::cout << "Texture for scarf tower load failed" << std::endl;
+  }
+  scarf3TowerSprite.setTexture(scarf3TowerTexture);
+  scarf3TowerSprite.setScale(sf::Vector2f(gridSizeF / 100, gridSizeF / 100));
+
+  // Set the font for sidebar text
+  sidebarFont.loadFromFile("Fonts/Sono-Regular.ttf");
+  sidebar.SetFont(sidebarFont);
+
+  sidebar.tower1.setTexture(basicTowerTexture);
+  sidebar.tower2.setTexture(hatTowerTexture);
+  sidebar.tower3.setTexture(scarfTowerTexture);
 }
 
 // Initalizes window with correct size
 void Game::InitializeWindow() {
   this->videoMode.height = 960;
-  this->videoMode.width = 960;
+  this->videoMode.width = 1160;
   this->window = new sf::RenderWindow(this->videoMode, "Tower Defense",
                                       sf::Style::Titlebar | sf::Style::Close);
 }
 
 // Initalizes view with same size as window
 void Game::InitializeView() {
-  view.setSize(960.f, 960.f);
+  view.setSize(1160.f, 960.f);
   view.setCenter(this->window->getSize().x / 2.f,
                  this->window->getSize().y / 2.f);
 }
