@@ -832,6 +832,7 @@ void Game::render() {
 
   // Draw sidebar
   sidebar.UpdateRoundCount(this->level->GetCurrentRound() + 1);
+  sidebar.UpdateWallet(this->wallet);
   sidebar.drawTo(*(this->window));
 
   // Done drawing, display to screen
