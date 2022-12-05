@@ -47,13 +47,12 @@ public:
         button.setTexture(&texture); 
     }
 
-    void SetPosition(sf::Vector2f pos) { 
+    void SetButtonPosition(sf::Vector2f pos) { 
         button.setPosition(pos);
-        float posX = (pos.x + button.getLocalBounds().width / 2.5) -
-                     (text.getLocalBounds().width / 2);
-        float posY = (pos.y + button.getLocalBounds().height / 3) -
-                     (text.getLocalBounds().height / 2);
-        text.setPosition(posX, posY);
+    }
+
+    void SetTextPosition(sf::Vector2f pos) {
+        text.setPosition(pos);
     }
 
     void SetScale(float x, float y) { text.setScale(x, y); }
