@@ -125,11 +125,12 @@ void loadLevel(std::string levelName) {
 int main() {
   RenderWindow MENU(VideoMode(960, 720), "MENU", Style::Default);
 
-  RectangleShape background;
-  background.setSize(Vector2f(960, 650));
+  RectangleShape menuBackground;
+  menuBackground.setSize(Vector2f(960, 650));
   Texture Picture;
   Picture.loadFromFile("pics/menuscreen.png");
-  background.setTexture(&Picture);
+  menuBackground.setTexture(&Picture);
+
   RectangleShape levelbackground;
   levelbackground.setSize(Vector2f(960, 650));
   Texture PictureLevel;
@@ -137,10 +138,12 @@ int main() {
   levelbackground.setTexture(&PictureLevel);
 
 
-  Button bplay("PLAY", 200, 100, Color(0, 0, 0, 10), Color(0, 0, 0, 30), Color(0, 0, 0, 30));
-  Button bexit("EXIT", 200, 100, Color(0, 0, 0, 10), Color(0, 0, 0, 30), Color(0, 0, 0, 30));
-  bplay.SetPosition({200, 500});
-  bexit.SetPosition({450, 500});
+  Button bplay("PLAY", 200, 100, Color(0, 0, 0, 10), Color(0, 0, 130, 50), Color(0, 0, 130, 50));
+  Button bexit("EXIT", 200, 100, Color(0, 0, 0, 10), Color(0, 0, 130, 50), Color(0, 0, 130, 50));
+  bplay.SetButtonPosition({200, 500});
+  bexit.SetButtonPosition({450, 500});
+  bplay.SetTextPosition({285, 530});
+  bexit.SetTextPosition({535, 530});
 
   Font font;
   font.loadFromFile("misc/Sono-Regular.ttf");
@@ -148,12 +151,16 @@ int main() {
   bexit.SetFont(font);
 
   Text levelText;
-  levelText.setString("CHOOSE YOUR LEVEL");
-  levelText.setPosition({200, 100});
+  levelText.setString("CHOOSE A LEVEL");
+  levelText.setPosition({205, 150});
   levelText.setFont(font);
   levelText.setScale(2, 2);
-  levelText.setFillColor(Color(0, 0, 0, 80));
+  levelText.setFillColor(Color(0, 0, 0, 255));
   levelText.setStyle(Text::Bold);
+  RectangleShape levelTextBG;
+  levelTextBG.setFillColor(Color(255, 255, 255, 230));
+  levelTextBG.setSize({500, 100});
+  levelTextBG.setPosition({200, 145});
 
   while (MENU.isOpen()) {
     Event event;
@@ -175,22 +182,28 @@ int main() {
           if (bplay.MouseOnButton(MENU)) {
             RenderWindow Play(VideoMode(960, 720), "PLAY");
 
-            Button levelA("1", 140, 140, Color(0, 0, 0, 10), Color(0, 0, 0, 30), Color(0, 0, 0, 30));
-            Button levelB("2", 140, 140, Color(0, 0, 0, 10), Color(0, 0, 0, 30), Color(0, 0, 0, 30));
-            Button levelC("3", 140, 140, Color(0, 0, 0, 10), Color(0, 0, 0, 30), Color(0, 0, 0, 30));
-            Button levelD("4", 140, 140, Color(0, 0, 0, 10), Color(0, 0, 0, 30), Color(0, 0, 0, 30));
-            Button levelE("5", 140, 140, Color(0, 0, 0, 10), Color(0, 0, 0, 30), Color(0, 0, 0, 30));
+            Button levelA("1", 140, 140, Color(0, 0, 0, 10), Color(0, 0, 0, 255), Color(0, 0, 0, 255));
+            Button levelB("2", 140, 140, Color(0, 0, 0, 10), Color(0, 0, 0, 255), Color(0, 0, 0, 255));
+            Button levelC("3", 140, 140, Color(0, 0, 0, 10), Color(0, 0, 0, 255), Color(0, 0, 0, 255));
+            Button levelD("4", 140, 140, Color(0, 0, 0, 10), Color(0, 0, 0, 255), Color(0, 0, 0, 255));
+            Button levelE("5", 140, 140, Color(0, 0, 0, 10), Color(0, 0, 0, 255), Color(0, 0, 0, 255));
             levelA.SetScale(2, 2);
             levelB.SetScale(2, 2);
             levelC.SetScale(2, 2);
             levelD.SetScale(2, 2);
             levelE.SetScale(2, 2);
 
-            levelA.SetPosition({25, 330});
-            levelB.SetPosition({200, 330});
-            levelC.SetPosition({375, 330});
-            levelD.SetPosition({550, 330});
-            levelE.SetPosition({725, 330});
+            levelA.SetButtonPosition({25, 330});
+            levelB.SetButtonPosition({200, 330});
+            levelC.SetButtonPosition({375, 330});
+            levelD.SetButtonPosition({550, 330});
+            levelE.SetButtonPosition({725, 330});
+
+            levelA.SetTextPosition({100, 365});
+            levelB.SetTextPosition({275, 365});
+            levelC.SetTextPosition({450, 365});
+            levelD.SetTextPosition({625, 365});
+            levelE.SetTextPosition({800, 365});
 
             levelA.SetFont(font);
             levelB.SetFont(font);
@@ -279,7 +292,9 @@ int main() {
                       }
                       //break;
                     }
+                    
                 }
+                break;
               }
               Play.clear();
               Play.draw(levelbackground);
@@ -288,6 +303,7 @@ int main() {
               levelC.drawTo(Play);
               levelD.drawTo(Play);
               levelE.drawTo(Play);
+              Play.draw(levelTextBG);
               Play.draw(levelText);
               Play.display();
             }
@@ -298,8 +314,7 @@ int main() {
       }
     }
     MENU.clear();
-    MENU.draw(background);
-    // MENU.draw(testi.GetRoundedRect());
+    MENU.draw(menuBackground);
     bplay.drawTo(MENU);
     bexit.drawTo(MENU);
     MENU.display();
