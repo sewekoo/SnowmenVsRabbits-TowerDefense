@@ -228,6 +228,31 @@ void Game::updateInput() {
         }
       }
     }
+  } else if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
+    std::cout << "Right Mouse clicked" << std::endl;
+    for (int x = 0; x < this->level->GetMapSize(); x++) {
+      for (int y = 0; y < this->level->GetMapSize(); y++) {
+        if ((this->level->tileMap[x][y].IsOccupied()) &&
+            (this->level->tileMap[x][y].type_ == 0) &&
+            (this->level->tileMap[x][y].GetGridLocationX() == mousePosGrid.x) &&
+            (this->level->tileMap[x][y].GetGridLocationY() == mousePosGrid.y)) {
+          
+          for (auto i : towers) {
+            if (i->GetGridPosX() == this->mousePosGrid.x * gridSizeF && i->GetGridPosY() == this->mousePosGrid.y * gridSizeF) {
+              if ((*i).GetType() == "basic") {
+                this->wallet += 50;  // TO BE DECIDED
+              } else if ((*i).GetType() == "hat") {
+                this->wallet += 60;  // TO BE DECIDED
+              } else if ((*i).GetType() == "scarf") {
+                this->wallet += 70;  // TO BE DECIDED
+              }
+              towers.erase(std::remove(towers.begin(), towers.end(), i), towers.end());
+              std::cout << "tower removed" << std::endl;
+            }
+          }
+        }
+      }
+    }
   }
   enemyDestroyedThisTick = true;
 }
