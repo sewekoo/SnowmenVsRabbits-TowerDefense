@@ -26,19 +26,19 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 31,
+				"line" : 15,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 40,
+				"line" : 24,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 34,
+				"line" : 18,
 				"parent" : 0
 			}
 		]
@@ -89,32 +89,28 @@
 				"role" : "flags"
 			},
 			{
-				"fragment" : "-Wl,-rpath,/Users/lauri/IdeaProjects/Group_Project/libs/SFML-2.5.1-macos-clang/lib",
+				"backtrace" : 2,
+				"fragment" : "-lsfml-audio",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/Users/lauri/IdeaProjects/Group_Project/libs/SFML-2.5.1-macos-clang/lib/libsfml-audio.dylib",
+				"fragment" : "-lsfml-graphics",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/Users/lauri/IdeaProjects/Group_Project/libs/SFML-2.5.1-macos-clang/lib/libsfml-graphics.dylib",
+				"fragment" : "-lsfml-network",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/Users/lauri/IdeaProjects/Group_Project/libs/SFML-2.5.1-macos-clang/lib/libsfml-network.dylib",
+				"fragment" : "-lsfml-system",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/Users/lauri/IdeaProjects/Group_Project/libs/SFML-2.5.1-macos-clang/lib/libsfml-system.dylib",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 2,
-				"fragment" : "/Users/lauri/IdeaProjects/Group_Project/libs/SFML-2.5.1-macos-clang/lib/libsfml-window.dylib",
+				"fragment" : "-lsfml-window",
 				"role" : "libraries"
 			}
 		],
