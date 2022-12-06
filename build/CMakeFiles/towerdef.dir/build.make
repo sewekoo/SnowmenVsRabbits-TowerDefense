@@ -236,11 +236,6 @@ towerdef: CMakeFiles/towerdef.dir/src/menu.cpp.o
 towerdef: CMakeFiles/towerdef.dir/src/road.cpp.o
 towerdef: CMakeFiles/towerdef.dir/src/tower.cpp.o
 towerdef: CMakeFiles/towerdef.dir/build.make
-towerdef: /Users/lauri/IdeaProjects/Group_Project/libs/SFML-2.5.1-macos-clang/lib/libsfml-audio.dylib
-towerdef: /Users/lauri/IdeaProjects/Group_Project/libs/SFML-2.5.1-macos-clang/lib/libsfml-graphics.dylib
-towerdef: /Users/lauri/IdeaProjects/Group_Project/libs/SFML-2.5.1-macos-clang/lib/libsfml-network.dylib
-towerdef: /Users/lauri/IdeaProjects/Group_Project/libs/SFML-2.5.1-macos-clang/lib/libsfml-system.dylib
-towerdef: /Users/lauri/IdeaProjects/Group_Project/libs/SFML-2.5.1-macos-clang/lib/libsfml-window.dylib
 towerdef: CMakeFiles/towerdef.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/lauri/IdeaProjects/Group_Project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable towerdef"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/towerdef.dir/link.txt --verbose=$(VERBOSE)
