@@ -720,13 +720,14 @@ void Game::render() {
   for (auto i : towers) {
     if (i->GetType() == "basic") {
       if (i->GetLevel() <= 1) {
-        basicTowerSprite.setPosition(i->posX_ * gridSizeF, i->posY_ * gridSizeF);
+        basicTowerSprite.setPosition(i->posX_ * gridSizeF,
+                                     i->posY_ * gridSizeF);
         basicTowerSprite.move(gridSizeF / 2.f, gridSizeF / 2.f);
         auto originalRotation = basicTowerSprite.getRotation();
         if (i->hasTarget) {
           float theta =
-            atan2(i->targetPosY - i->posY_, i->targetPosX - i->posX_) * 180 /
-            3.141;
+              atan2(i->targetPosY - i->posY_, i->targetPosX - i->posX_) * 180 /
+              3.141;
           theta += 90;
           basicTowerSprite.setRotation(theta);
         }
@@ -734,13 +735,14 @@ void Game::render() {
         basicTowerSprite.setRotation(originalRotation);
 
       } else if (i->GetLevel() > 1) {
-        basic3TowerSprite.setPosition(i->posX_ * gridSizeF, i->posY_ * gridSizeF);
+        basic3TowerSprite.setPosition(i->posX_ * gridSizeF,
+                                      i->posY_ * gridSizeF);
         basic3TowerSprite.move(gridSizeF / 2.f, gridSizeF / 2.f);
         auto originalRotation = basic3TowerSprite.getRotation();
-        if (i->hasTarget){
+        if (i->hasTarget) {
           float theta =
-            atan2(i->targetPosY - i->posY_, i->targetPosX - i->posX_) * 180 /
-            3.141;
+              atan2(i->targetPosY - i->posY_, i->targetPosX - i->posX_) * 180 /
+              3.141;
           theta += 90;
           basic3TowerSprite.setRotation(theta);
         }
@@ -754,8 +756,8 @@ void Game::render() {
         auto originalRotation = hatTowerSprite.getRotation();
         if (i->hasTarget) {
           float theta =
-            atan2(i->targetPosY - i->posY_, i->targetPosX - i->posX_) * 180 /
-            3.141;
+              atan2(i->targetPosY - i->posY_, i->targetPosX - i->posX_) * 180 /
+              3.141;
           theta += 90;
           hatTowerSprite.setRotation(theta);
         }
@@ -768,8 +770,8 @@ void Game::render() {
         auto originalRotation = hat3TowerSprite.getRotation();
         if (i->hasTarget) {
           float theta =
-            atan2(i->targetPosY - i->posY_, i->targetPosX - i->posX_) * 180 /
-            3.141;
+              atan2(i->targetPosY - i->posY_, i->targetPosX - i->posX_) * 180 /
+              3.141;
           theta += 90;
           hat3TowerSprite.setRotation(theta);
         }
@@ -779,13 +781,14 @@ void Game::render() {
 
     } else if (i->GetType() == "scarf") {
       if (i->GetLevel() <= 1) {
-        scarfTowerSprite.setPosition(i->posX_ * gridSizeF, i->posY_ * gridSizeF);
+        scarfTowerSprite.setPosition(i->posX_ * gridSizeF,
+                                     i->posY_ * gridSizeF);
         scarfTowerSprite.move(gridSizeF / 2.f, gridSizeF / 2.f);
         auto originalRotation = scarfTowerSprite.getRotation();
         if (i->hasTarget) {
           float theta =
-            atan2(i->targetPosY - i->posY_, i->targetPosX - i->posX_) * 180 /
-            3.141;
+              atan2(i->targetPosY - i->posY_, i->targetPosX - i->posX_) * 180 /
+              3.141;
           theta += 90;
           scarfTowerSprite.setRotation(theta);
         }
@@ -793,13 +796,14 @@ void Game::render() {
         scarfTowerSprite.setRotation(originalRotation);
 
       } else if (i->GetLevel() > 1) {
-        scarf3TowerSprite.setPosition(i->posX_ * gridSizeF, i->posY_ * gridSizeF);
+        scarf3TowerSprite.setPosition(i->posX_ * gridSizeF,
+                                      i->posY_ * gridSizeF);
         scarf3TowerSprite.move(gridSizeF / 2.f, gridSizeF / 2.f);
         auto originalRotation = scarf3TowerSprite.getRotation();
         if (i->hasTarget) {
           float theta =
-            atan2(i->targetPosY - i->posY_, i->targetPosX - i->posX_) * 180 /
-            3.141;
+              atan2(i->targetPosY - i->posY_, i->targetPosX - i->posX_) * 180 /
+              3.141;
           theta += 90;
           scarf3TowerSprite.setRotation(theta);
         }

@@ -77,39 +77,35 @@ void loadLevel(std::string levelName) {
     }
 
     // Read the neighbor values in from the file
-    while(levelFile.good()) {
-        getline(levelFile, line);
-        int var = 1;
-        value.clear();
-        for (auto ii = 0; ii < line.size(); ii++) {
-            if(line[ii] != ',') {
-                value.push_back(line[ii]);
-            }
-            else {
-                if (var == 1) {
-                    one = std::stoi(value);
-                    value.clear();
-                }
-                else if (var == 2) {
-                    two = std::stoi(value);
-                    value.clear();
-                }
-                else if (var == 3) {
-                    three = std::stoi(value);
-                    value.clear();
-                }
-                else if (var == 4) {
-                    four = std::stoi(value);
-                    value.clear();
-                }
-                else {
-                    // do nothing
-                }
-                var++;
-            }
+    while (levelFile.good()) {
+      getline(levelFile, line);
+      int var = 1;
+      value.clear();
+      for (auto ii = 0; ii < line.size(); ii++) {
+        if (line[ii] != ',') {
+          value.push_back(line[ii]);
+        } else {
+          if (var == 1) {
+            one = std::stoi(value);
+            value.clear();
+          } else if (var == 2) {
+            two = std::stoi(value);
+            value.clear();
+          } else if (var == 3) {
+            three = std::stoi(value);
+            value.clear();
+          } else if (var == 4) {
+            four = std::stoi(value);
+            value.clear();
+          } else {
+            // do nothing
+          }
+          var++;
         }
-        oneTuple = std::make_tuple(std::make_tuple(one, two), std::make_tuple(three, four));
-        defaultNeighbours2.push_back(oneTuple);
+      }
+      oneTuple = std::make_tuple(std::make_tuple(one, two),
+                                 std::make_tuple(three, four));
+      defaultNeighbours2.push_back(oneTuple);
     }
   }
 
@@ -137,9 +133,10 @@ int main() {
   PictureLevel.loadFromFile("pics/carrotbackground.png");
   levelbackground.setTexture(&PictureLevel);
 
-
-  Button bplay("PLAY", 200, 100, Color(0, 0, 0, 10), Color(0, 0, 130, 50), Color(0, 0, 130, 50));
-  Button bexit("EXIT", 200, 100, Color(0, 0, 0, 10), Color(0, 0, 130, 50), Color(0, 0, 130, 50));
+  Button bplay("PLAY", 200, 100, Color(0, 0, 0, 10), Color(0, 0, 130, 50),
+               Color(0, 0, 130, 50));
+  Button bexit("EXIT", 200, 100, Color(0, 0, 0, 10), Color(0, 0, 130, 50),
+               Color(0, 0, 130, 50));
   bplay.SetButtonPosition({200, 500});
   bexit.SetButtonPosition({450, 500});
   bplay.SetTextPosition({285, 530});
@@ -182,11 +179,16 @@ int main() {
           if (bplay.MouseOnButton(MENU)) {
             RenderWindow Play(VideoMode(960, 720), "PLAY");
 
-            Button levelA("1", 140, 140, Color(0, 0, 0, 10), Color(0, 0, 0, 255), Color(0, 0, 0, 255));
-            Button levelB("2", 140, 140, Color(0, 0, 0, 10), Color(0, 0, 0, 255), Color(0, 0, 0, 255));
-            Button levelC("3", 140, 140, Color(0, 0, 0, 10), Color(0, 0, 0, 255), Color(0, 0, 0, 255));
-            Button levelD("4", 140, 140, Color(0, 0, 0, 10), Color(0, 0, 0, 255), Color(0, 0, 0, 255));
-            Button levelE("5", 140, 140, Color(0, 0, 0, 10), Color(0, 0, 0, 255), Color(0, 0, 0, 255));
+            Button levelA("1", 140, 140, Color(0, 0, 0, 10),
+                          Color(0, 0, 0, 255), Color(0, 0, 0, 255));
+            Button levelB("2", 140, 140, Color(0, 0, 0, 10),
+                          Color(0, 0, 0, 255), Color(0, 0, 0, 255));
+            Button levelC("3", 140, 140, Color(0, 0, 0, 10),
+                          Color(0, 0, 0, 255), Color(0, 0, 0, 255));
+            Button levelD("4", 140, 140, Color(0, 0, 0, 10),
+                          Color(0, 0, 0, 255), Color(0, 0, 0, 255));
+            Button levelE("5", 140, 140, Color(0, 0, 0, 10),
+                          Color(0, 0, 0, 255), Color(0, 0, 0, 255));
             levelA.SetScale(2, 2);
             levelB.SetScale(2, 2);
             levelC.SetScale(2, 2);
@@ -250,7 +252,7 @@ int main() {
                         game.update();
                         game.render();
                       }
-                      //break;
+                      // break;
                     } else if (levelB.MouseOnButton(Play)) {
                       int size = 12;
                       loadLevel("src/level2.txt");
@@ -260,7 +262,7 @@ int main() {
                         game.update();
                         game.render();
                       }
-                      //break;
+                      // break;
                     } else if (levelC.MouseOnButton(Play)) {
                       int size = 12;
                       loadLevel("src/level3.txt");
@@ -270,7 +272,7 @@ int main() {
                         game.update();
                         game.render();
                       }
-                      //break;
+                      // break;
                     } else if (levelD.MouseOnButton(Play)) {
                       int size = 12;
                       loadLevel("src/level4.txt");
@@ -280,7 +282,7 @@ int main() {
                         game.update();
                         game.render();
                       }
-                      //break;
+                      // break;
                     } else if (levelE.MouseOnButton(Play)) {
                       int size = 12;
                       loadLevel("src/level5.txt");
@@ -290,9 +292,8 @@ int main() {
                         game.update();
                         game.render();
                       }
-                      //break;
+                      // break;
                     }
-                    
                 }
                 break;
               }

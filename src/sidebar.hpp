@@ -1,12 +1,13 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include <iostream> 
+#include <iostream>
+
 #include "button.hpp"
 
 class Sidebar {
-public:
- Sidebar() { 
+ public:
+  Sidebar() {
     /*if (!basic.loadFromFile("pics/snowman_basic1.png")) {
       std::cout << "not working" << std::endl;
     }
@@ -91,9 +92,9 @@ public:
     line2.setSize(sf::Vector2f(200, 3));
     line2.setFillColor(sf::Color(0, 0, 0, 30));
     line2.setPosition(960, 90);
-}
+  }
 
-void SetFont(sf::Font &font) { 
+  void SetFont(sf::Font &font) {
     roundCount.setFont(font);
     wallet.setFont(font);
     goButtonText.setFont(font);
@@ -103,13 +104,17 @@ void SetFont(sf::Font &font) {
     hatUpgrade.setFont(font);
     scarfPrice.setFont(font);
     scarfUpgrade.setFont(font);
-}
+  }
 
-void UpdateRoundCount(int round) { roundCount.setString("Round: " + std::to_string(round) + " / 5"); }
+  void UpdateRoundCount(int round) {
+    roundCount.setString("Round: " + std::to_string(round) + " / 5");
+  }
 
-void UpdateWallet(int amount) { wallet.setString("Wallet: " + std::to_string(amount) + "$"); }
+  void UpdateWallet(int amount) {
+    wallet.setString("Wallet: " + std::to_string(amount) + "$");
+  }
 
-void drawTo(sf::RenderWindow &window) { 
+  void drawTo(sf::RenderWindow &window) {
     window.draw(sidebar);
     window.draw(roundCount);
     window.draw(wallet);
@@ -129,50 +134,53 @@ void drawTo(sf::RenderWindow &window) {
     window.draw(tower3);
     window.draw(goButton);
     window.draw(goButtonText);
-}
+  }
 
-bool MouseOnButton(sf::RenderWindow &window, sf::RectangleShape button) {
+  bool MouseOnButton(sf::RenderWindow &window, sf::RectangleShape button) {
     float MPosX = sf::Mouse::getPosition(window).x;
     float MPosY = sf::Mouse::getPosition(window).y;
 
     float BPosX = button.getPosition().x;
     float BPosY = button.getPosition().y;
 
-    float BPosXWithWidth = button.getPosition().x + button.getLocalBounds().width;
-    float BPosYWithHeight = button.getPosition().y + button.getLocalBounds().height;
+    float BPosXWithWidth =
+        button.getPosition().x + button.getLocalBounds().width;
+    float BPosYWithHeight =
+        button.getPosition().y + button.getLocalBounds().height;
 
-    if (MPosX > BPosX && MPosX < BPosXWithWidth && MPosY > BPosY && MPosY < BPosYWithHeight) {
-        return true;
+    if (MPosX > BPosX && MPosX < BPosXWithWidth && MPosY > BPosY &&
+        MPosY < BPosYWithHeight) {
+      return true;
     }
     return false;
-}
+  }
 
-void CenterText(sf::Vector2f posOfGoButton) { 
-        float posX = (posOfGoButton.x + goButton.getLocalBounds().width / 2) -
-                     (goButtonText.getLocalBounds().width / 2);
-        float posY = (posOfGoButton.y + goButton.getLocalBounds().height / 2) -
-                     (goButtonText.getLocalBounds().height / 2);
-        goButtonText.setPosition(posX, posY);
-    }
+  void CenterText(sf::Vector2f posOfGoButton) {
+    float posX = (posOfGoButton.x + goButton.getLocalBounds().width / 2) -
+                 (goButtonText.getLocalBounds().width / 2);
+    float posY = (posOfGoButton.y + goButton.getLocalBounds().height / 2) -
+                 (goButtonText.getLocalBounds().height / 2);
+    goButtonText.setPosition(posX, posY);
+  }
 
-//private:
-    sf::RectangleShape sidebar;
-    sf::Text roundCount;
-    sf::Text wallet;
-    sf::Text basicPrice;
-    sf::Text basicUpgrade;
-    sf::Text hatPrice;
-    sf::Text hatUpgrade;
-    sf::Text scarfPrice;
-    sf::Text scarfUpgrade;
-    sf::RectangleShape line1;
-    sf::RectangleShape line2;
-    sf::Sprite tower1;
-    sf::Sprite tower2;
-    sf::Sprite tower3;
-    sf::RectangleShape tower1B;
-    sf::RectangleShape tower2B;
-    sf::RectangleShape tower3B;
-    sf::RectangleShape goButton;
-    sf::Text goButtonText;
+  // private:
+  sf::RectangleShape sidebar;
+  sf::Text roundCount;
+  sf::Text wallet;
+  sf::Text basicPrice;
+  sf::Text basicUpgrade;
+  sf::Text hatPrice;
+  sf::Text hatUpgrade;
+  sf::Text scarfPrice;
+  sf::Text scarfUpgrade;
+  sf::RectangleShape line1;
+  sf::RectangleShape line2;
+  sf::Sprite tower1;
+  sf::Sprite tower2;
+  sf::Sprite tower3;
+  sf::RectangleShape tower1B;
+  sf::RectangleShape tower2B;
+  sf::RectangleShape tower3B;
+  sf::RectangleShape goButton;
+  sf::Text goButtonText;
 };
