@@ -247,6 +247,7 @@ void Game::updateInput() {
                 this->wallet += 70;  // TO BE DECIDED
               }
               towers.erase(std::remove(towers.begin(), towers.end(), i), towers.end());
+              this->level->tileMap[x][y].MakeFree();
               std::cout << "tower removed" << std::endl;
             }
           }
