@@ -119,8 +119,10 @@ void loadLevel(std::string levelName) {
 }
 
 int main() {
+  // Window for the menu
   RenderWindow MENU(VideoMode(960, 720), "MENU", Style::Default);
 
+  // Backgrounds for both the menu and level choosing window
   RectangleShape menuBackground;
   menuBackground.setSize(Vector2f(960, 650));
   Texture Picture;
@@ -133,6 +135,7 @@ int main() {
   PictureLevel.loadFromFile("pics/carrotbackground.png");
   levelbackground.setTexture(&PictureLevel);
 
+  // Creating buttons for MENU (bplay = button for play, bexit = button for exit)
   Button bplay("PLAY", 200, 100, Color(0, 0, 0, 10), Color(0, 0, 130, 50),
                Color(0, 0, 130, 50));
   Button bexit("EXIT", 200, 100, Color(0, 0, 0, 10), Color(0, 0, 130, 50),
@@ -142,11 +145,13 @@ int main() {
   bplay.SetTextPosition({285, 530});
   bexit.SetTextPosition({535, 530});
 
+  // The font for both menu and level choosing window
   Font font;
   font.loadFromFile("misc/Sono-Regular.ttf");
   bplay.SetFont(font);
   bexit.SetFont(font);
 
+  // Text for the level choosing window
   Text levelText;
   levelText.setString("CHOOSE A LEVEL");
   levelText.setPosition({205, 150});
@@ -159,6 +164,8 @@ int main() {
   levelTextBG.setSize({500, 100});
   levelTextBG.setPosition({200, 145});
 
+  // Running MENU window. When mouse is on top of a button, it changes color. Pressing on Exit button closes the window
+  // and pressing on Play opens the level choosing window
   while (MENU.isOpen()) {
     Event event;
     while (MENU.pollEvent(event)) {
@@ -176,7 +183,10 @@ int main() {
           }
           break;
         case Event::MouseButtonPressed:
+        // Running Play window. When mouse is on top of a button, it changes color. Pressing on different level numbers opens varying
+        // levels and creates a new Game class. The level is read from a file according to the code written in the beginning of this file
           if (bplay.MouseOnButton(MENU)) {
+            // Window for level choosing
             RenderWindow Play(VideoMode(960, 720), "PLAY");
 
             Button levelA("1", 140, 140, Color(0, 0, 0, 10),
@@ -297,6 +307,7 @@ int main() {
                 }
                 break;
               }
+              // Drawing all the Play window elements
               Play.clear();
               Play.draw(levelbackground);
               levelA.drawTo(Play);
@@ -314,6 +325,7 @@ int main() {
           }
       }
     }
+    // Drawing all the MENU window elements
     MENU.clear();
     MENU.draw(menuBackground);
     bplay.drawTo(MENU);

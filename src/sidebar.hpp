@@ -2,21 +2,22 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
-
 #include "button.hpp"
 
+/**
+ * @brief Class that creates the sidebar
+ * 
+ */
 class Sidebar {
  public:
+
+ /**
+  * @brief Construct a new Sidebar object
+  * 
+  */
   Sidebar() {
-    /*if (!basic.loadFromFile("pics/snowman_basic1.png")) {
-      std::cout << "not working" << std::endl;
-    }
-    if (!hat.loadFromFile("pics/snowman_hat1.png")) {
-      std::cout << "not working" << std::endl;
-    }
-    if (!scarf.loadFromFile("pics/snowman_scarf1.png")) {
-      std::cout << "not working" << std::endl;
-    }*/
+
+    // Create boxes around images of towers
     tower1B.setFillColor(sf::Color(0, 0, 255, 30));
     tower1B.setOutlineColor(sf::Color::White);
     tower1B.setOutlineThickness(3);
@@ -33,28 +34,34 @@ class Sidebar {
     tower3B.setPosition({1014, 370});
     tower3B.setSize(sf::Vector2f(90, 90));
 
+    // Create box that starts the round
     goButton.setFillColor(sf::Color(255, 75, 0, 100));
     goButton.setPosition({980, 520});
     goButton.setSize(sf::Vector2f(150, 100));
     goButtonText.setString("GO");
     CenterText({960, 500});
 
+    // Images of three different tower types
     tower1.setPosition({1010, 100});
     tower2.setPosition({1010, 235});
     tower3.setPosition({1010, 370});
 
+    // Creating actual sidebar shape
     sidebar.setSize(sf::Vector2f(200, 650));
     sidebar.setFillColor(sf::Color(255, 255, 255, 230));
     sidebar.setOutlineColor(sf::Color(0, 0, 0, 30));
     sidebar.setOutlineThickness(3);
     sidebar.setPosition(960, 0);
 
+    // Round counter
     roundCount.setString("Round: 1 / 5");
     roundCount.setPosition({970, 5});
 
+    // Wallet situation
     wallet.setString("Wallet: ");
     wallet.setPosition({970, 50});
 
+    // Setting the information of both the regular and update prices of all towers
     basicPrice.setString("Price: x$");
     basicPrice.setPosition({1025, 195});
     basicPrice.setCharacterSize(12);
@@ -85,6 +92,7 @@ class Sidebar {
     scarfUpgrade.setCharacterSize(12);
     scarfUpgrade.setFillColor(sf::Color::Black);
 
+    // Lines to draw that separate the roundcounter and wallet
     line1.setSize(sf::Vector2f(200, 3));
     line1.setFillColor(sf::Color(0, 0, 0, 30));
     line1.setPosition(960, 45);
@@ -94,6 +102,11 @@ class Sidebar {
     line2.setPosition(960, 90);
   }
 
+  /**
+   * @brief Set the font for all text in sidebar
+   * 
+   * @param font 
+   */
   void SetFont(sf::Font &font) {
     roundCount.setFont(font);
     wallet.setFont(font);
@@ -106,14 +119,29 @@ class Sidebar {
     scarfUpgrade.setFont(font);
   }
 
+  /**
+   * @brief Round count updater
+   * 
+   * @param round 
+   */
   void UpdateRoundCount(int round) {
     roundCount.setString("Round: " + std::to_string(round) + " / 5");
   }
 
+  /**
+   * @brief Updating wallet counter
+   * 
+   * @param amount 
+   */
   void UpdateWallet(int amount) {
     wallet.setString("Wallet: " + std::to_string(amount) + "$");
   }
 
+  /**
+   * @brief Drawing all the elements of the sidebar
+   * 
+   * @param window Window to draw to
+   */
   void drawTo(sf::RenderWindow &window) {
     window.draw(sidebar);
     window.draw(roundCount);
@@ -136,6 +164,14 @@ class Sidebar {
     window.draw(goButtonText);
   }
 
+  /**
+   * @brief Function to determine if mouse is on top of the shape
+   * 
+   * @param window
+   * @param button Rectangle that mouse is on top of
+   * @return true 
+   * @return false 
+   */
   bool MouseOnButton(sf::RenderWindow &window, sf::RectangleShape button) {
     float MPosX = sf::Mouse::getPosition(window).x;
     float MPosY = sf::Mouse::getPosition(window).y;
@@ -155,6 +191,11 @@ class Sidebar {
     return false;
   }
 
+  /**
+   * @brief Centering text on top of the shape
+   * 
+   * @param posOfGoButton Position of the shape the text should be in the center of
+   */
   void CenterText(sf::Vector2f posOfGoButton) {
     float posX = (posOfGoButton.x + goButton.getLocalBounds().width / 2) -
                  (goButtonText.getLocalBounds().width / 2);
@@ -163,7 +204,19 @@ class Sidebar {
     goButtonText.setPosition(posX, posY);
   }
 
-  // private:
+  // Getter functions
+
+  sf::Sprite& GetTower1() { return tower1; }
+  sf::Sprite& GetTower2() { return tower2; }
+  sf::Sprite& GetTower3() { return tower3; }
+
+  const sf::RectangleShape& GetTower1B() const { return tower1B; }
+  const sf::RectangleShape& GetTower2B() const { return tower2B; }
+  const sf::RectangleShape& GetTower3B() const { return tower3B; }
+
+  const sf::RectangleShape& GetGoButton() const { return goButton; }
+
+ private:
   sf::RectangleShape sidebar;
   sf::Text roundCount;
   sf::Text wallet;

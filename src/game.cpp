@@ -61,16 +61,16 @@ void Game::pollEvents() {
         }
         break;
       case sf::Event::MouseButtonPressed:
-        if (sidebar.MouseOnButton(*(this->window), sidebar.tower1B)) {
+        if (sidebar.MouseOnButton(*(this->window), sidebar.GetTower1B())) {
           basic_clicked = true;
           std::cout << "1B pressed" << std::endl;
-        } else if (sidebar.MouseOnButton(*(this->window), sidebar.tower2B)) {
+        } else if (sidebar.MouseOnButton(*(this->window), sidebar.GetTower2B())) {
           hat_clicked = true;
           std::cout << "2B pressed" << std::endl;
-        } else if (sidebar.MouseOnButton(*(this->window), sidebar.tower3B)) {
+        } else if (sidebar.MouseOnButton(*(this->window), sidebar.GetTower3B())) {
           scarf_clicked = true;
           std::cout << "3B pressed" << std::endl;
-        } else if (sidebar.MouseOnButton(*(this->window), sidebar.goButton)) {
+        } else if (sidebar.MouseOnButton(*(this->window), sidebar.GetGoButton())) {
           go_clicked = true;
         }
         break;
@@ -228,7 +228,7 @@ void Game::updateInput() {
         }
       }
     }
-  } else if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
+  } else if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {      // Removal of tower
     std::cout << "Right Mouse clicked" << std::endl;
     for (int x = 0; x < this->level->GetMapSize(); x++) {
       for (int y = 0; y < this->level->GetMapSize(); y++) {
@@ -1010,9 +1010,10 @@ void Game::InitializeVariables() {
   sidebarFont.loadFromFile("misc/Sono-Regular.ttf");
   sidebar.SetFont(sidebarFont);
 
-  sidebar.tower1.setTexture(basicTowerTexture);
-  sidebar.tower2.setTexture(hatTowerTexture);
-  sidebar.tower3.setTexture(scarfTowerTexture);
+  // Set images in sidebar
+  sidebar.GetTower1().setTexture(basicTowerTexture);
+  sidebar.GetTower2().setTexture(hatTowerTexture);
+  sidebar.GetTower3().setTexture(scarfTowerTexture);
 }
 
 // Initalizes window with correct size
