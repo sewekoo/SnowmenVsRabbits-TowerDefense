@@ -62,32 +62,32 @@ class Sidebar {
     wallet.setPosition({970, 50});
 
     // Setting the information of both the regular and update prices of all towers
-    basicPrice.setString("Price: x$");
+    basicPrice.setString("Price: 100$");
     basicPrice.setPosition({1025, 195});
     basicPrice.setCharacterSize(12);
     basicPrice.setFillColor(sf::Color::Black);
 
-    basicUpgrade.setString("Upgrade: x$");
+    basicUpgrade.setString("Upgrade: 75$");
     basicUpgrade.setPosition({1020, 212});
     basicUpgrade.setCharacterSize(12);
     basicUpgrade.setFillColor(sf::Color::Black);
 
-    hatPrice.setString("Price: x$");
+    hatPrice.setString("Price: 150$");
     hatPrice.setPosition({1025, 330});
     hatPrice.setCharacterSize(12);
     hatPrice.setFillColor(sf::Color::Black);
 
-    hatUpgrade.setString("Upgrade: x$");
+    hatUpgrade.setString("Upgrade: 125$");
     hatUpgrade.setPosition({1020, 347});
     hatUpgrade.setCharacterSize(12);
     hatUpgrade.setFillColor(sf::Color::Black);
 
-    scarfPrice.setString("Price: x$");
+    scarfPrice.setString("Price: 200$");
     scarfPrice.setPosition({1025, 465});
     scarfPrice.setCharacterSize(12);
     scarfPrice.setFillColor(sf::Color::Black);
 
-    scarfUpgrade.setString("Upgrade: x$");
+    scarfUpgrade.setString("Upgrade: 175$");
     scarfUpgrade.setPosition({1020, 482});
     scarfUpgrade.setCharacterSize(12);
     scarfUpgrade.setFillColor(sf::Color::Black);
