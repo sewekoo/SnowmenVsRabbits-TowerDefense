@@ -64,13 +64,16 @@ void Game::pollEvents() {
         if (sidebar.MouseOnButton(*(this->window), sidebar.GetTower1B())) {
           basic_clicked = true;
           std::cout << "1B pressed" << std::endl;
-        } else if (sidebar.MouseOnButton(*(this->window), sidebar.GetTower2B())) {
+        } else if (sidebar.MouseOnButton(*(this->window),
+                                         sidebar.GetTower2B())) {
           hat_clicked = true;
           std::cout << "2B pressed" << std::endl;
-        } else if (sidebar.MouseOnButton(*(this->window), sidebar.GetTower3B())) {
+        } else if (sidebar.MouseOnButton(*(this->window),
+                                         sidebar.GetTower3B())) {
           scarf_clicked = true;
           std::cout << "3B pressed" << std::endl;
-        } else if (sidebar.MouseOnButton(*(this->window), sidebar.GetGoButton())) {
+        } else if (sidebar.MouseOnButton(*(this->window),
+                                         sidebar.GetGoButton())) {
           go_clicked = true;
         }
         break;
@@ -94,23 +97,30 @@ void Game::updateInput() {
             (this->level->tileMap[x][y].GetGridLocationY() == mousePosGrid.y)) {
           if (this->wallet >=
               this->level->tileMap[x][y].GetTower()->GetUpgradePrice()) {
-            std::cout << "Tower upgrade sequence began" << std::endl;
-            if (this->level->tileMap[x][y].GetTower() != nullptr) {
-              std::cout << "Tile tower value is not nullptr. Trying to upgrade:"
-                        << std::endl;
-              try {
+            if (this->level->tileMap[x][y].GetTower()->GetLevel() < 2) {
+              std::cout << "Tower upgrade sequence began" << std::endl;
+              if (this->level->tileMap[x][y].GetTower() != nullptr) {
                 std::cout
-                    << this->level->tileMap[x][y].occupantTower_ << "level: "
-                    << this->level->tileMap[x][y].occupantTower_->GetLevel()
+                    << "Tile tower value is not nullptr. Trying to upgrade:"
                     << std::endl;
-                this->level->tileMap[x][y].occupantTower_->Upgrade();
-                std::cout
-                    << "Upgrade success. New level: "
-                    << this->level->tileMap[x][y].occupantTower_->GetLevel()
-                    << std::endl;
-              } catch (const std::exception& e) {
-                std::cout << "Upgrade failed" << std::endl;
+                try {
+                  std::cout
+                      << this->level->tileMap[x][y].occupantTower_ << "level: "
+                      << this->level->tileMap[x][y].occupantTower_->GetLevel()
+                      << std::endl;
+                  wallet -=
+                      this->level->tileMap[x][y].GetTower()->GetUpgradePrice();
+                  this->level->tileMap[x][y].occupantTower_->Upgrade();
+                  std::cout
+                      << "Upgrade success. New level: "
+                      << this->level->tileMap[x][y].occupantTower_->GetLevel()
+                      << std::endl;
+                } catch (const std::exception& e) {
+                  std::cout << "Upgrade failed" << std::endl;
+                }
               }
+            } else {
+              latestMessage = "Max level";
             }
           } else {
             latestMessage = "Not enough money.";
@@ -228,7 +238,8 @@ void Game::updateInput() {
         }
       }
     }
-  } else if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {      // Removal of tower
+  } else if (sf::Mouse::isButtonPressed(
+                 sf::Mouse::Right)) {  // Removal of tower
     std::cout << "Right Mouse clicked" << std::endl;
     for (int x = 0; x < this->level->GetMapSize(); x++) {
       for (int y = 0; y < this->level->GetMapSize(); y++) {
@@ -236,9 +247,9 @@ void Game::updateInput() {
             (this->level->tileMap[x][y].type_ == 0) &&
             (this->level->tileMap[x][y].GetGridLocationX() == mousePosGrid.x) &&
             (this->level->tileMap[x][y].GetGridLocationY() == mousePosGrid.y)) {
-          
           for (auto i : towers) {
-            if (i->GetGridPosX() == this->mousePosGrid.x * gridSizeF && i->GetGridPosY() == this->mousePosGrid.y * gridSizeF) {
+            if (i->GetGridPosX() == this->mousePosGrid.x * gridSizeF &&
+                i->GetGridPosY() == this->mousePosGrid.y * gridSizeF) {
               if ((*i).GetType() == "basic") {
                 this->wallet += 50;  // TO BE DECIDED
               } else if ((*i).GetType() == "hat") {
@@ -246,7 +257,8 @@ void Game::updateInput() {
               } else if ((*i).GetType() == "scarf") {
                 this->wallet += 70;  // TO BE DECIDED
               }
-              towers.erase(std::remove(towers.begin(), towers.end(), i), towers.end());
+              towers.erase(std::remove(towers.begin(), towers.end(), i),
+                           towers.end());
               this->level->tileMap[x][y].MakeFree();
               std::cout << "tower removed" << std::endl;
             }
