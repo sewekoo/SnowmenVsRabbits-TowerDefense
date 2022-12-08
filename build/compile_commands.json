@@ -36,8 +36,8 @@
 },
 {
   "directory": "/Users/lauri/IdeaProjects/Group_Project/build",
-  "command": "/usr/bin/clang++  -I/Users/lauri/IdeaProjects/Group_Project/libs/SFML-2.5.1/include -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk -o CMakeFiles/towerdef.dir/src/menu.cpp.o -c /Users/lauri/IdeaProjects/Group_Project/src/menu.cpp",
-  "file": "/Users/lauri/IdeaProjects/Group_Project/src/menu.cpp"
+  "command": "/usr/bin/clang++  -I/Users/lauri/IdeaProjects/Group_Project/libs/SFML-2.5.1/include -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk -o CMakeFiles/towerdef.dir/src/main.cpp.o -c /Users/lauri/IdeaProjects/Group_Project/src/main.cpp",
+  "file": "/Users/lauri/IdeaProjects/Group_Project/src/main.cpp"
 },
 {
   "directory": "/Users/lauri/IdeaProjects/Group_Project/build",

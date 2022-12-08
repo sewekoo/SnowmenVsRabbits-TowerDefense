@@ -12,7 +12,7 @@ enable_testing()
 #set_target_properties(sfml-graphics PROPERTIES IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/libs/SFML-2.5.1-macos-clang/lib/libsfml-graphics.dylib" )
 
 
-add_executable(towerdef src/entrypoint.cpp src/game.cpp src/level.cpp src/tile.cpp src/tower_sniper.cpp src/exitpoint.cpp src/grass.cpp src/menu.cpp src/road.cpp src/tower.cpp)
+add_executable(towerdef src/entrypoint.cpp src/game.cpp src/level.cpp src/tile.cpp src/tower_sniper.cpp src/exitpoint.cpp src/grass.cpp src/main.cpp src/road.cpp src/tower.cpp)
 #add_executable(towerdef src/lauri_hello_test.C)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/libs/SFML-2.5.1/include) #Same include for all

@@ -167,19 +167,19 @@ CMakeFiles/towerdef.dir/src/grass.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/towerdef.dir/src/grass.cpp.s"
 	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/lauri/IdeaProjects/Group_Project/src/grass.cpp -o CMakeFiles/towerdef.dir/src/grass.cpp.s
 
-CMakeFiles/towerdef.dir/src/menu.cpp.o: CMakeFiles/towerdef.dir/flags.make
-CMakeFiles/towerdef.dir/src/menu.cpp.o: /Users/lauri/IdeaProjects/Group_Project/src/menu.cpp
-CMakeFiles/towerdef.dir/src/menu.cpp.o: CMakeFiles/towerdef.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/lauri/IdeaProjects/Group_Project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/towerdef.dir/src/menu.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/towerdef.dir/src/menu.cpp.o -MF CMakeFiles/towerdef.dir/src/menu.cpp.o.d -o CMakeFiles/towerdef.dir/src/menu.cpp.o -c /Users/lauri/IdeaProjects/Group_Project/src/menu.cpp
+CMakeFiles/towerdef.dir/src/main.cpp.o: CMakeFiles/towerdef.dir/flags.make
+CMakeFiles/towerdef.dir/src/main.cpp.o: /Users/lauri/IdeaProjects/Group_Project/src/main.cpp
+CMakeFiles/towerdef.dir/src/main.cpp.o: CMakeFiles/towerdef.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/lauri/IdeaProjects/Group_Project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/towerdef.dir/src/main.cpp.o"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/towerdef.dir/src/main.cpp.o -MF CMakeFiles/towerdef.dir/src/main.cpp.o.d -o CMakeFiles/towerdef.dir/src/main.cpp.o -c /Users/lauri/IdeaProjects/Group_Project/src/main.cpp
 
-CMakeFiles/towerdef.dir/src/menu.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/towerdef.dir/src/menu.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/lauri/IdeaProjects/Group_Project/src/menu.cpp > CMakeFiles/towerdef.dir/src/menu.cpp.i
+CMakeFiles/towerdef.dir/src/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/towerdef.dir/src/main.cpp.i"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/lauri/IdeaProjects/Group_Project/src/main.cpp > CMakeFiles/towerdef.dir/src/main.cpp.i
 
-CMakeFiles/towerdef.dir/src/menu.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/towerdef.dir/src/menu.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/lauri/IdeaProjects/Group_Project/src/menu.cpp -o CMakeFiles/towerdef.dir/src/menu.cpp.s
+CMakeFiles/towerdef.dir/src/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/towerdef.dir/src/main.cpp.s"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/lauri/IdeaProjects/Group_Project/src/main.cpp -o CMakeFiles/towerdef.dir/src/main.cpp.s
 
 CMakeFiles/towerdef.dir/src/road.cpp.o: CMakeFiles/towerdef.dir/flags.make
 CMakeFiles/towerdef.dir/src/road.cpp.o: /Users/lauri/IdeaProjects/Group_Project/src/road.cpp
@@ -218,7 +218,7 @@ towerdef_OBJECTS = \
 "CMakeFiles/towerdef.dir/src/tower_sniper.cpp.o" \
 "CMakeFiles/towerdef.dir/src/exitpoint.cpp.o" \
 "CMakeFiles/towerdef.dir/src/grass.cpp.o" \
-"CMakeFiles/towerdef.dir/src/menu.cpp.o" \
+"CMakeFiles/towerdef.dir/src/main.cpp.o" \
 "CMakeFiles/towerdef.dir/src/road.cpp.o" \
 "CMakeFiles/towerdef.dir/src/tower.cpp.o"
 
@@ -232,7 +232,7 @@ towerdef: CMakeFiles/towerdef.dir/src/tile.cpp.o
 towerdef: CMakeFiles/towerdef.dir/src/tower_sniper.cpp.o
 towerdef: CMakeFiles/towerdef.dir/src/exitpoint.cpp.o
 towerdef: CMakeFiles/towerdef.dir/src/grass.cpp.o
-towerdef: CMakeFiles/towerdef.dir/src/menu.cpp.o
+towerdef: CMakeFiles/towerdef.dir/src/main.cpp.o
 towerdef: CMakeFiles/towerdef.dir/src/road.cpp.o
 towerdef: CMakeFiles/towerdef.dir/src/tower.cpp.o
 towerdef: CMakeFiles/towerdef.dir/build.make

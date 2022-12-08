@@ -643,29 +643,29 @@ src/level.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/level.cpp.s
 .PHONY : src/level.cpp.s
 
-src/menu.o: src/menu.cpp.o
-.PHONY : src/menu.o
+src/main.o: src/main.cpp.o
+.PHONY : src/main.o
 
 # target to build an object file
-src/menu.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/menu.cpp.o
-.PHONY : src/menu.cpp.o
+src/main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/main.cpp.o
+.PHONY : src/main.cpp.o
 
-src/menu.i: src/menu.cpp.i
-.PHONY : src/menu.i
+src/main.i: src/main.cpp.i
+.PHONY : src/main.i
 
 # target to preprocess a source file
-src/menu.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/menu.cpp.i
-.PHONY : src/menu.cpp.i
+src/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/main.cpp.i
+.PHONY : src/main.cpp.i
 
-src/menu.s: src/menu.cpp.s
-.PHONY : src/menu.s
+src/main.s: src/main.cpp.s
+.PHONY : src/main.s
 
 # target to generate assembly for a file
-src/menu.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/menu.cpp.s
-.PHONY : src/menu.cpp.s
+src/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/towerdef.dir/build.make CMakeFiles/towerdef.dir/src/main.cpp.s
+.PHONY : src/main.cpp.s
 
 src/road.o: src/road.cpp.o
 .PHONY : src/road.o
@@ -818,9 +818,9 @@ help:
 	@echo "... src/level.o"
 	@echo "... src/level.i"
 	@echo "... src/level.s"
-	@echo "... src/menu.o"
-	@echo "... src/menu.i"
-	@echo "... src/menu.s"
+	@echo "... src/main.o"
+	@echo "... src/main.i"
+	@echo "... src/main.s"
 	@echo "... src/road.o"
 	@echo "... src/road.i"
 	@echo "... src/road.s"

@@ -1,13 +1,18 @@
-# Project Name (replace here!)
+# Snowmen vs Rabbits
 
-This is the template for the projects. Please copy the project description here. 
-You can use Markdown language to render it as formatted **HTML** file.
+“Tower defense (or informally TD) is a subgenre of strategy video game where the goal is to defend a player’s territories or possessions by obstructing enemy attackers, usually achieved by placing defensive structures on or along their path of attack.” (Wikipedia)
+In a tower defense game, the enemies move in waves from some position of the map to another. The goal of the player is to place towers on their path in order to block, impede, attack or destroy the enemies before they are able to reach their goal. The primary object is the survival of the base.
 
 # Group
-- Member 1
-- Member 2
-- Member 3
-- Member 4
+- Roosa Ahlroos
+- Karl Rass
+- Lauri Karanko
+- Severi Koivumaa
+
+
+
+
+
 
 # Repository organization
 Your project implementation should follow the skelaton organization in this repository.

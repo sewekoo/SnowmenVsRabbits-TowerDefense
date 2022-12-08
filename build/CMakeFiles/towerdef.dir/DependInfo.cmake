@@ -13,7 +13,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/Users/lauri/IdeaProjects/Group_Project/src/game.cpp" "CMakeFiles/towerdef.dir/src/game.cpp.o" "gcc" "CMakeFiles/towerdef.dir/src/game.cpp.o.d"
   "/Users/lauri/IdeaProjects/Group_Project/src/grass.cpp" "CMakeFiles/towerdef.dir/src/grass.cpp.o" "gcc" "CMakeFiles/towerdef.dir/src/grass.cpp.o.d"
   "/Users/lauri/IdeaProjects/Group_Project/src/level.cpp" "CMakeFiles/towerdef.dir/src/level.cpp.o" "gcc" "CMakeFiles/towerdef.dir/src/level.cpp.o.d"
-  "/Users/lauri/IdeaProjects/Group_Project/src/menu.cpp" "CMakeFiles/towerdef.dir/src/menu.cpp.o" "gcc" "CMakeFiles/towerdef.dir/src/menu.cpp.o.d"
+  "/Users/lauri/IdeaProjects/Group_Project/src/main.cpp" "CMakeFiles/towerdef.dir/src/main.cpp.o" "gcc" "CMakeFiles/towerdef.dir/src/main.cpp.o.d"
   "/Users/lauri/IdeaProjects/Group_Project/src/road.cpp" "CMakeFiles/towerdef.dir/src/road.cpp.o" "gcc" "CMakeFiles/towerdef.dir/src/road.cpp.o.d"
   "/Users/lauri/IdeaProjects/Group_Project/src/tile.cpp" "CMakeFiles/towerdef.dir/src/tile.cpp.o" "gcc" "CMakeFiles/towerdef.dir/src/tile.cpp.o.d"
   "/Users/lauri/IdeaProjects/Group_Project/src/tower.cpp" "CMakeFiles/towerdef.dir/src/tower.cpp.o" "gcc" "CMakeFiles/towerdef.dir/src/tower.cpp.o.d"
