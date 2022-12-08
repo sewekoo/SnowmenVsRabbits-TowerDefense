@@ -7,9 +7,9 @@ Tile::Tile(const sf::Vector2f& size) : sf::RectangleShape(size) {
 }
 
 Tile::~Tile() {
-  delete next_;
+  //delete next_;
   delete occupantEnemy_;
-  delete occupantTower_;
+  //delete occupantTower_;
 }
 
 bool Tile::IsOccupied() { return occupied_; }
