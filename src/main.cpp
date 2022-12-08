@@ -5,11 +5,37 @@
 #include "game.hpp"
 using namespace sf;
 
+/**
+ * Info for which enemy to spawn during each round.
+ * Every "inner vector" corresponds to one round.
+ * Enemies spawn in the order they are put into the vector.
+ *
+ * 1 = Basic enemy
+ * 2 = Fast enemy
+ * 3 = Strong enemy
+ *
+ * Game ends automatically when all enemies have spawned.
+ */
 std::vector<std::vector<int>> defaultEnemies{
-    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {1, 2, 1, 1, 2, 1, 1, 2, 1, 1, 2, 2},
-    {1, 3, 1, 3, 1, 3, 1, 1, 3, 1, 3, 3}, {2, 1, 3, 1, 2, 3, 1, 1, 3, 1, 2, 2},
-    {2, 2, 3, 2, 2, 3, 3, 3, 2, 2, 2, 3},
-};
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    {2, 2, 2, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 3},
+    {2, 2, 2, 2, 3, 1, 1, 1, 3, 1, 3, 3, 1, 1, 3, 3, 3, 1, 1, 3, 3},
+    {2, 2, 2, 2, 2, 2, 3, 3, 1, 1, 3, 3, 3,
+     3, 1, 1, 3, 3, 3, 1, 1, 1, 3, 3, 1, 3},
+    {3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 3, 3, 3, 3, 3,
+     1, 1, 1, 3, 3, 3, 3, 1, 1, 3, 3, 3, 3, 3, 1},
+    {2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+     2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+    {2, 2, 2, 2, 2, 2, 3, 3, 1, 3, 3, 3, 3, 3, 1, 3, 3, 3, 3,
+     3, 1, 1, 3, 3, 1, 3, 3, 3, 3, 1, 3, 1, 3, 1, 1, 1, 1, 3},
+    {2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 1, 3, 3, 3, 3, 3, 3, 1, 3, 3,
+     3, 3, 3, 3, 3, 1, 1, 1, 3, 1, 1, 3, 3, 3, 1, 1, 1, 3, 3, 3, 3, 1, 3},
+    {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+     3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
+    {2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+     2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+     3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+     3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3}};
 
 std::vector<std::tuple<std::tuple<int, int>, std::tuple<int, int>>>
     defaultNeighbours2;
@@ -135,7 +161,8 @@ int main() {
   PictureLevel.loadFromFile("pics/carrotbackground.png");
   levelbackground.setTexture(&PictureLevel);
 
-  // Creating buttons for MENU (bplay = button for play, bexit = button for exit)
+  // Creating buttons for MENU (bplay = button for play, bexit = button for
+  // exit)
   Button bplay("PLAY", 200, 100, Color(0, 0, 0, 10), Color(0, 0, 130, 50),
                Color(0, 0, 130, 50));
   Button bexit("EXIT", 200, 100, Color(0, 0, 0, 10), Color(0, 0, 130, 50),
@@ -164,8 +191,9 @@ int main() {
   levelTextBG.setSize({500, 100});
   levelTextBG.setPosition({200, 145});
 
-  // Running MENU window. When mouse is on top of a button, it changes color. Pressing on Exit button closes the window
-  // and pressing on Play opens the level choosing window
+  // Running MENU window. When mouse is on top of a button, it changes color.
+  // Pressing on Exit button closes the window and pressing on Play opens the
+  // level choosing window
   while (MENU.isOpen()) {
     Event event;
     while (MENU.pollEvent(event)) {
@@ -183,8 +211,10 @@ int main() {
           }
           break;
         case Event::MouseButtonPressed:
-        // Running Play window. When mouse is on top of a button, it changes color. Pressing on different level numbers opens varying
-        // levels and creates a new Game class. The level is read from a file according to the code written in the beginning of this file
+          // Running Play window. When mouse is on top of a button, it changes
+          // color. Pressing on different level numbers opens varying levels and
+          // creates a new Game class. The level is read from a file according
+          // to the code written in the beginning of this file
           if (bplay.MouseOnButton(MENU)) {
             // Window for level choosing
             RenderWindow Play(VideoMode(960, 720), "PLAY");
