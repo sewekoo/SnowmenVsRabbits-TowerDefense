@@ -54,7 +54,7 @@ class Sidebar {
     sidebar.setPosition(960, 0);
 
     // Round counter
-    roundCount.setString("Round: 1 / 5");
+    roundCount.setString("Round: 1 / 10");
     roundCount.setPosition({970, 5});
 
     // Wallet situation
@@ -125,7 +125,7 @@ class Sidebar {
    * @param round 
    */
   void UpdateRoundCount(int round) {
-    roundCount.setString("Round: " + std::to_string(round) + " / 5");
+    roundCount.setString("Round: " + std::to_string(round) + " / 10");
   }
 
   /**
