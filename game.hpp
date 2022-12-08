@@ -1,13 +1,12 @@
 #ifndef GAME_HPP
 #define GAME_HPP
 
+#include <sstream>
 #include <math.h>
 
-#include <sstream>
-
 #include "level.hpp"
-#include "sidebar.hpp"
 #include "snowball.hpp"
+#include "sidebar.hpp"
 
 /**
  * Class that updates the game and handles "core logic".
@@ -122,7 +121,7 @@ class Game {
   // 0 => building phase, 1 => active wave, 2 => level won
   int gameState = 0;
 
-  double wallet = 100000;
+  double wallet = 100;
 
   std::string latestMessage = "";
 

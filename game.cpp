@@ -61,16 +61,19 @@ void Game::pollEvents() {
         }
         break;
       case sf::Event::MouseButtonPressed:
-        if (sidebar.MouseOnButton(*(this->window), sidebar.tower1B)) {
+        if (sidebar.MouseOnButton(*(this->window), sidebar.GetTower1B())) {
           basic_clicked = true;
           std::cout << "1B pressed" << std::endl;
-        } else if (sidebar.MouseOnButton(*(this->window), sidebar.tower2B)) {
+        } else if (sidebar.MouseOnButton(*(this->window),
+                                         sidebar.GetTower2B())) {
           hat_clicked = true;
           std::cout << "2B pressed" << std::endl;
-        } else if (sidebar.MouseOnButton(*(this->window), sidebar.tower3B)) {
+        } else if (sidebar.MouseOnButton(*(this->window),
+                                         sidebar.GetTower3B())) {
           scarf_clicked = true;
           std::cout << "3B pressed" << std::endl;
-        } else if (sidebar.MouseOnButton(*(this->window), sidebar.goButton)) {
+        } else if (sidebar.MouseOnButton(*(this->window),
+                                         sidebar.GetGoButton())) {
           go_clicked = true;
         }
         break;
@@ -94,23 +97,30 @@ void Game::updateInput() {
             (this->level->tileMap[x][y].GetGridLocationY() == mousePosGrid.y)) {
           if (this->wallet >=
               this->level->tileMap[x][y].GetTower()->GetUpgradePrice()) {
-            std::cout << "Tower upgrade sequence began" << std::endl;
-            if (this->level->tileMap[x][y].GetTower() != nullptr) {
-              std::cout << "Tile tower value is not nullptr. Trying to upgrade:"
-                        << std::endl;
-              try {
+            if (this->level->tileMap[x][y].GetTower()->GetLevel() < 2) {
+              std::cout << "Tower upgrade sequence began" << std::endl;
+              if (this->level->tileMap[x][y].GetTower() != nullptr) {
                 std::cout
-                    << this->level->tileMap[x][y].occupantTower_ << "level: "
-                    << this->level->tileMap[x][y].occupantTower_->GetLevel()
+                    << "Tile tower value is not nullptr. Trying to upgrade:"
                     << std::endl;
-                this->level->tileMap[x][y].occupantTower_->Upgrade();
-                std::cout
-                    << "Upgrade success. New level: "
-                    << this->level->tileMap[x][y].occupantTower_->GetLevel()
-                    << std::endl;
-              } catch (const std::exception& e) {
-                std::cout << "Upgrade failed" << std::endl;
+                try {
+                  std::cout
+                      << this->level->tileMap[x][y].occupantTower_ << "level: "
+                      << this->level->tileMap[x][y].occupantTower_->GetLevel()
+                      << std::endl;
+                  wallet -=
+                      this->level->tileMap[x][y].GetTower()->GetUpgradePrice();
+                  this->level->tileMap[x][y].occupantTower_->Upgrade();
+                  std::cout
+                      << "Upgrade success. New level: "
+                      << this->level->tileMap[x][y].occupantTower_->GetLevel()
+                      << std::endl;
+                } catch (const std::exception& e) {
+                  std::cout << "Upgrade failed" << std::endl;
+                }
               }
+            } else {
+              latestMessage = "Max level";
             }
           } else {
             latestMessage = "Not enough money.";
@@ -225,6 +235,34 @@ void Game::updateInput() {
           basic_clicked = false;
           hat_clicked = false;
           scarf_clicked = false;
+        }
+      }
+    }
+  } else if (sf::Mouse::isButtonPressed(
+                 sf::Mouse::Right)) {  // Removal of tower
+    std::cout << "Right Mouse clicked" << std::endl;
+    for (int x = 0; x < this->level->GetMapSize(); x++) {
+      for (int y = 0; y < this->level->GetMapSize(); y++) {
+        if ((this->level->tileMap[x][y].IsOccupied()) &&
+            (this->level->tileMap[x][y].type_ == 0) &&
+            (this->level->tileMap[x][y].GetGridLocationX() == mousePosGrid.x) &&
+            (this->level->tileMap[x][y].GetGridLocationY() == mousePosGrid.y)) {
+          for (auto i : towers) {
+            if (i->GetGridPosX() == this->mousePosGrid.x * gridSizeF &&
+                i->GetGridPosY() == this->mousePosGrid.y * gridSizeF) {
+              if ((*i).GetType() == "basic") {
+                this->wallet += 50;
+              } else if ((*i).GetType() == "hat") {
+                this->wallet += 75;
+              } else if ((*i).GetType() == "scarf") {
+                this->wallet += 100;
+              }
+              towers.erase(std::remove(towers.begin(), towers.end(), i),
+                           towers.end());
+              this->level->tileMap[x][y].MakeFree();
+              std::cout << "tower removed" << std::endl;
+            }
+          }
         }
       }
     }
@@ -726,8 +764,8 @@ void Game::render() {
         auto originalRotation = basicTowerSprite.getRotation();
         if (i->hasTarget) {
           float theta =
-            atan2(i->targetPosY - i->posY_, i->targetPosX - i->posX_) * 180 /
-            3.141;
+              atan2(i->targetPosY - i->posY_, i->targetPosX - i->posX_) * 180 /
+              3.141;
           theta += 90;
           basicTowerSprite.setRotation(theta);
         }
@@ -739,10 +777,10 @@ void Game::render() {
                                       i->posY_ * gridSizeF);
         basic3TowerSprite.move(gridSizeF / 2.f, gridSizeF / 2.f);
         auto originalRotation = basic3TowerSprite.getRotation();
-        if (i->hasTarget){
+        if (i->hasTarget) {
           float theta =
-            atan2(i->targetPosY - i->posY_, i->targetPosX - i->posX_) * 180 /
-            3.141;
+              atan2(i->targetPosY - i->posY_, i->targetPosX - i->posX_) * 180 /
+              3.141;
           theta += 90;
           basic3TowerSprite.setRotation(theta);
         }
@@ -756,8 +794,8 @@ void Game::render() {
         auto originalRotation = hatTowerSprite.getRotation();
         if (i->hasTarget) {
           float theta =
-            atan2(i->targetPosY - i->posY_, i->targetPosX - i->posX_) * 180 /
-            3.141;
+              atan2(i->targetPosY - i->posY_, i->targetPosX - i->posX_) * 180 /
+              3.141;
           theta += 90;
           hatTowerSprite.setRotation(theta);
         }
@@ -770,14 +808,15 @@ void Game::render() {
         auto originalRotation = hat3TowerSprite.getRotation();
         if (i->hasTarget) {
           float theta =
-            atan2(i->targetPosY - i->posY_, i->targetPosX - i->posX_) * 180 /
-            3.141;
+              atan2(i->targetPosY - i->posY_, i->targetPosX - i->posX_) * 180 /
+              3.141;
           theta += 90;
           hat3TowerSprite.setRotation(theta);
         }
         this->window->draw(hat3TowerSprite);
         hat3TowerSprite.setRotation(originalRotation);
       }
+
     } else if (i->GetType() == "scarf") {
       if (i->GetLevel() <= 1) {
         scarfTowerSprite.setPosition(i->posX_ * gridSizeF,
@@ -786,14 +825,14 @@ void Game::render() {
         auto originalRotation = scarfTowerSprite.getRotation();
         if (i->hasTarget) {
           float theta =
-            atan2(i->targetPosY - i->posY_, i->targetPosX - i->posX_) * 180 /
-            3.141;
+              atan2(i->targetPosY - i->posY_, i->targetPosX - i->posX_) * 180 /
+              3.141;
           theta += 90;
           scarfTowerSprite.setRotation(theta);
         }
         this->window->draw(scarfTowerSprite);
         scarfTowerSprite.setRotation(originalRotation);
-        
+
       } else if (i->GetLevel() > 1) {
         scarf3TowerSprite.setPosition(i->posX_ * gridSizeF,
                                       i->posY_ * gridSizeF);
@@ -801,8 +840,8 @@ void Game::render() {
         auto originalRotation = scarf3TowerSprite.getRotation();
         if (i->hasTarget) {
           float theta =
-            atan2(i->targetPosY - i->posY_, i->targetPosX - i->posX_) * 180 /
-            3.141;
+              atan2(i->targetPosY - i->posY_, i->targetPosX - i->posX_) * 180 /
+              3.141;
           theta += 90;
           scarf3TowerSprite.setRotation(theta);
         }
@@ -835,6 +874,7 @@ void Game::render() {
 
   // Draw sidebar
   sidebar.UpdateRoundCount(this->level->GetCurrentRound() + 1);
+  sidebar.UpdateWallet(this->wallet);
   sidebar.drawTo(*(this->window));
 
   // Done drawing, display to screen
@@ -982,9 +1022,10 @@ void Game::InitializeVariables() {
   sidebarFont.loadFromFile("Fonts/Sono-Regular.ttf");
   sidebar.SetFont(sidebarFont);
 
-  sidebar.tower1.setTexture(basicTowerTexture);
-  sidebar.tower2.setTexture(hatTowerTexture);
-  sidebar.tower3.setTexture(scarfTowerTexture);
+  // Set images in sidebar
+  sidebar.GetTower1().setTexture(basicTowerTexture);
+  sidebar.GetTower2().setTexture(hatTowerTexture);
+  sidebar.GetTower3().setTexture(scarfTowerTexture);
 }
 
 // Initalizes window with correct size
@@ -1055,13 +1096,37 @@ void Game::InitializeLevel() {
           std::make_tuple(std::make_tuple(8, 6), std::make_tuple(9, 6)),
       };
 
+  /**
+   * Info for which enemy to spawn during each round.
+   * Every "inner vector" corresponds to one round.
+   * Enemies spawn in the order they are put into the vector.
+   *
+   * 1 = Basic enemy
+   * 2 = Fast enemy
+   * 3 = Strong enemy
+   *
+   * Game ends automatically when all enemies have spawned.
+   */
   std::vector<std::vector<int>> defaultEnemies{
-      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-      {1, 2, 1, 1, 2, 1, 1, 2, 1, 1, 2, 2},
-      {1, 3, 1, 3, 1, 3, 1, 1, 3, 1, 3, 3},
-      {2, 1, 3, 1, 2, 3, 1, 1, 3, 1, 2, 2},
-      {2, 2, 3, 2, 2, 3, 3, 3, 2, 2, 2, 3},
-  };
+      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+      {2, 2, 2, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 3},
+      {2, 2, 2, 2, 3, 1, 1, 1, 3, 1, 3, 3, 1, 1, 3, 3, 3, 1, 1, 3, 3},
+      {2, 2, 2, 2, 2, 2, 3, 3, 1, 1, 3, 3, 3,
+       3, 1, 1, 3, 3, 3, 1, 1, 1, 3, 3, 1, 3},
+      {3, 3, 3, 3, 3, 3, 3, 3, 1, 1, 1, 3, 3, 3, 3, 3,
+       1, 1, 1, 3, 3, 3, 3, 1, 1, 3, 3, 3, 3, 3, 1},
+      {2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
+      {2, 2, 2, 2, 2, 2, 3, 3, 1, 3, 3, 3, 3, 3, 1, 3, 3, 3, 3,
+       3, 1, 1, 3, 3, 1, 3, 3, 3, 3, 1, 3, 1, 3, 1, 1, 1, 1, 3},
+      {2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 1, 3, 3, 3, 3, 3, 3, 1, 3, 3,
+       3, 3, 3, 3, 3, 1, 1, 1, 3, 1, 1, 3, 3, 3, 1, 1, 1, 3, 3, 3, 3, 1, 3},
+      {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+       3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
+      {2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+       3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+       3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3}};
 
   // Calls level class constructor.
   this->level =
