@@ -422,6 +422,8 @@ Actual game is basically ready. We still have to balance the game and during the
 5. Disable enemy spawning on clicking
 6. Try adding music
 7. Implement different types of levels
+8. Tower building cost the same for every tower
+9. Different tower types and attributes for them should have their own constructors somewhere
 
 
 # Meeting dd.mm.2022 HH::MM
