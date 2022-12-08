@@ -363,8 +363,65 @@ Maybe multiple paths for enemies.
 Other TODOs reflected in the actions-section.
 
 
+# Meeting 7.12.2022 01::53
 
+**Participants**:
 
+1. Roosa Ahlroos
+2. Severi Koivumaa
+3. Karl Rass
+4. Lauri Karanko
+
+## Summary of works
+
+1. Roosa Ahlroos
+
+   - Implemented sidebar with a go button to start a round.
+   - Implemented tower selling (and deletion).
+
+2. Severi Koivumaa
+
+   - Implemented towers turning towards enemies they are targeting
+   - Implemented snowballs to fly from snowmen to rabbits when they are shooting
+
+3. Karl Rass
+
+- Added different level designs with 
+
+4. Lauri Karanko
+
+- Made documentation file and started work on it with initial version
+
+## Challenges
+
+1. Game is still quite unbalanced
+2. We cannot figure out how to have the whole game not close with level window closing.
+3. Upgrade don't take money away
+
+## Actions
+
+1. Severi will get rid of debug menus and try to move them elsewhere. Also he will disable enemy spawning and killing by clicking.
+2. Karl will attempt to add music.
+3. Everyone will write the documentation.
+4. Everyone will work on the game balance.
+5. Roosa will change max rounds on sidebar.
+6. Severi will change enemy types in a round.
+7. Everyone will comment code.
+8. Lauri will update Readme file.
+
+## Project status
+
+Actual game is basically ready. We still have to balance the game and during the meeting we agreed on prices for enemies.
+
+### TODOs
+
+1. Get rid of the debug info from the top left corner and move necessary info to somewhere else (or just make it prettier)
+2. General game balancing
+3. Game documentation
+4. Plan the demo
+5. Disable enemy spawning on clicking
+6. Try adding music
+7. Implement different types of levels
 
 
 # Meeting dd.mm.2022 HH::MM
