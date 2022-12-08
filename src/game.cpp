@@ -240,11 +240,11 @@ void Game::updateInput() {
           for (auto i : towers) {
             if (i->GetGridPosX() == this->mousePosGrid.x * gridSizeF && i->GetGridPosY() == this->mousePosGrid.y * gridSizeF) {
               if ((*i).GetType() == "basic") {
-                this->wallet += 50;  // TO BE DECIDED
+                this->wallet += 50;
               } else if ((*i).GetType() == "hat") {
-                this->wallet += 60;  // TO BE DECIDED
+                this->wallet += 75;
               } else if ((*i).GetType() == "scarf") {
-                this->wallet += 70;  // TO BE DECIDED
+                this->wallet += 100;
               }
               towers.erase(std::remove(towers.begin(), towers.end(), i), towers.end());
               this->level->tileMap[x][y].MakeFree();
