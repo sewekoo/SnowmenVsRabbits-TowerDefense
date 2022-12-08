@@ -279,21 +279,18 @@ void Game::FireTowers() {
     for (int y = 0; y < this->level->GetMapSize(); y++) {
       if (this->level->tileMap[x][y].type_ == 0 &&
           this->level->tileMap[x][y].IsOccupied()) {
-        // std::cout << "Firing func found tower" << std::endl;
+        if (!this->level->tileMap[x][y].GetTower()->ReadyToFire) {
+          this->level->tileMap[x][y].GetTower()->CooldownValue += 0.1;
+          if (this->level->tileMap[x][y].GetTower()->CooldownValue >=
+              this->level->tileMap[x][y].GetTower()->GetSpeed()) {
+            this->level->tileMap[x][y].GetTower()->CooldownValue = 0;
+            this->level->tileMap[x][y].GetTower()->ReadyToFire = true;
+          }
+        }
         for (int z = 0; z < this->level->GetMapSize(); z++) {
           for (int q = 0; q < this->level->GetMapSize(); q++) {
-            // std::cout << "Road type check: " <<
-            // (this->level->tileMap[z][q].type_ == 1) << std::endl;
             if (this->level->tileMap[z][q].type_ == 1 &&
                 this->level->tileMap[z][q].IsOccupied()) {
-              // std::cout << "X difference: " <<
-              // (this->level->tileMap[x][y].GetGridLocationX() -
-              // this->level->tileMap[z][q].GetGridLocationX()) << std::endl;
-              // std::cout << "Y difference: " <<
-              // (this->level->tileMap[x][y].GetGridLocationY() -
-              // this->level->tileMap[z][q].GetGridLocationY()) << std::endl;
-              // std::cout << "Tower range: " <<
-              // this->level->tileMap[x][y].GetTower()->GetRange() << std::endl;
               if ((((this->level->tileMap[x][y].GetGridLocationX() -
                          this->level->tileMap[z][q].GetGridLocationX() <=
                      this->level->tileMap[x][y].GetTower()->GetRange()) &&
@@ -334,13 +331,6 @@ void Game::FireTowers() {
                       this->level->tileMap[z][q].GetGridLocationY(),
                       this->level->tileMap[x][y].GetTower()->GetDamage());
                   this->level->tileMap[x][y].GetTower()->ReadyToFire = false;
-                } else {
-                  this->level->tileMap[x][y].GetTower()->CooldownValue += 0.1;
-                  if (this->level->tileMap[x][y].GetTower()->CooldownValue >=
-                      this->level->tileMap[x][y].GetTower()->GetSpeed()) {
-                    this->level->tileMap[x][y].GetTower()->CooldownValue = 0;
-                    this->level->tileMap[x][y].GetTower()->ReadyToFire = true;
-                  }
                 }
               }
             }
@@ -509,7 +499,7 @@ void Game::spawnEnemies() {
  */
 void ::Game::updateFireClock() {
   sf::Time timeElapsed = FireClock.getElapsedTime();
-  sf::Int64 fireTime = 40000;
+  sf::Int64 fireTime = 60000;
   if (timeElapsed.asMicroseconds() >= fireTime) {
     if (!this->level->LevelLost) {
       FireClock.restart();
@@ -543,8 +533,8 @@ void Game::updateBuildClock() {
 
 void Game::updateSpawnClock() {
   sf::Time timeElapsed = SpawnClock.getElapsedTime();
-  float spawnTime = 2;
-  if (timeElapsed.asSeconds() >= spawnTime && gameState == 1) {
+  sf::Int32 spawnTime = 1500;
+  if (timeElapsed.asMilliseconds() >= spawnTime && gameState == 1) {
     SpawnClock.restart();
     this->spawnEnemies();
   }
