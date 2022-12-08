@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <fstream>
 
 #include "button.hpp"
@@ -186,6 +187,16 @@ int main() {
   levelTextBG.setFillColor(Color(255, 255, 255, 230));
   levelTextBG.setSize({500, 100});
   levelTextBG.setPosition({200, 145});
+
+  // Menu background music. Plays straight from file, no need for buffer
+  /* LEAVE COMMENTED IF USING WSL */
+  // sf::Music music;
+  // if (!music.openFromFile("src/destination.ogg")) {
+  //     std::cout << "Failed to open audio file" << std::endl;
+  // }
+  // else {
+  //   music.play();
+  // }
 
   // Running MENU window. When mouse is on top of a button, it changes color.
   // Pressing on Exit button closes the window and pressing on Play opens the
