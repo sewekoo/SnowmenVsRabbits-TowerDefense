@@ -524,7 +524,7 @@ void Game::updateSnowballClock() {
 
 void Game::updateBuildClock() {
   sf::Time timeElapsed = SpawnClock.getElapsedTime();
-  float buildingTime = 5;
+  float buildingTime = 15;
   if ((timeElapsed.asSeconds() >= buildingTime && gameState == 0) ||
       (go_clicked == true && gameState == 0)) {
     SpawnClock.restart();
