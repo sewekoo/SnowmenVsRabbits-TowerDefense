@@ -63,14 +63,17 @@ void Game::pollEvents() {
       case sf::Event::MouseButtonPressed:
         if (sidebar.MouseOnButton(*(this->window), sidebar.GetTower1B())) {
           basic_clicked = true;
+          clickSelection = 1;
           std::cout << "1B pressed" << std::endl;
         } else if (sidebar.MouseOnButton(*(this->window),
                                          sidebar.GetTower2B())) {
           hat_clicked = true;
+          clickSelection = 2;
           std::cout << "2B pressed" << std::endl;
         } else if (sidebar.MouseOnButton(*(this->window),
                                          sidebar.GetTower3B())) {
           scarf_clicked = true;
+          clickSelection = 3;
           std::cout << "3B pressed" << std::endl;
         } else if (sidebar.MouseOnButton(*(this->window),
                                          sidebar.GetGoButton())) {
@@ -197,6 +200,7 @@ void Game::updateInput() {
           basic_clicked = false;
           hat_clicked = false;
           scarf_clicked = false;
+          clickSelection = 0;
         }
 
         if ((!this->level->tileMap[x][y].IsOccupied()) &&
@@ -217,6 +221,7 @@ void Game::updateInput() {
           basic_clicked = false;
           hat_clicked = false;
           scarf_clicked = false;
+          clickSelection = 0;
         }
 
         if ((!this->level->tileMap[x][y].IsOccupied()) &&
@@ -237,6 +242,7 @@ void Game::updateInput() {
           basic_clicked = false;
           hat_clicked = false;
           scarf_clicked = false;
+          clickSelection = 0;
         }
       }
     }
@@ -870,6 +876,7 @@ void Game::render() {
   sidebar.UpdateWallet(this->wallet);
   sidebar.UpdateTimer(BuildClock.getElapsedTime().asSeconds());
   sidebar.UpdateGamePhase(gameState);
+  sidebar.UpdateSelection(clickSelection);
   sidebar.drawTo(*(this->window));
 
   // Done drawing, display to screen
