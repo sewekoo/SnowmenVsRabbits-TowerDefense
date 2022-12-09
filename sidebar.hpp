@@ -2,21 +2,21 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <sstream>
+
 #include "button.hpp"
 
 /**
  * @brief Class that creates the sidebar
- * 
+ *
  */
 class Sidebar {
  public:
-
- /**
-  * @brief Construct a new Sidebar object
-  * 
-  */
+  /**
+   * @brief Construct a new Sidebar object
+   *
+   */
   Sidebar() {
-
     // Create boxes around images of towers
     tower1B.setFillColor(sf::Color(0, 0, 255, 30));
     tower1B.setOutlineColor(sf::Color::White);
@@ -47,7 +47,7 @@ class Sidebar {
     tower3.setPosition({1010, 370});
 
     // Creating actual sidebar shape
-    sidebar.setSize(sf::Vector2f(200, 650));
+    sidebar.setSize(sf::Vector2f(200, 1160));
     sidebar.setFillColor(sf::Color(255, 255, 255, 230));
     sidebar.setOutlineColor(sf::Color(0, 0, 0, 30));
     sidebar.setOutlineThickness(3);
@@ -61,7 +61,20 @@ class Sidebar {
     wallet.setString("Wallet: ");
     wallet.setPosition({970, 50});
 
-    // Setting the information of both the regular and update prices of all towers
+    // Building phase timer
+    timer.setPosition({1045, 700});
+    timer.setFillColor(sf::Color::Red);
+
+    // Game phase text
+    gamePhaseBox.setFillColor(sf::Color(255, 75, 0, 100));
+    gamePhaseBox.setPosition({980, 638});
+    gamePhaseBox.setSize(sf::Vector2f(150, 45));
+    gamePhase.setString("Building phase");
+    gamePhase.setPosition({1000, 650});
+    gamePhase.setCharacterSize(16);
+
+    // Setting the information of both the regular and update prices of all
+    // towers
     basicPrice.setString("Price: 100$");
     basicPrice.setPosition({1025, 195});
     basicPrice.setCharacterSize(12);
@@ -104,10 +117,10 @@ class Sidebar {
 
   /**
    * @brief Set the font for all text in sidebar
-   * 
-   * @param font 
+   *
+   * @param font
    */
-  void SetFont(sf::Font &font) {
+  void SetFont(sf::Font& font) {
     roundCount.setFont(font);
     wallet.setFont(font);
     goButtonText.setFont(font);
@@ -117,12 +130,14 @@ class Sidebar {
     hatUpgrade.setFont(font);
     scarfPrice.setFont(font);
     scarfUpgrade.setFont(font);
+    timer.setFont(font);
+    gamePhase.setFont(font);
   }
 
   /**
    * @brief Round count updater
-   * 
-   * @param round 
+   *
+   * @param round
    */
   void UpdateRoundCount(int round) {
     roundCount.setString("Round: " + std::to_string(round) + " / 10");
@@ -130,19 +145,57 @@ class Sidebar {
 
   /**
    * @brief Updating wallet counter
-   * 
-   * @param amount 
+   *
+   * @param amount
    */
   void UpdateWallet(int amount) {
     wallet.setString("Wallet: " + std::to_string(amount) + "$");
   }
 
   /**
+   * @brief Updates building timer
+   *
+   * @param time Current time elapsed
+   */
+  void UpdateTimer(float time) {
+    int currentTime = 15 - (int)time;
+    std::stringstream ss;
+    if (currentTime >= 0) {
+      ss << currentTime;
+    }
+    timer.setString(ss.str());
+  }
+
+  /**
+   * @brief Updates game phase text
+   *
+   * @param phase Game phase code
+   */
+  void UpdateGamePhase(int phase) {
+    if (phase == 0) {
+      gamePhase.setString("Building phase");
+    } else if (phase == 2) {
+      gamePhase.setString("Level won");
+      gamePhase.setPosition({385, 360});
+      gamePhase.setCharacterSize(50);
+      gamePhase.setFillColor(sf::Color::Green);
+    } else if (phase == 3) {
+      gamePhase.setString("Level lost");
+      gamePhase.setPosition({375, 360});
+      gamePhase.setCharacterSize(50);
+      gamePhase.setFillColor(sf::Color::Red);
+    } else {
+      gamePhase.setString("Active wave");
+      gamePhase.setPosition({1013, 650});
+    }
+  }
+
+  /**
    * @brief Drawing all the elements of the sidebar
-   * 
+   *
    * @param window Window to draw to
    */
-  void drawTo(sf::RenderWindow &window) {
+  void drawTo(sf::RenderWindow& window) {
     window.draw(sidebar);
     window.draw(roundCount);
     window.draw(wallet);
@@ -162,17 +215,20 @@ class Sidebar {
     window.draw(tower3);
     window.draw(goButton);
     window.draw(goButtonText);
+    window.draw(timer);
+    window.draw(gamePhaseBox);
+    window.draw(gamePhase);
   }
 
   /**
    * @brief Function to determine if mouse is on top of the shape
-   * 
+   *
    * @param window
    * @param button Rectangle that mouse is on top of
-   * @return true 
-   * @return false 
+   * @return true
+   * @return false
    */
-  bool MouseOnButton(sf::RenderWindow &window, sf::RectangleShape button) {
+  bool MouseOnButton(sf::RenderWindow& window, sf::RectangleShape button) {
     float MPosX = sf::Mouse::getPosition(window).x;
     float MPosY = sf::Mouse::getPosition(window).y;
 
@@ -193,8 +249,9 @@ class Sidebar {
 
   /**
    * @brief Centering text on top of the shape
-   * 
-   * @param posOfGoButton Position of the shape the text should be in the center of
+   *
+   * @param posOfGoButton Position of the shape the text should be in the center
+   * of
    */
   void CenterText(sf::Vector2f posOfGoButton) {
     float posX = (posOfGoButton.x + goButton.getLocalBounds().width / 2) -
@@ -226,6 +283,8 @@ class Sidebar {
   sf::Text hatUpgrade;
   sf::Text scarfPrice;
   sf::Text scarfUpgrade;
+  sf::Text timer;
+  sf::Text gamePhase;
   sf::RectangleShape line1;
   sf::RectangleShape line2;
   sf::Sprite tower1;
@@ -235,5 +294,6 @@ class Sidebar {
   sf::RectangleShape tower2B;
   sf::RectangleShape tower3B;
   sf::RectangleShape goButton;
+  sf::RectangleShape gamePhaseBox;
   sf::Text goButtonText;
 };

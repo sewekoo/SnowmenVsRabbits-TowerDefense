@@ -505,6 +505,7 @@ void ::Game::updateFireClock() {
       FireClock.restart();
       FireTowers();
     } else {
+      gameState = 3;
       latestMessage = "Level lost.";
     }
   }
@@ -865,6 +866,8 @@ void Game::render() {
   // Draw sidebar
   sidebar.UpdateRoundCount(this->level->GetCurrentRound() + 1);
   sidebar.UpdateWallet(this->wallet);
+  sidebar.UpdateTimer(BuildClock.getElapsedTime().asSeconds());
+  sidebar.UpdateGamePhase(gameState);
   sidebar.drawTo(*(this->window));
 
   // Done drawing, display to screen
