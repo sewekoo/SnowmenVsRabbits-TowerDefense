@@ -166,6 +166,26 @@ class Sidebar {
     timer.setString(ss.str());
   }
 
+  void UpdateSelection(int selection) {
+    if (selection == 0) {
+      tower1B.setOutlineColor(sf::Color::White);
+      tower2B.setOutlineColor(sf::Color::White);
+      tower3B.setOutlineColor(sf::Color::White);
+    } else if (selection == 1) {
+      tower1B.setOutlineColor(sf::Color::Green);
+      tower2B.setOutlineColor(sf::Color::White);
+      tower3B.setOutlineColor(sf::Color::White);
+    } else if (selection == 2) {
+      tower1B.setOutlineColor(sf::Color::White);
+      tower2B.setOutlineColor(sf::Color::Green);
+      tower3B.setOutlineColor(sf::Color::White);
+    } else if (selection == 3) {
+      tower1B.setOutlineColor(sf::Color::White);
+      tower2B.setOutlineColor(sf::Color::White);
+      tower3B.setOutlineColor(sf::Color::Green);
+    }
+  }
+
   /**
    * @brief Updates game phase text
    *

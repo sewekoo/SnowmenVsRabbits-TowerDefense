@@ -1,3 +1,4 @@
+#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <fstream>
 
@@ -37,12 +38,10 @@ std::vector<std::vector<int>> defaultEnemies{
      3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
      3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3}};
 
-std::vector<std::tuple<std::tuple<int, int>, std::tuple<int, int>>>
-    defaultNeighbours2;
-
-std::vector<std::vector<std::string>> defaultLevel2;
-
-void loadLevel(std::string levelName) {
+void loadLevel(
+    std::string levelName, std::vector<std::vector<std::string>>& defaultLevel2,
+    std::vector<std::tuple<std::tuple<int, int>, std::tuple<int, int>>>&
+        defaultNeighbours2) {
   std::ifstream levelFile(levelName);
 
   std::string line;
@@ -191,6 +190,15 @@ int main() {
   levelTextBG.setSize({500, 100});
   levelTextBG.setPosition({200, 145});
 
+  // Menu background music. Plays straight from file, no need for buffer
+  /* LEAVE COMMENTED IF USING WSL */
+  sf::Music music;
+  if (!music.openFromFile("destination.ogg")) {
+    std::cout << "Failed to open audio file" << std::endl;
+  } else {
+    music.play();
+  }
+
   // Running MENU window. When mouse is on top of a button, it changes color.
   // Pressing on Exit button closes the window and pressing on Play opens the
   // level choosing window
@@ -253,6 +261,10 @@ int main() {
             levelD.SetFont(font);
             levelE.SetFont(font);
 
+            std::vector<std::tuple<std::tuple<int, int>, std::tuple<int, int>>>
+                defaultNeighbours2;
+            std::vector<std::vector<std::string>> defaultLevel2;
+
             while (Play.isOpen()) {
               Event p_event;
               while (Play.pollEvent(p_event)) {
@@ -285,57 +297,65 @@ int main() {
                   case Event::MouseButtonPressed:
                     if (levelA.MouseOnButton(Play)) {
                       int size = 12;
-                      loadLevel("level.txt");
+                      loadLevel("level.txt", defaultLevel2, defaultNeighbours2);
+                      std::cout << "ykkösen: " << defaultLevel2[1][1]
+                                << std::endl;
                       Game game{size, defaultLevel2, defaultNeighbours2,
                                 defaultEnemies};
                       while (game.GetWindowIsOpen()) {
                         game.update();
                         game.render();
                       }
-                      // break;
+                      Play.close();
                     } else if (levelB.MouseOnButton(Play)) {
                       int size = 12;
-                      loadLevel("level2.txt");
+                      loadLevel("level2.txt", defaultLevel2,
+                                defaultNeighbours2);
+                      std::cout << "kakkosen: " << defaultLevel2[1][1]
+                                << std::endl;
                       Game game{size, defaultLevel2, defaultNeighbours2,
                                 defaultEnemies};
                       while (game.GetWindowIsOpen()) {
                         game.update();
                         game.render();
                       }
-                      // break;
+                      Play.close();
                     } else if (levelC.MouseOnButton(Play)) {
                       int size = 12;
-                      loadLevel("level3.txt");
+                      loadLevel("level3.txt", defaultLevel2,
+                                defaultNeighbours2);
                       Game game{size, defaultLevel2, defaultNeighbours2,
                                 defaultEnemies};
                       while (game.GetWindowIsOpen()) {
                         game.update();
                         game.render();
                       }
-                      // break;
+                      Play.close();
                     } else if (levelD.MouseOnButton(Play)) {
                       int size = 12;
-                      loadLevel("level4.txt");
+                      loadLevel("level4.txt", defaultLevel2,
+                                defaultNeighbours2);
                       Game game{size, defaultLevel2, defaultNeighbours2,
                                 defaultEnemies};
                       while (game.GetWindowIsOpen()) {
                         game.update();
                         game.render();
                       }
-                      // break;
+                      Play.close();
                     } else if (levelE.MouseOnButton(Play)) {
                       int size = 12;
-                      loadLevel("level5.txt");
+                      loadLevel("level5.txt", defaultLevel2,
+                                defaultNeighbours2);
                       Game game{size, defaultLevel2, defaultNeighbours2,
                                 defaultEnemies};
                       while (game.GetWindowIsOpen()) {
                         game.update();
                         game.render();
                       }
-                      // break;
+                      Play.close();
                     }
+                    break;
                 }
-                break;
               }
               // Drawing all the Play window elements
               Play.clear();

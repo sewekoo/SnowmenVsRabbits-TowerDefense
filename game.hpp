@@ -1,12 +1,13 @@
 #ifndef GAME_HPP
 #define GAME_HPP
 
-#include <sstream>
 #include <math.h>
 
+#include <sstream>
+
 #include "level.hpp"
-#include "snowball.hpp"
 #include "sidebar.hpp"
+#include "snowball.hpp"
 
 /**
  * Class that updates the game and handles "core logic".
@@ -170,6 +171,10 @@ class Game {
   bool basic_clicked = false;
   bool hat_clicked = false;
   bool scarf_clicked = false;
+
+  // Info which is clicked to transfer info to sidebar
+  // 0 => None, 1 => Basic, 2 => Hat, 3 => Scarf
+  int clickSelection = 0;
 
   // Pressing go
   bool go_clicked = false;
