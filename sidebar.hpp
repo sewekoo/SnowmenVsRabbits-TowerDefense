@@ -199,11 +199,15 @@ class Sidebar {
       gamePhase.setPosition({385, 360});
       gamePhase.setCharacterSize(50);
       gamePhase.setFillColor(sf::Color::Green);
+      gamePhase.setOutlineThickness(1);
+      gamePhase.setOutlineColor(sf::Color::Black);
     } else if (phase == 3) {
       gamePhase.setString("Level lost");
       gamePhase.setPosition({375, 360});
       gamePhase.setCharacterSize(50);
       gamePhase.setFillColor(sf::Color::Red);
+      gamePhase.setOutlineThickness(1);
+      gamePhase.setOutlineColor(sf::Color::Black);
     } else {
       gamePhase.setString("Active wave");
       gamePhase.setPosition({1013, 650});
