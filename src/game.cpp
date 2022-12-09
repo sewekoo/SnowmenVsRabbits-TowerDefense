@@ -126,57 +126,59 @@ void Game::updateInput() {
             latestMessage = "Not enough money.";
           }
         }
+        /**
+                if ((this->level->tileMap[x][y].IsOccupied()) &&
+                    (this->level->tileMap[x][y].type_ == 1) &&
+                    (this->level->tileMap[x][y].GetGridLocationX() ==
+           mousePosGrid.x) && (this->level->tileMap[x][y].GetGridLocationY() ==
+           mousePosGrid.y)) { if
+           (this->level->tileMap[x][y].GetEnemy()->TakeDamage(10)) { auto size =
+           enemies.size(); for (int i = 0; i != size; i++) { if
+           (enemies[i]->GetHP() <= 0) { enemies.erase(enemies.begin() + i);
+                      }
+                    }
+                    this->wallet +=
+           this->level->tileMap[x][y].GetEnemy()->GetValue();
+                    this->level->tileMap[x][y].removeEnemy();
+                    enemyDestroyedThisTick = false;
+                    std::cout << "Enemy is killed" << std::endl;
+                  } else {
+                    std::cout << "Enemy hp: "
+                              << this->level->tileMap[x][y].GetEnemy()->GetHP()
+                              << std::endl;
+                  }
 
-        if ((this->level->tileMap[x][y].IsOccupied()) &&
-            (this->level->tileMap[x][y].type_ == 1) &&
-            (this->level->tileMap[x][y].GetGridLocationX() == mousePosGrid.x) &&
-            (this->level->tileMap[x][y].GetGridLocationY() == mousePosGrid.y)) {
-          if (this->level->tileMap[x][y].GetEnemy()->TakeDamage(10)) {
-            auto size = enemies.size();
-            for (int i = 0; i != size; i++) {
-              if (enemies[i]->GetHP() <= 0) {
-                enemies.erase(enemies.begin() + i);
-              }
-            }
-            this->wallet += this->level->tileMap[x][y].GetEnemy()->GetValue();
-            this->level->tileMap[x][y].removeEnemy();
-            enemyDestroyedThisTick = false;
-            std::cout << "Enemy is killed" << std::endl;
-          } else {
-            std::cout << "Enemy hp: "
-                      << this->level->tileMap[x][y].GetEnemy()->GetHP()
-                      << std::endl;
-          }
+                  std::cout << "Enemy hp: "
+                            << this->level->tileMap[x][y].GetEnemy()->GetHP()
+                            << std::endl;
+                }
 
-          std::cout << "Enemy hp: "
-                    << this->level->tileMap[x][y].GetEnemy()->GetHP()
-                    << std::endl;
-        }
-
-        if ((!this->level->tileMap[x][y].IsOccupied()) &&
-            ((this->level->tileMap[x][y].type_ == 1) ||
-             (this->level->tileMap[x][y].type_ == 2)) &&
-            (this->level->tileMap[x][y].GetGridLocationX() == mousePosGrid.x) &&
-            (this->level->tileMap[x][y].GetGridLocationY() == mousePosGrid.y) &&
-            (this->enemyDestroyedThisTick)) {
-          std::cout << "MousePos X & Y: " << mousePosGrid.x << " "
-                    << mousePosGrid.y << std::endl;
-          std::cout << "TilePos X & Y: "
-                    << this->level->tileMap[x][y].GetGridLocationX() << " "
-                    << this->level->tileMap[x][y].GetGridLocationY()
-                    << std::endl;
-          std::cout << "Enemy adding sequence began" << std::endl;
-          Enemy* newEnemy =
-              new EasyEnemy(this->mousePosGrid.x, this->mousePosGrid.y);
-          std::cout << "Enemy created into variable succesful" << std::endl;
-          enemies.push_back(newEnemy);
-          std::cout << "Enemy pushed to enemies vector succesful" << std::endl;
-          this->level->tileMap[x][y].addOccupant(newEnemy);
-          enemiesAdded++;
-          this->level->tileMap[x][y].MakeOccupied();
-          std::cout << "Succesfully increased enemy counter" << std::endl;
-        }
-
+                if ((!this->level->tileMap[x][y].IsOccupied()) &&
+                    ((this->level->tileMap[x][y].type_ == 1) ||
+                     (this->level->tileMap[x][y].type_ == 2)) &&
+                    (this->level->tileMap[x][y].GetGridLocationX() ==
+           mousePosGrid.x) && (this->level->tileMap[x][y].GetGridLocationY() ==
+           mousePosGrid.y) && (this->enemyDestroyedThisTick)) { std::cout <<
+           "MousePos X & Y: " << mousePosGrid.x << " "
+                            << mousePosGrid.y << std::endl;
+                  std::cout << "TilePos X & Y: "
+                            << this->level->tileMap[x][y].GetGridLocationX() <<
+           " "
+                            << this->level->tileMap[x][y].GetGridLocationY()
+                            << std::endl;
+                  std::cout << "Enemy adding sequence began" << std::endl;
+                  Enemy* newEnemy =
+                      new EasyEnemy(this->mousePosGrid.x, this->mousePosGrid.y);
+                  std::cout << "Enemy created into variable succesful" <<
+           std::endl; enemies.push_back(newEnemy); std::cout << "Enemy pushed to
+           enemies vector succesful" << std::endl;
+                  this->level->tileMap[x][y].addOccupant(newEnemy);
+                  enemiesAdded++;
+                  this->level->tileMap[x][y].MakeOccupied();
+                  std::cout << "Succesfully increased enemy counter" <<
+           std::endl;
+                }
+        */
         if ((!this->level->tileMap[x][y].IsOccupied()) &&
             (this->level->tileMap[x][y].type_ == 0) &&
             (this->level->tileMap[x][y].GetGridLocationX() == mousePosGrid.x) &&
@@ -505,6 +507,7 @@ void ::Game::updateFireClock() {
       FireClock.restart();
       FireTowers();
     } else {
+      gameState = 3;
       latestMessage = "Level lost.";
     }
   }
@@ -521,7 +524,7 @@ void Game::updateSnowballClock() {
 
 void Game::updateBuildClock() {
   sf::Time timeElapsed = SpawnClock.getElapsedTime();
-  float buildingTime = 5;
+  float buildingTime = 15;
   if ((timeElapsed.asSeconds() >= buildingTime && gameState == 0) ||
       (go_clicked == true && gameState == 0)) {
     SpawnClock.restart();
@@ -860,11 +863,13 @@ void Game::render() {
 
   // Draw UI
   // Draws info text of mouse position
-  this->window->draw(text);
+  // this->window->draw(text);
 
   // Draw sidebar
   sidebar.UpdateRoundCount(this->level->GetCurrentRound() + 1);
   sidebar.UpdateWallet(this->wallet);
+  sidebar.UpdateTimer(BuildClock.getElapsedTime().asSeconds());
+  sidebar.UpdateGamePhase(gameState);
   sidebar.drawTo(*(this->window));
 
   // Done drawing, display to screen
