@@ -189,10 +189,12 @@ void Game::updateInput() {
                 }
         */
         else if ((!this->level->tileMap[x][y].IsOccupied()) &&
-            (this->level->tileMap[x][y].type_ == 0) &&
-            (this->level->tileMap[x][y].GetGridLocationX() == mousePosGrid.x) &&
-            (this->level->tileMap[x][y].GetGridLocationY() == mousePosGrid.y) &&
-            (basic_clicked == true)) {
+                 (this->level->tileMap[x][y].type_ == 0) &&
+                 (this->level->tileMap[x][y].GetGridLocationX() ==
+                  mousePosGrid.x) &&
+                 (this->level->tileMap[x][y].GetGridLocationY() ==
+                  mousePosGrid.y) &&
+                 (basic_clicked == true)) {
           if (this->wallet >= 100.0) {
             Tower* newTower =
                 new Tower(this->mousePosGrid.x, this->mousePosGrid.y, "basic");
@@ -210,10 +212,12 @@ void Game::updateInput() {
         }
 
         else if ((!this->level->tileMap[x][y].IsOccupied()) &&
-            (this->level->tileMap[x][y].type_ == 0) &&
-            (this->level->tileMap[x][y].GetGridLocationX() == mousePosGrid.x) &&
-            (this->level->tileMap[x][y].GetGridLocationY() == mousePosGrid.y) &&
-            (hat_clicked == true)) {
+                 (this->level->tileMap[x][y].type_ == 0) &&
+                 (this->level->tileMap[x][y].GetGridLocationX() ==
+                  mousePosGrid.x) &&
+                 (this->level->tileMap[x][y].GetGridLocationY() ==
+                  mousePosGrid.y) &&
+                 (hat_clicked == true)) {
           if (this->wallet >= 150.0) {
             Tower* newTower =
                 new Tower(this->mousePosGrid.x, this->mousePosGrid.y, "hat");
@@ -231,10 +235,12 @@ void Game::updateInput() {
         }
 
         else if ((!this->level->tileMap[x][y].IsOccupied()) &&
-            (this->level->tileMap[x][y].type_ == 0) &&
-            (this->level->tileMap[x][y].GetGridLocationX() == mousePosGrid.x) &&
-            (this->level->tileMap[x][y].GetGridLocationY() == mousePosGrid.y) &&
-            (scarf_clicked == true)) {
+                 (this->level->tileMap[x][y].type_ == 0) &&
+                 (this->level->tileMap[x][y].GetGridLocationX() ==
+                  mousePosGrid.x) &&
+                 (this->level->tileMap[x][y].GetGridLocationY() ==
+                  mousePosGrid.y) &&
+                 (scarf_clicked == true)) {
           if (this->wallet >= 200.0) {
             Tower* newTower =
                 new Tower(this->mousePosGrid.x, this->mousePosGrid.y, "scarf");
@@ -488,6 +494,12 @@ void Game::spawnEnemies() {
               this->gameState = 2;
             } else {
               this->BuildClock.restart();
+              if (round < 2) {
+                this->wallet += 100 - (round * 20);
+              } else {
+                this->wallet += 10;
+              }
+              this->round += 1;
               this->gameState = 0;
             }
           }

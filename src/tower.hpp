@@ -39,15 +39,15 @@ class Tower {
     } else if (type == "hat") {
       damage_ = 10;
       range_ = 1;
-      attackSpeed_ = 1.2;
+      attackSpeed_ = 1.4;
       value_ = 150;
       upgradePrice_ = 125;
       level_ = 1;
       type_ = type;
     } else if (type == "scarf") {
-      damage_ = 10;
+      damage_ = 70;
       range_ = 1;
-      attackSpeed_ = 1.2;
+      attackSpeed_ = 15;
       value_ = 200;
       upgradePrice_ = 175;
       level_ = 1;

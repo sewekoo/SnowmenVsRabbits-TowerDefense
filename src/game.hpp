@@ -122,7 +122,7 @@ class Game {
   // 0 => building phase, 1 => active wave, 2 => level won
   int gameState = 0;
 
-  double wallet = 100;
+  double wallet = 200;
 
   std::string latestMessage = "";
 
@@ -153,6 +153,9 @@ class Game {
   // Enemies
   std::vector<Enemy*> enemies;
   int enemiesAdded = 0;
+
+  // Round counter
+  int round = 0;
 
   // Snowballs
   std::vector<Snowball*> snowballs;
