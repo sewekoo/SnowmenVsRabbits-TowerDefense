@@ -63,15 +63,21 @@ void Game::pollEvents() {
       case sf::Event::MouseButtonPressed:
         if (sidebar.MouseOnButton(*(this->window), sidebar.GetTower1B())) {
           basic_clicked = true;
+          hat_clicked = false;
+          scarf_clicked = false;
           clickSelection = 1;
           std::cout << "1B pressed" << std::endl;
         } else if (sidebar.MouseOnButton(*(this->window),
                                          sidebar.GetTower2B())) {
+          basic_clicked = false;
           hat_clicked = true;
+          scarf_clicked = false;
           clickSelection = 2;
           std::cout << "2B pressed" << std::endl;
         } else if (sidebar.MouseOnButton(*(this->window),
                                          sidebar.GetTower3B())) {
+          basic_clicked = false;
+          hat_clicked = false;
           scarf_clicked = true;
           clickSelection = 3;
           std::cout << "3B pressed" << std::endl;
@@ -182,11 +188,13 @@ void Game::updateInput() {
            std::endl;
                 }
         */
-        if ((!this->level->tileMap[x][y].IsOccupied()) &&
-            (this->level->tileMap[x][y].type_ == 0) &&
-            (this->level->tileMap[x][y].GetGridLocationX() == mousePosGrid.x) &&
-            (this->level->tileMap[x][y].GetGridLocationY() == mousePosGrid.y) &&
-            (basic_clicked == true)) {
+        else if ((!this->level->tileMap[x][y].IsOccupied()) &&
+                 (this->level->tileMap[x][y].type_ == 0) &&
+                 (this->level->tileMap[x][y].GetGridLocationX() ==
+                  mousePosGrid.x) &&
+                 (this->level->tileMap[x][y].GetGridLocationY() ==
+                  mousePosGrid.y) &&
+                 (basic_clicked == true)) {
           if (this->wallet >= 100.0) {
             Tower* newTower =
                 new Tower(this->mousePosGrid.x, this->mousePosGrid.y, "basic");
@@ -203,18 +211,20 @@ void Game::updateInput() {
           clickSelection = 0;
         }
 
-        if ((!this->level->tileMap[x][y].IsOccupied()) &&
-            (this->level->tileMap[x][y].type_ == 0) &&
-            (this->level->tileMap[x][y].GetGridLocationX() == mousePosGrid.x) &&
-            (this->level->tileMap[x][y].GetGridLocationY() == mousePosGrid.y) &&
-            (hat_clicked == true)) {
-          if (this->wallet >= 100.0) {
+        else if ((!this->level->tileMap[x][y].IsOccupied()) &&
+                 (this->level->tileMap[x][y].type_ == 0) &&
+                 (this->level->tileMap[x][y].GetGridLocationX() ==
+                  mousePosGrid.x) &&
+                 (this->level->tileMap[x][y].GetGridLocationY() ==
+                  mousePosGrid.y) &&
+                 (hat_clicked == true)) {
+          if (this->wallet >= 150.0) {
             Tower* newTower =
                 new Tower(this->mousePosGrid.x, this->mousePosGrid.y, "hat");
             towers.push_back(newTower);
             this->level->tileMap[x][y].addOccupant(newTower);
             this->level->tileMap[x][y].MakeOccupied();
-            this->wallet -= 100;
+            this->wallet -= 150;
           } else {
             latestMessage = "Not enough money";
           }
@@ -224,18 +234,20 @@ void Game::updateInput() {
           clickSelection = 0;
         }
 
-        if ((!this->level->tileMap[x][y].IsOccupied()) &&
-            (this->level->tileMap[x][y].type_ == 0) &&
-            (this->level->tileMap[x][y].GetGridLocationX() == mousePosGrid.x) &&
-            (this->level->tileMap[x][y].GetGridLocationY() == mousePosGrid.y) &&
-            (scarf_clicked == true)) {
-          if (this->wallet >= 100.0) {
+        else if ((!this->level->tileMap[x][y].IsOccupied()) &&
+                 (this->level->tileMap[x][y].type_ == 0) &&
+                 (this->level->tileMap[x][y].GetGridLocationX() ==
+                  mousePosGrid.x) &&
+                 (this->level->tileMap[x][y].GetGridLocationY() ==
+                  mousePosGrid.y) &&
+                 (scarf_clicked == true)) {
+          if (this->wallet >= 200.0) {
             Tower* newTower =
                 new Tower(this->mousePosGrid.x, this->mousePosGrid.y, "scarf");
             towers.push_back(newTower);
             this->level->tileMap[x][y].addOccupant(newTower);
             this->level->tileMap[x][y].MakeOccupied();
-            this->wallet -= 100;
+            this->wallet -= 200;
           } else {
             latestMessage = "Not enough money";
           }
@@ -482,6 +494,12 @@ void Game::spawnEnemies() {
               this->gameState = 2;
             } else {
               this->BuildClock.restart();
+              if (round < 2) {
+                this->wallet += 100 - (round * 20);
+              } else {
+                this->wallet += 10;
+              }
+              this->round += 1;
               this->gameState = 0;
             }
           }
@@ -907,7 +925,7 @@ void Game::InitializeVariables() {
   rangeIndicator.setFillColor(sf::Color(255, 0, 0, 20));
 
   // Sets mouse position text information
-  font.loadFromFile("Fonts/sansation.ttf");
+  font.loadFromFile("misc/sansation.ttf");
   text.setCharacterSize(12);
   text.setFillColor(sf::Color::Green);
   text.setOutlineColor(sf::Color::Red);
@@ -1021,7 +1039,7 @@ void Game::InitializeVariables() {
   scarf3TowerSprite.setScale(sf::Vector2f(gridSizeF / 100, gridSizeF / 100));
 
   // Set the font for sidebar text
-  sidebarFont.loadFromFile("Fonts/Sono-Regular.ttf");
+  sidebarFont.loadFromFile("misc/Sono-Regular.ttf");
   sidebar.SetFont(sidebarFont);
 
   // Set images in sidebar

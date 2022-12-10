@@ -160,10 +160,13 @@ class Sidebar {
   void UpdateTimer(float time) {
     int currentTime = 15 - (int)time;
     std::stringstream ss;
-    if (currentTime >= 0) {
-      ss << currentTime;
+    if (gamePhase.getString() == "Building phase") {
+      if (currentTime >= 0) {
+        ss << currentTime;
+      }
     }
-    timer.setString(ss.str());
+      timer.setString(ss.str());
+    
   }
 
   void UpdateSelection(int selection) {

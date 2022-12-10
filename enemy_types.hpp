@@ -7,15 +7,15 @@
 // Easy enemy:
 #define EASY_HEALTH 40
 #define EASY_SPEED 1
-#define EASY_VALUE 10
+#define EASY_VALUE 2
 // Fast enemy:
-#define FAST_HEALTH 30
+#define FAST_HEALTH 50
 #define FAST_SPEED 2
-#define FAST_VALUE 10
+#define FAST_VALUE 3
 // slow enemy:
 #define SLOW_HEALTH 100
 #define SLOW_SPEED 1
-#define SLOW_VALUE 20
+#define SLOW_VALUE 10
 
 /**
  * @brief Derived enemy classes
