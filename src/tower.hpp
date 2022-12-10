@@ -15,7 +15,6 @@ class Tower {
         value_(100),
         upgradePrice_(75),
         level_(1),
-        texture_("snowman_basic.png"),
         type_("basic") {}
 
   Tower(double damage, int range, double attackSpeed, double value,
@@ -26,18 +25,34 @@ class Tower {
         value_(value),
         upgradePrice_(upgradePrice),
         level_(level),
-        texture_(texture),
         type_(type) {}
 
-  Tower(float posX, float posY, std::string type)
-      : damage_(10),
-        range_(1),
-        attackSpeed_(1.2),
-        value_(100),
-        upgradePrice_(75),
-        level_(1),
-        texture_("snowman_basic.png"),
-        type_(type) {
+  Tower(float posX, float posY, std::string type) {
+    if (type == "basic") {
+      damage_ = 10;
+      range_ = 1;
+      attackSpeed_ = 1.2;
+      value_ = 100;
+      upgradePrice_ = 75;
+      level_ = 1;
+      type_ = type;
+    } else if (type == "hat") {
+      damage_ = 10;
+      range_ = 1;
+      attackSpeed_ = 1.2;
+      value_ = 150;
+      upgradePrice_ = 125;
+      level_ = 1;
+      type_ = type;
+    } else if (type == "scarf") {
+      damage_ = 10;
+      range_ = 1;
+      attackSpeed_ = 1.2;
+      value_ = 200;
+      upgradePrice_ = 175;
+      level_ = 1;
+      type_ = type;
+    }
     posX_ = posX;
     posY_ = posY;
   }
@@ -52,7 +67,6 @@ class Tower {
   const double GetValue() { return value_; }
   const double GetUpgradePrice() { return upgradePrice_; }
   const int GetLevel() { return level_; }
-  const std::string& GetTexture() const { return texture_; }
   const std::string& GetType() { return type_; }
 
   // Upgrade is different for different towers
@@ -81,7 +95,6 @@ class Tower {
   double value_;
   double upgradePrice_;
   int level_;
-  std::string texture_;
   float gridSizeF = 80.f;
   std::string type_;
 };
