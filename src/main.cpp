@@ -189,14 +189,20 @@ int main() {
   levelTextBG.setPosition({200, 145});
 
   // Menu background music. Plays straight from file, no need for buffer
-  /* LEAVE COMMENTED IF USING WSL */
-  // sf::Music music;
-  // if (!music.openFromFile("src/destination.ogg")) {
-  //     std::cout << "Failed to open audio file" << std::endl;
-  // }
-  // else {
-  //   music.play();
-  // }
+  /* NOT SUPPORTED IN WSL NATIVELY */
+  sf::Music music;
+  if (!music.openFromFile("src/destination.ogg")) {
+      std::cout << "Failed to open audio file. Trying for Windows:" << std::endl;
+      if (!music.openFromFile("destination.ogg")) {
+        // That failed too.
+      }
+      else {
+        music.play();
+      }
+  }
+  else {
+    music.play();
+  }
 
   // Running MENU window. When mouse is on top of a button, it changes color.
   // Pressing on Exit button closes the window and pressing on Play opens the
