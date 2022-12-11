@@ -68,6 +68,8 @@ class Tower {
   const double GetUpgradePrice() { return upgradePrice_; }
   const int GetLevel() { return level_; }
   const std::string& GetType() { return type_; }
+  float GetGridPosX() { return posX_ * gridSizeF; }
+  float GetGridPosY() { return posY_ * gridSizeF; }
 
   // Upgrade is different for different towers
   virtual void Upgrade();
@@ -77,9 +79,6 @@ class Tower {
 
   float posX_;
   float posY_;
-
-  float GetGridPosX() { return posX_ * gridSizeF; }
-  float GetGridPosY() { return posY_ * gridSizeF; }
 
   double CooldownValue = 0;
   bool ReadyToFire = true;
