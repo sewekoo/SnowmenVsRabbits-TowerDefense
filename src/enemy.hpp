@@ -36,14 +36,17 @@ class Enemy : public sf::RectangleShape {
     this->setSize(sf::Vector2f(gridSizeF, gridSizeF));
     this->setPosition(posX * gridSizeF, posY * gridSizeF);
   }
-
+  /**
+   * @brief Destroy the Enemy object
+   */
   ~Enemy() {}
 
   /**
-   * TakeDamge takes int as a parameter that tells how much damage is dealt to
+   * @brief TakeDamge takes int as a parameter that tells how much damage is dealt to
    * this enemy. Damage is substracted from hp_. If damage is greater or equal
    * to enemy's hp, it goes to 0. (= enemy dies) Function returns a boolean
    * value indicating if this enemy died during function call.
+   * @param dmg Damage to be taken by enemy.
    */
   bool TakeDamage(double dmg) {
     if (hp_ > dmg) {
@@ -76,6 +79,12 @@ class Enemy : public sf::RectangleShape {
   */
   float GetPosY() { return posY_; }
 
+  /**
+   * @brief Changes enemy pos to new values
+   * 
+   * @param newPosX New X coordinate
+   * @param newPosY New Y coordinate
+   */
   void ChangePos(float newPosX, float newPosY) {
     posX_ = newPosX;
     posY_ = newPosY;
@@ -84,7 +93,17 @@ class Enemy : public sf::RectangleShape {
   float posX_;
   float posY_;
 
+  /**
+   * @brief Get the Grid Pos X object
+   * 
+   * @return int 
+   */
   int GetGridPosX() { return posX_ * gridSizeF; }
+  /**
+   * @brief Get the Grid Pos Y object
+   * 
+   * @return int 
+   */
   int GetGridPosY() { return posY_ * gridSizeF; }
 
   int direction = 0;

@@ -567,9 +567,6 @@ void Game::updateSpawnClock() {
   }
 }
 
-// Updates game clock. May be useful with enemy movement for example
-void Game::updateDt() { dt = dtClock.restart().asSeconds(); }
-
 /**
  * @brief Enemy movement clock
  * Change moveTime variable to change all enemies speed
@@ -639,7 +636,6 @@ void Game::updateTileSelector() {
 
 // Main game update loop
 void Game::update() {
-  this->updateDt();
   this->updateMousePosition();
   this->pollEvents();
   this->updateInput();

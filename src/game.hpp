@@ -65,10 +65,6 @@ class Game {
    */
   void updateBuildClock();
   /**
-   * Updates clock.
-   */
-  void updateDt();
-  /**
    * @brief Updates enemy move timer.
    *
    */
@@ -131,7 +127,6 @@ class Game {
   unsigned gridSizeU;
   float dt = 0.f;
   // Clock
-  sf::Clock dtClock;
   sf::Clock MoveClock;
   sf::Clock SnowballClock;
   sf::Clock FireClock;
