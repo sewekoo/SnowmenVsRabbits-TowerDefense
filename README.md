@@ -2,6 +2,9 @@
 
 Group work project done for course "Object oriented programming with C++".
 
+My responsibilities:
+Game map generation based on vector input. Tile abstract classes and different variations. Enabling tiles to hold either enemies or towers as pointers with their class methods functioning. Enemy movement with pointers transferring from tile to tile and tiles handling path for enemies. Towers detecting enemies, turning towards them and shooting at them. Snowball animation with enemies taking damage as the ball hits. Game loop with repeating rounds with specific enemies spawning.
+
 “Tower defense (or informally TD) is a subgenre of strategy video game where the goal is to defend a player’s territories or possessions by obstructing enemy attackers, usually achieved by placing defensive structures on or along their path of attack.” (Wikipedia)
 In a tower defense game, the enemies move in waves from some position of the map to another. The goal of the player is to place towers on their path in order to block, impede, attack or destroy the enemies before they are able to reach their goal. The primary object is the survival of the base.
 
